@@ -37,3 +37,7 @@
 # System Files
 /src/frontend/.DS_Store
 /src/frontend/Thumbs.db
+/.idea/
+/out/
+/gradle/
+/.gradle/
