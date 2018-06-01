@@ -13,6 +13,7 @@ public class User {
     @Id @GeneratedValue
     private Long id;
     private String email;
+    private String name;
     private Role role;
     private String passwordHash;
 
@@ -46,5 +47,13 @@ public class User {
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
