@@ -51,8 +51,8 @@ public class Course {
     }
 
     public void removeMap(MindMap map) {
-        maps.remove(map);
-        //maps.remove(findMapById(map.getId()));
+        // maps.remove(map);
+        maps.remove(findMapById(map.getId()));
     }
 
     private MindMap findMapById(long mapId) {

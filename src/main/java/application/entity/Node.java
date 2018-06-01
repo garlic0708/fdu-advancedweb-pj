@@ -58,8 +58,8 @@ public class Node {
 
     // 不确定是否能拿到对应的child
     public void removeChild(Node child) {
-        //childNodes.remove(findChildById(child.getId()));
-        childNodes.remove(child);
+        childNodes.remove(findChildById(child.getId()));
+        //childNodes.remove(child);
     }
 
     public Set<Node> getChildNodes() { return childNodes; }
@@ -77,8 +77,8 @@ public class Node {
     public Set<HomeWork> getHomeWork() { return homeWork; }
 
     public void removeQuestion(HomeWork question) {
-        //homeWork.remove(findQuestionById(question.getId()));
-        homeWork.remove(question);
+        homeWork.remove(findQuestionById(question.getId()));
+        //homeWork.remove(question);
     }
 
     private HomeWork findQuestionById(long questionId) {
@@ -94,8 +94,8 @@ public class Node {
     public Set<Courseware> getCoursewares() { return coursewares; }
 
     public void removeCourseware(Courseware courseware) {
-        //coursewares.remove(findCoursewareById(courseware.getId()));
-        coursewares.remove(courseware);
+        coursewares.remove(findCoursewareById(courseware.getId()));
+        //coursewares.remove(courseware);
     }
 
     private Courseware findCoursewareById(long id) {
@@ -111,8 +111,8 @@ public class Node {
     public Set<Resource> getResources() { return resources; }
 
     public void removeResource(Resource resource) {
-        //resources.remove(findResourceById(resource.getId()));
-        resources.remove(resource);
+        resources.remove(findResourceById(resource.getId()));
+        //resources.remove(resource);
     }
 
     private Resource findResourceById(long resourceId) {
