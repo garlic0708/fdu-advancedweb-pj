@@ -34,4 +34,20 @@ public class StudentAnswerForShortAnswer {
     public void setAnswer(String answer) {
         this.answer = answer;
     }
+
+    public ShortAnswerQuestion getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(ShortAnswerQuestion question) {
+        this.question = question;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
 }

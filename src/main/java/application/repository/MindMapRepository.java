@@ -9,5 +9,6 @@ import org.springframework.data.repository.CrudRepository;
  * Date: 2018/6/1.
  */
 public interface MindMapRepository extends CrudRepository<MindMap, Long> {
-
+    MindMap findByName(String name);
+    MindMap findById(long id);
 }

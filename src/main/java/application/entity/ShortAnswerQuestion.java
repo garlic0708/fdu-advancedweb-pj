@@ -1,5 +1,11 @@
 package application.entity;
 
+import org.neo4j.ogm.annotation.Relationship;
+
+import java.util.Set;
+
+import static org.neo4j.ogm.annotation.Relationship.INCOMING;
+
 /**
  * Creator: DreamBoy
  * Date: 2018/6/1.
@@ -7,6 +13,9 @@ package application.entity;
 public class ShortAnswerQuestion extends HomeWork {
     private String content;
     private String correctAnswer;
+
+    @Relationship(type = "resolve", direction = INCOMING)
+    private Set<StudentAnswerForShortAnswer> studentAnswerForShortAnswers;
 
     public String getCorrectAnswer() {
         return correctAnswer;
@@ -22,5 +31,13 @@ public class ShortAnswerQuestion extends HomeWork {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Set<StudentAnswerForShortAnswer> getStudentAnswerForShortAnswers() {
+        return studentAnswerForShortAnswers;
+    }
+
+    public void setStudentAnswerForShortAnswers(Set<StudentAnswerForShortAnswer> studentAnswerForShortAnswers) {
+        this.studentAnswerForShortAnswers = studentAnswerForShortAnswers;
     }
 }

@@ -8,4 +8,7 @@ import org.springframework.data.repository.CrudRepository;
  * Date: 2018/6/1.
  */
 public interface NodeRepository extends CrudRepository<Node, Long> {
+    Node findById(long id);
+
+    Node findByName(String name);
 }

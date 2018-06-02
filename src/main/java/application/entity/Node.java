@@ -21,17 +21,23 @@ public class Node {
     private Long id;
     private String name;
 
-    @Relationship(type = "hasChild", direction = INCOMING)
+    @Relationship(type = "hasChild")
     private Set<Node> childNodes;
 
-    @Relationship(type = "hasHomeWork", direction = INCOMING)
+    @Relationship(type = "hasHomeWork")
     private Set<HomeWork> homeWork;
 
-    @Relationship(type = "hasCourseWares", direction = INCOMING)
+    @Relationship(type = "hasCourseWares")
     private Set<Courseware> coursewares;
 
-    @Relationship(type = "hasResource", direction = INCOMING)
+    @Relationship(type = "hasResource")
     private Set<Resource> resources;
+
+    @Relationship(type = "hasRootNode", direction = INCOMING)
+    private MindMap fatherMap;
+
+    @Relationship(type = "hasChild", direction = INCOMING)
+    private Node fatherNode;
 
     public Node() {
         childNodes = new HashSet<>();
@@ -123,5 +129,21 @@ public class Node {
                 return resource;
         }
         return null;
+    }
+
+    public MindMap getFatherMap() {
+        return fatherMap;
+    }
+
+    public void setFatherMap(MindMap fatherMap) {
+        this.fatherMap = fatherMap;
+    }
+
+    public Node getFatherNode() {
+        return fatherNode;
+    }
+
+    public void setFatherNode(Node fatherNode) {
+        this.fatherNode = fatherNode;
     }
 }

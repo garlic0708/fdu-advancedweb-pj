@@ -3,9 +3,14 @@ package application.entity;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.Properties;
+import org.neo4j.ogm.annotation.Relationship;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import static org.neo4j.ogm.annotation.Relationship.INCOMING;
 
 /**
  * Creator: DreamBoy
@@ -17,11 +22,18 @@ public class MutipleChoiceQuestion extends HomeWork{
     private Map<String, String> answers;
     private Set<String> correctAnswers;
 
+    @Relationship(type = "resolve", direction = INCOMING)
+    private Set<StudentAnswerForMutipleChoice> studentAnswerForMutipleChoices;
+
     public void addAnswer(String key, String value) {
+        if (answers == null)
+            answers = new HashMap<>();
         answers.put(key, value);
     }
 
     public void addCorrectAnswer(String answer) {
+        if (correctAnswers == null)
+            correctAnswers = new HashSet<>();
         correctAnswers.add(answer);
     }
 
@@ -39,5 +51,13 @@ public class MutipleChoiceQuestion extends HomeWork{
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Set<StudentAnswerForMutipleChoice> getStudentAnswerForMutipleChoices() {
+        return studentAnswerForMutipleChoices;
+    }
+
+    public void setStudentAnswerForMutipleChoices(Set<StudentAnswerForMutipleChoice> studentAnswerForMutipleChoices) {
+        this.studentAnswerForMutipleChoices = studentAnswerForMutipleChoices;
     }
 }

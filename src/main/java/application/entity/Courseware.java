@@ -3,6 +3,9 @@ package application.entity;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
+
+import static org.neo4j.ogm.annotation.Relationship.INCOMING;
 
 /**
  * Creator: DreamBoy
@@ -15,6 +18,9 @@ public class Courseware {
     private Long id;
     private String name;
     private String fileLocation;
+
+    @Relationship(type = "hasCourseWares", direction = INCOMING)
+    private Node fatherNode;
 
     public Long getId() {
         return id;
@@ -38,5 +44,13 @@ public class Courseware {
 
     public void setFileLocation(String fileLocation) {
         this.fileLocation = fileLocation;
+    }
+
+    public Node getFatherNode() {
+        return fatherNode;
+    }
+
+    public void setFatherNode(Node fatherNode) {
+        this.fatherNode = fatherNode;
     }
 }

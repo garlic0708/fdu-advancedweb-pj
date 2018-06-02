@@ -14,9 +14,7 @@ public class StudentAnswerForMutipleChoice {
     @Id
     @GeneratedValue
     private Long id;
-
     private Set<String> answers;
-
     @StartNode
     private Student student;
     @EndNode
@@ -39,5 +37,21 @@ public class StudentAnswerForMutipleChoice {
             answers = new HashSet<>();
         }
         answers.add(answer);
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public MutipleChoiceQuestion getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(MutipleChoiceQuestion question) {
+        this.question = question;
     }
 }

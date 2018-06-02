@@ -27,6 +27,9 @@ public class Course {
     @Relationship(type = "Open Course", direction = INCOMING)
     private Teacher teacher;
 
+    @Relationship(type = "Select Course" , direction = INCOMING)
+    private Set<Student> students;
+
     public Course() {
         maps = new HashSet<>();
     }
@@ -74,5 +77,13 @@ public class Course {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
     }
 }
