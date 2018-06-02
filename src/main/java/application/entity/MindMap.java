@@ -5,6 +5,8 @@ import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
+import static org.neo4j.ogm.annotation.Relationship.INCOMING;
+
 /**
  * Creator: DreamBoy
  * Date: 2018/6/1.
@@ -18,6 +20,8 @@ public class MindMap {
 
     @Relationship(type = "hasRootNode")
     private Node rootNode;
+    @Relationship(type = "hasMap", direction = INCOMING)
+    private Course course;
 
     public String getName() {
         return name;
@@ -41,5 +45,13 @@ public class MindMap {
 
     public void setRootNode(Node rootNode) {
         this.rootNode = rootNode;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 }

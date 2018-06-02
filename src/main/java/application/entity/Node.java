@@ -8,6 +8,8 @@ import org.neo4j.ogm.annotation.Relationship;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.neo4j.ogm.annotation.Relationship.INCOMING;
+
 /**
  * Creator: DreamBoy
  * Date: 2018/6/1.
@@ -19,16 +21,16 @@ public class Node {
     private Long id;
     private String name;
 
-    @Relationship(type = "hasChild")
+    @Relationship(type = "hasChild", direction = INCOMING)
     private Set<Node> childNodes;
 
-    @Relationship(type = "hasHomeWork")
+    @Relationship(type = "hasHomeWork", direction = INCOMING)
     private Set<HomeWork> homeWork;
 
-    @Relationship(type = "hasCourseWares")
+    @Relationship(type = "hasCourseWares", direction = INCOMING)
     private Set<Courseware> coursewares;
 
-    @Relationship(type = "hasResource")
+    @Relationship(type = "hasResource", direction = INCOMING)
     private Set<Resource> resources;
 
     public Node() {

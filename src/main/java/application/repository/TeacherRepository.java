@@ -8,4 +8,5 @@ import org.springframework.data.repository.CrudRepository;
  * Date: 2018/6/1.
  */
 public interface TeacherRepository extends CrudRepository<Teacher, Long> {
+    Teacher findByName(String name);
 }

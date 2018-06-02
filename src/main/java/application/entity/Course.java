@@ -8,6 +8,8 @@ import org.neo4j.ogm.annotation.Relationship;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.neo4j.ogm.annotation.Relationship.INCOMING;
+
 /**
  * Creator: DreamBoy
  * Date: 2018/6/1.
@@ -21,6 +23,9 @@ public class Course {
 
     @Relationship(type = "hasMap")
     private Set<MindMap> maps;
+
+    @Relationship(type = "Open Course", direction = INCOMING)
+    private Teacher teacher;
 
     public Course() {
         maps = new HashSet<>();
@@ -61,5 +66,13 @@ public class Course {
                 return mindMap;
         }
         return null;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 }

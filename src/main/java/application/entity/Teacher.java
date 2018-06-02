@@ -5,6 +5,8 @@ import org.neo4j.ogm.annotation.Relationship;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.neo4j.ogm.annotation.Relationship.INCOMING;
+
 /**
  * Creator: DreamBoy
  * Date: 2018/6/1.
@@ -28,5 +30,9 @@ public class Teacher extends User {
 
     public void addCourse(Course course) {
         courses.add(course);
+    }
+
+    public Set<Course> getCourses() {
+        return this.courses;
     }
 }

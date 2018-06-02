@@ -1,5 +1,6 @@
 package application.repository;
 
+import application.entity.Course;
 import application.entity.MindMap;
 import org.springframework.data.repository.CrudRepository;
 
@@ -8,4 +9,5 @@ import org.springframework.data.repository.CrudRepository;
  * Date: 2018/6/1.
  */
 public interface MindMapRepository extends CrudRepository<MindMap, Long> {
+
 }
