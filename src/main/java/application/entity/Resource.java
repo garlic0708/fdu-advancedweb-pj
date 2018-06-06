@@ -18,6 +18,7 @@ public class Resource {
     private Long id;
     private String name;
     private String fileLocation;
+    private ResourceType type;
 
     @Relationship(type = "hasResource", direction = INCOMING)
     private Node fatherNode;
@@ -53,5 +54,13 @@ public class Resource {
 
     public void setFatherNode(Node fatherNode) {
         this.fatherNode = fatherNode;
+    }
+
+    public ResourceType getType() {
+        return type;
+    }
+
+    public void setType(ResourceType type) {
+        this.type = type;
     }
 }

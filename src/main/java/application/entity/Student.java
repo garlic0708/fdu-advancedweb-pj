@@ -34,8 +34,12 @@ public class Student extends User {
         courses = new HashSet<>();
     }
 
-    public void addCourse(Course course) {
+    public void addCourses(Course course) {
         courses.add(course);
+    }
+
+    public Set<Course> getCourses() {
+        return this.courses;
     }
 
     public Set<StudentAnswerForMutipleChoice> getStudentAnswerForMutipleChoice() {

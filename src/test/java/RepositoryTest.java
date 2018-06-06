@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {SpringBootWebApplication.class})
-public class SimpleTest {
+public class RepositoryTest {
     @Autowired
     private CourseRepository courseRepository;
     @Autowired
@@ -87,7 +87,7 @@ public class SimpleTest {
         student.setName("Xu");
 
         Course course = courseRepository.findByName("math");
-        student.addCourse(course);
+        student.addCourses(course);
         studentRepository.save(student);
 
         course = courseRepository.findByName("math");
@@ -103,8 +103,8 @@ public class SimpleTest {
         rui.setName("rui");
 
         Course course = courseRepository.findByName("math");
-        jia.addCourse(course);
-        rui.addCourse(course);
+        jia.addCourses(course);
+        rui.addCourses(course);
         studentRepository.save(jia);
         studentRepository.save(rui);
 
@@ -206,7 +206,7 @@ public class SimpleTest {
     }
 
     @Test
-    public void testFindStudentByQuestion() {
+    public void testDeleteAnswer() {
         answerForShortAnswerRepository.deleteAll();
         answerForChoiceRepository.deleteAll();
     }

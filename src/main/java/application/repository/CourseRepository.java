@@ -9,6 +9,8 @@ import org.springframework.data.repository.CrudRepository;
  * Date: 2018/6/1.
  */
 public interface CourseRepository extends CrudRepository<Course, Long> {
+    Course findById(long id);
     Course findByName(String name);
     Course findByMapsContains(MindMap map);
+    void deleteById(long id);
 }

@@ -20,7 +20,7 @@ public class MutipleChoiceQuestion extends HomeWork{
     private String content;
     @Properties
     private Map<String, String> answers;
-    private Set<String> correctAnswers;
+    private String correctAnswers;
 
     @Relationship(type = "resolve", direction = INCOMING)
     private Set<StudentAnswerForMutipleChoice> studentAnswerForMutipleChoices;
@@ -32,16 +32,14 @@ public class MutipleChoiceQuestion extends HomeWork{
     }
 
     public void addCorrectAnswer(String answer) {
-        if (correctAnswers == null)
-            correctAnswers = new HashSet<>();
-        correctAnswers.add(answer);
+        this.correctAnswers = answer;
     }
 
     public Map<String, String> getAnswers() {
         return answers;
     }
 
-    public Set<String> getCorrectAnswers() {
+    public String getCorrectAnswers() {
         return correctAnswers;
     }
 
