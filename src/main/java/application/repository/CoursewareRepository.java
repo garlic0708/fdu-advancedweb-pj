@@ -8,4 +8,9 @@ import org.springframework.data.repository.CrudRepository;
  * Date: 2018/6/1.
  */
 public interface CoursewareRepository extends CrudRepository<Courseware, Long> {
+    Courseware findById(long id);
+
+    Courseware findByName(String name);
+
+    void deleteById(long id);
 }

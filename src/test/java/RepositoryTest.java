@@ -7,10 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
-import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {SpringBootWebApplication.class})
-public class SimpleTest {
+public class RepositoryTest {
     @Autowired
     private CourseRepository courseRepository;
     @Autowired
@@ -33,11 +31,11 @@ public class SimpleTest {
     @Autowired
     private NodeRepository nodeRepository;
     @Autowired
-    private MutipleChoiceRepository mutipleChoiceRepository;
+    private MultipleChoiceRepository multipleChoiceRepository;
     @Autowired
     private ShortAnswerRepository shortAnswerRepository;
     @Autowired
-    private StudentAnswerForMutipleChoiceRepository answerForChoiceRepository;
+    private StudentAnswerForMultipleChoiceRepository answerForChoiceRepository;
     @Autowired
     private StudentAnswerForShortAnswerRepository answerForShortAnswerRepository;
 
@@ -87,7 +85,7 @@ public class SimpleTest {
         student.setName("Xu");
 
         Course course = courseRepository.findByName("math");
-        student.addCourse(course);
+        student.addCourses(course);
         studentRepository.save(student);
 
         course = courseRepository.findByName("math");
@@ -103,8 +101,8 @@ public class SimpleTest {
         rui.setName("rui");
 
         Course course = courseRepository.findByName("math");
-        jia.addCourse(course);
-        rui.addCourse(course);
+        jia.addCourses(course);
+        rui.addCourses(course);
         studentRepository.save(jia);
         studentRepository.save(rui);
 
@@ -158,7 +156,7 @@ public class SimpleTest {
     @Test
     public void testQuestionAndNode() {
         Node sineFunction = nodeRepository.findByName("Sine function");
-        MutipleChoiceQuestion mutipleChoice = new MutipleChoiceQuestion();
+        MultipleChoiceQuestion mutipleChoice = new MultipleChoiceQuestion();
         mutipleChoice.setContent("sin30=?");
         mutipleChoice.addAnswer("a", "0.3");
         mutipleChoice.addAnswer("b", "0.4");
@@ -181,10 +179,10 @@ public class SimpleTest {
     @Test
     public void testAnswerForQuestion() {
         Student Xu = studentRepository.findByName("Xu");
-        MutipleChoiceQuestion mutipleChoice = mutipleChoiceRepository.findById(163);
+        MultipleChoiceQuestion mutipleChoice = multipleChoiceRepository.findById(163);
         ShortAnswerQuestion shortAnswerQ = shortAnswerRepository.findById(164);
 
-        StudentAnswerForMutipleChoice choice = new StudentAnswerForMutipleChoice();
+        StudentAnswerForMultipleChoice choice = new StudentAnswerForMultipleChoice();
         choice.addAnswer("c");
         StudentAnswerForShortAnswer shortAnswer = new StudentAnswerForShortAnswer();
         shortAnswer.setAnswer("0");
@@ -199,14 +197,14 @@ public class SimpleTest {
         answerForShortAnswerRepository.save(shortAnswer);
 
         Xu = studentRepository.findByName("Xu");
-        assertEquals(Xu.getStudentAnswerForMutipleChoice().size(), 1);
+        assertEquals(Xu.getStudentAnswerForMultipleChoice().size(), 1);
 
-        mutipleChoice = mutipleChoiceRepository.findById(163);
-        assertEquals(mutipleChoice.getStudentAnswerForMutipleChoices().size(), 1);
+        mutipleChoice = multipleChoiceRepository.findById(163);
+        assertEquals(mutipleChoice.getStudentAnswerForMultipleChoices().size(), 1);
     }
 
     @Test
-    public void testFindStudentByQuestion() {
+    public void testDeleteAnswer() {
         answerForShortAnswerRepository.deleteAll();
         answerForChoiceRepository.deleteAll();
     }

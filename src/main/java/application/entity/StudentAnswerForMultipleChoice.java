@@ -10,7 +10,7 @@ import java.util.Set;
  * Date: 2018/6/1.
  */
 @RelationshipEntity(type = "resolve")
-public class StudentAnswerForMutipleChoice {
+public class StudentAnswerForMultipleChoice {
     @Id
     @GeneratedValue
     private Long id;
@@ -18,7 +18,7 @@ public class StudentAnswerForMutipleChoice {
     @StartNode
     private Student student;
     @EndNode
-    private MutipleChoiceQuestion question;
+    private MultipleChoiceQuestion question;
 
     public Long getId() {
         return id;
@@ -47,11 +47,11 @@ public class StudentAnswerForMutipleChoice {
         this.student = student;
     }
 
-    public MutipleChoiceQuestion getQuestion() {
+    public MultipleChoiceQuestion getQuestion() {
         return question;
     }
 
-    public void setQuestion(MutipleChoiceQuestion question) {
+    public void setQuestion(MultipleChoiceQuestion question) {
         this.question = question;
     }
 }

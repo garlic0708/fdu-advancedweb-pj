@@ -17,6 +17,8 @@ public class HomeWork {
     @GeneratedValue
     private Long id;
 
+    private QuestionType type;
+
     @Relationship(type = "hasHomeWork", direction = INCOMING)
     private Node fatherNode;
 
@@ -34,5 +36,13 @@ public class HomeWork {
 
     public void setFatherNode(Node fatherNode) {
         this.fatherNode = fatherNode;
+    }
+
+    public QuestionType getType() {
+        return type;
+    }
+
+    public void setType(QuestionType type) {
+        this.type = type;
     }
 }

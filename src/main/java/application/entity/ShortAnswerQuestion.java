@@ -14,6 +14,10 @@ public class ShortAnswerQuestion extends HomeWork {
     private String content;
     private String correctAnswer;
 
+    public ShortAnswerQuestion() {
+        this.setType(QuestionType.SHORTANSWER);
+    }
+
     @Relationship(type = "resolve", direction = INCOMING)
     private Set<StudentAnswerForShortAnswer> studentAnswerForShortAnswers;
 

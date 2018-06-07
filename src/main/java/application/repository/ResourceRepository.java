@@ -8,4 +8,11 @@ import org.springframework.data.repository.CrudRepository;
  * Date: 2018/6/1.
  */
 public interface ResourceRepository extends CrudRepository<Resource, Long> {
+    Resource findById(long id);
+
+    Resource findByName(String name);
+
+    Resource findByFatherNode_Id(long nodeId);
+
+    void deleteById(long id);
 }

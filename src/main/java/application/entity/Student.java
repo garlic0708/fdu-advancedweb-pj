@@ -5,8 +5,6 @@ import org.neo4j.ogm.annotation.Relationship;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.neo4j.ogm.annotation.Relationship.INCOMING;
-
 /**
  * Creator: DreamBoy
  * Date: 2018/6/1.
@@ -16,7 +14,7 @@ public class Student extends User {
     private Set<Course> courses;
 
     @Relationship(type = "resolve" )
-    private Set<StudentAnswerForMutipleChoice> studentAnswerForMutipleChoice;
+    private Set<StudentAnswerForMultipleChoice> studentAnswerForMultipleChoice;
 
     @Relationship(type = "resolve")
     private Set<StudentAnswerForShortAnswer> studentAnswerForShortAnswer;
@@ -34,16 +32,20 @@ public class Student extends User {
         courses = new HashSet<>();
     }
 
-    public void addCourse(Course course) {
+    public void addCourses(Course course) {
         courses.add(course);
     }
 
-    public Set<StudentAnswerForMutipleChoice> getStudentAnswerForMutipleChoice() {
-        return studentAnswerForMutipleChoice;
+    public Set<Course> getCourses() {
+        return this.courses;
     }
 
-    public void setStudentAnswerForMutipleChoice(Set<StudentAnswerForMutipleChoice> studentAnswerForMutipleChoice) {
-        this.studentAnswerForMutipleChoice = studentAnswerForMutipleChoice;
+    public Set<StudentAnswerForMultipleChoice> getStudentAnswerForMultipleChoice() {
+        return studentAnswerForMultipleChoice;
+    }
+
+    public void setStudentAnswerForMultipleChoice(Set<StudentAnswerForMultipleChoice> studentAnswerForMultipleChoice) {
+        this.studentAnswerForMultipleChoice = studentAnswerForMultipleChoice;
     }
 
     public Set<StudentAnswerForShortAnswer> getStudentAnswerForShortAnswer() {

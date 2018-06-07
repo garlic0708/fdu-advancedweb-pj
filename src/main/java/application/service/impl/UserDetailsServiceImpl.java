@@ -1,7 +1,8 @@
-package application.service;
+package application.service.impl;
 
 import application.entity.CurrentUser;
 import application.entity.User;
+import application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = null; // todo get user from userService
+        User user = null;
         return new CurrentUser(user);
     }
 }
