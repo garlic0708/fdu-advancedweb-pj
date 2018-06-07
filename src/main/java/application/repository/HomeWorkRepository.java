@@ -14,6 +14,7 @@ public interface HomeWorkRepository extends CrudRepository<HomeWork, Long> {
     HomeWork findById(long id);
 
     @Query("MATCH (map: MindMap)-[:hasRootNode]->(root:Node)-[:hasChild*]->(child:Node)," +
-            "(hw: HomeWork)<-[:hasHomeWork]-(n) WHERE n IN [root, child] RETURN hw")
+            "(hw: HomeWork)<-[:hasHomeWork]-(n) WHERE n IN [root, child] AND ID(map) = {0} " +
+            "RETURN hw")
     Set<HomeWork> findByMindMapId(long id);
 }
