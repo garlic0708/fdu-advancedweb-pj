@@ -19,14 +19,19 @@ import java.util.Set;
  */
 @Service
 public class MultipleChoiceServiceImpl implements MultipleChoiceService {
+    private final MultipleChoiceRepository choiceRepository;
+    private final NodeRepository nodeRepository;
+    private final StudentRepository studentRepository;
+    private final StudentAnswerForMultipleChoiceRepository answerForMultipleChoiceRepository;
+
     @Autowired
-    private MultipleChoiceRepository choiceRepository;
-    @Autowired
-    private NodeRepository nodeRepository;
-    @Autowired
-    private StudentRepository studentRepository;
-    @Autowired
-    private StudentAnswerForMultipleChoiceRepository answerForMultipleChoiceRepository;
+    public MultipleChoiceServiceImpl(MultipleChoiceRepository choiceRepository, NodeRepository nodeRepository, StudentRepository studentRepository, StudentAnswerForMultipleChoiceRepository answerForMultipleChoiceRepository) {
+        this.choiceRepository = choiceRepository;
+        this.nodeRepository = nodeRepository;
+        this.studentRepository = studentRepository;
+        this.answerForMultipleChoiceRepository = answerForMultipleChoiceRepository;
+    }
+
     @Override
     public MultipleChoiceQuestion getById(long id) {
         return choiceRepository.findById(id);

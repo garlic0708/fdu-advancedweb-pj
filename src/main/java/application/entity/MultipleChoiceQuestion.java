@@ -13,7 +13,7 @@ import static org.neo4j.ogm.annotation.Relationship.INCOMING;
  * Creator: DreamBoy
  * Date: 2018/6/1.
  */
-public class MultipleChoiceQuestion extends HomeWork{
+public class MultipleChoiceQuestion extends HomeWork {
     private String content;
     @Properties
     private Map<String, String> answers;

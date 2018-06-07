@@ -1,5 +1,6 @@
 import application.SpringBootWebApplication;
 import application.entity.Node;
+import application.service.MindMapService;
 import application.service.NodeService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,11 +22,13 @@ import static org.junit.Assert.assertEquals;
 public class NodeServiceTest {
     @Autowired
     private NodeService nodeService;
+    @Autowired
+    private MindMapService mindMapService;
 
     @Test
     public void testAdd() {
         nodeService.deleteAll();
-        nodeService.addRootNode(167, "rootNode");
+        nodeService.addRootNode(mindMapService.getByName("map1").getId(), "rootNode");
         Node root = nodeService.getByName("rootNode");
         Node node1 = new Node();
         node1.setName("child1_1");
