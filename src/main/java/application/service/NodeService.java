@@ -2,6 +2,7 @@ package application.service;
 
 import application.entity.Node;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -19,11 +20,15 @@ public interface NodeService {
 
     Node getRootNodeByMindMapId(long mindMapId);
 
-    Node getAll(long mindMapId);
+    List<Node> getAll(long mindMapId);
 
     void addRootNode(long mindMapId, String nodeName);
 
     void addNode(long fatherNodeId, String childName);
 
     void deleteNode(long id);
+
+    void deleteAll();
+
+    void update(Node node);
 }

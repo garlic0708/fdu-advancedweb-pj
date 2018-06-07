@@ -51,19 +51,20 @@ public class MindMapServiceImpl implements MindMapService {
         return course.getMaps();
     }
 
-    //需要测试
     @Override
     public Set<MindMap> getByTeacherId(long teacherId) {
         Set<MindMap> maps = new HashSet<>();
         Teacher teacher = teacherRepository.findById(teacherId);
         Set<Course> courseSet = teacher.getCourses();
-        while (courseSet.iterator().hasNext()) {
-            Course course = courseSet.iterator().next();
-            maps.addAll(course.getMaps());
+        for (Course course : courseSet) {
+            Long id = course.getId();
+            course = courseRepository.findById(id).orElse(null);
+            if (course != null)
+                maps.addAll(course.getMaps());
         }
         return maps;
     }
-    //需要测试
+
     @Override
     public void addMindMap(long courseId, String name) {
         Course course = courseRepository.findById(courseId);
@@ -72,7 +73,7 @@ public class MindMapServiceImpl implements MindMapService {
         course.addMap(mindMap);
         courseRepository.save(course);
     }
-    //需要测试
+
     @Override
     public void deleteMindMap(long id) {
         mindMapRepository.deleteById(id);

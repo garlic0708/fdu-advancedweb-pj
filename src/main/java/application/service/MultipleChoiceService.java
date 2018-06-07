@@ -1,5 +1,5 @@
 package application.service;
-import application.entity.MutipleChoiceQuestion;
+import application.entity.MultipleChoiceQuestion;
 
 import java.util.Map;
 import java.util.Set;
@@ -9,13 +9,15 @@ import java.util.Set;
  * Date: 2018/6/5.
  */
 public interface MultipleChoiceService {
-    MutipleChoiceQuestion getById(long id);
+    MultipleChoiceQuestion getById(long id);
 
-    Set<MutipleChoiceQuestion> getByNodeId(long nodeId);
+    Set<MultipleChoiceQuestion> getByNodeId(long nodeId);
 
-    Set<MutipleChoiceQuestion> getByMindMapId(long mindMapId);
+    Set<MultipleChoiceQuestion> getByMindMapId(long mindMapId);
 
     void addMutipleChoice(long nodeId, String content, Map<String, String> answers, String correctAnswer);
 
     void deleteMutipleChoiceQuestion(long id);
+
+    void update(MultipleChoiceQuestion question);
 }

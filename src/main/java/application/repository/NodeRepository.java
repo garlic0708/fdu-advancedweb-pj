@@ -18,4 +18,7 @@ public interface NodeRepository extends CrudRepository<Node, Long> {
     @Query("MATCH (map: MindMap)-[:hasRootNode]->(root:Node)-[rel:hasChild*]->(child:Node)" +
             "WHERE ID(map) = {0} RETURN root, rel, child")
     List<Node> findByMindMapId(long id);
+
+    void deleteById(long id);
+
 }
