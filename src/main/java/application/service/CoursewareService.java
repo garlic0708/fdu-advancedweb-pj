@@ -15,9 +15,9 @@ public interface CoursewareService {
 
     Set<Courseware> getByNodeId(long nodeId);
 
-    void addResource(String name, String location);
+    void addCourseware(long nodeId, String name, String location);
 
     void deleteCourseware(long id);
 
-    void updateResource(Courseware resource);
+    void updateCourseware(Courseware courseware);
 }

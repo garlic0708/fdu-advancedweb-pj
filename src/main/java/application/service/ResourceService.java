@@ -1,7 +1,7 @@
 package application.service;
 
 import application.entity.Resource;
-import org.springframework.data.rest.core.mapping.ResourceType;
+import application.entity.ResourceType;
 
 import java.util.Set;
 
@@ -16,7 +16,7 @@ public interface ResourceService {
 
     Set<Resource> getByNodeId(long nodeId);
 
-    void addResource(String name, String location, ResourceType type);
+    void addResource(long nodeId, String name, String location, ResourceType type);
 
     void deleteResource(long id);
 

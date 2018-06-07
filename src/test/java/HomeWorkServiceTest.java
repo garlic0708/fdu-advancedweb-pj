@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {SpringBootWebApplication.class})
-public class HomeWorkTest {
+public class HomeWorkServiceTest {
     @Autowired
     private HomeWorkService homeWorkService;
     @Autowired
