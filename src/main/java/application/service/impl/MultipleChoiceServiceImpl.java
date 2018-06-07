@@ -2,8 +2,9 @@ package application.service.impl;
 
 import application.entity.MultipleChoiceQuestion;
 import application.entity.Node;
-import application.repository.MultipleChoiceRepository;
-import application.repository.NodeRepository;
+import application.entity.Student;
+import application.entity.StudentAnswerForMultipleChoice;
+import application.repository.*;
 import application.service.MultipleChoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,10 @@ public class MultipleChoiceServiceImpl implements MultipleChoiceService {
     private MultipleChoiceRepository choiceRepository;
     @Autowired
     private NodeRepository nodeRepository;
+    @Autowired
+    private StudentRepository studentRepository;
+    @Autowired
+    private StudentAnswerForMultipleChoiceRepository answerForMultipleChoiceRepository;
     @Override
     public MultipleChoiceQuestion getById(long id) {
         return choiceRepository.findById(id);
@@ -48,6 +53,27 @@ public class MultipleChoiceServiceImpl implements MultipleChoiceService {
         node.addQuestion(multipleChoiceQuestion);
         nodeRepository.save(node);
 
+    }
+
+    @Override
+    public void addStudentAnswer(long questionId, long studentId, String answer) {
+        MultipleChoiceQuestion question = choiceRepository.findById(questionId);
+        Student student = studentRepository.findById(studentId);
+        StudentAnswerForMultipleChoice answerForMultipleChoice = new StudentAnswerForMultipleChoice();
+        answerForMultipleChoice.addAnswer(answer);
+        answerForMultipleChoice.setQuestion(question);
+        answerForMultipleChoice.setStudent(student);
+        answerForMultipleChoiceRepository.save(answerForMultipleChoice);
+    }
+
+    @Override
+    public Set<StudentAnswerForMultipleChoice> getAnswersByQuestionId(long questionId) {
+        return answerForMultipleChoiceRepository.findByQuestion_Id(questionId);
+    }
+
+    @Override
+    public Set<StudentAnswerForMultipleChoice> getAnswersByStudentId(long studentId) {
+        return answerForMultipleChoiceRepository.findByStudent_Id(studentId);
     }
 
     @Override

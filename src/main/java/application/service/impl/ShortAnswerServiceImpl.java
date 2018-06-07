@@ -2,8 +2,12 @@ package application.service.impl;
 
 import application.entity.Node;
 import application.entity.ShortAnswerQuestion;
+import application.entity.Student;
+import application.entity.StudentAnswerForShortAnswer;
 import application.repository.NodeRepository;
 import application.repository.ShortAnswerRepository;
+import application.repository.StudentAnswerForShortAnswerRepository;
+import application.repository.StudentRepository;
 import application.service.ShortAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +24,11 @@ public class ShortAnswerServiceImpl implements ShortAnswerService {
     private ShortAnswerRepository shortAnswerRepository;
     @Autowired
     private NodeRepository nodeRepository;
+    @Autowired
+    private StudentRepository studentRepository;
+    @Autowired
+    private StudentAnswerForShortAnswerRepository answerForShortAnswerRepository;
+
     @Override
     public ShortAnswerQuestion getById(long id) {
         return shortAnswerRepository.findById(id);
@@ -44,6 +53,27 @@ public class ShortAnswerServiceImpl implements ShortAnswerService {
         Node node = nodeRepository.findById(nodeId);
         node.addQuestion(question);
         nodeRepository.save(node);
+    }
+
+    @Override
+    public void addStudentAnswer(long questionId, long studentId, String answer) {
+        ShortAnswerQuestion question = shortAnswerRepository.findById(questionId);
+        Student student = studentRepository.findById(studentId);
+        StudentAnswerForShortAnswer answerForShortAnswer = new StudentAnswerForShortAnswer();
+        answerForShortAnswer.setAnswer(answer);
+        answerForShortAnswer.setStudent(student);
+        answerForShortAnswer.setQuestion(question);
+        answerForShortAnswerRepository.save(answerForShortAnswer);
+    }
+
+    @Override
+    public Set<StudentAnswerForShortAnswer> getAnswersByQuestionId(long questionId) {
+        return answerForShortAnswerRepository.findByStudent_Id(questionId);
+    }
+
+    @Override
+    public Set<StudentAnswerForShortAnswer> getAnswersByStudentId(long studentId) {
+        return answerForShortAnswerRepository.findByStudent_Id(studentId);
     }
 
     @Override

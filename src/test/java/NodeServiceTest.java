@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -44,7 +45,8 @@ public class NodeServiceTest {
 
     @Test
     public void testGetAll() {
-        Node root = nodeService.getAll(167);
+        List<Node> nodes = nodeService.getAll(167);
+        Node root = nodes.get(0);
         assertEquals(root.getChildNodes().size(), 2);
     }
 

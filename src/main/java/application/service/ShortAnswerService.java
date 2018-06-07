@@ -1,6 +1,7 @@
 package application.service;
 
 import application.entity.ShortAnswerQuestion;
+import application.entity.StudentAnswerForShortAnswer;
 
 import java.util.Map;
 import java.util.Set;
@@ -17,6 +18,12 @@ public interface ShortAnswerService {
     Set<ShortAnswerQuestion> getByMindMapId(long mindMapId);
 
     void addShortAnswer(long nodeId, String content, String correctAnswer);
+
+    void addStudentAnswer(long questionId, long studentId, String answer);
+
+    Set<StudentAnswerForShortAnswer> getAnswersByQuestionId(long questionId);
+
+    Set<StudentAnswerForShortAnswer> getAnswersByStudentId(long studentId);
 
     void deleteShortAnswer(long id);
 
