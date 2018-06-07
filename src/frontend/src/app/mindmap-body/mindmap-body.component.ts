@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {init} from '../../assets/mapjs/mapjs-util'
+import {MindmapEvent} from "./mindmap-event";
 
 @Component({
   selector: 'app-mindmap-body',
@@ -10,8 +11,9 @@ export class MindmapBodyComponent implements OnInit, AfterViewInit {
 
   @ViewChild('container') container;
   mapModel;
+  selectedNodeId: number;
 
-  @Output() manipulation: EventEmitter<any> = new EventEmitter<any>();
+  @Output() manipulation: EventEmitter<MindmapEvent> = new EventEmitter<MindmapEvent>();
 
   constructor() {
   }
@@ -21,16 +23,30 @@ export class MindmapBodyComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.mapModel = init(this.container.nativeElement);
-    const events = ['nodeCreated', 'nodeRemoved', 'nodeAttrChanged'];
+    const events = ['nodeCreated', 'nodeRemoved', 'nodeAttrChanged', ];
     events.forEach(eventName => {
       this.mapModel.addEventListener(eventName, e => {
         this.manipulation.emit({
           eventName,
+          event: e,
           id: e.id,
-          rootId: e.rootId,
-          title: e.title,
         })
       })
+    });
+    this.mapModel.addEventListener('nodeSelectionChanged', e => {
+      if (this.selectedNodeId != e) {
+        this.selectedNodeId = e;
+        this.emitSelectionChanged();
+      }
+    });
+    this.selectedNodeId = this.mapModel.getSelectedNodeId();
+    this.emitSelectionChanged();
+  }
+
+  private emitSelectionChanged() {
+    this.manipulation.emit({
+      eventName: 'nodeSelectionChanged',
+      id: this.selectedNodeId,
     })
   }
 

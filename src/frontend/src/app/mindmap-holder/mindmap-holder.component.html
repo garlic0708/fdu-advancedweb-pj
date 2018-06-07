@@ -1,0 +1,6 @@
+<app-mindmap-body (manipulation)="mindmapEvent($event)"></app-mindmap-body>
+<mat-chip-list [selectable]="false">
+  <mat-chip *ngFor="let attachment of attachments" [color]="availableColors[attachment.type]">
+    {{attachment.description}}
+  </mat-chip>
+</mat-chip-list>
