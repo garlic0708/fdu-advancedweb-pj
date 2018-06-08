@@ -2,6 +2,7 @@ package application.service;
 
 import application.entity.Courseware;
 
+import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -20,4 +21,6 @@ public interface CoursewareService {
     void deleteCourseware(long id);
 
     void updateCourseware(Courseware courseware);
+
+    void uploadFile(byte[] file, String filePath, String fileName) throws IOException;
 }
