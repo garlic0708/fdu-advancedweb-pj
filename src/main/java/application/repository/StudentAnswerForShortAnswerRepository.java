@@ -1,6 +1,7 @@
 package application.repository;
 
 import application.entity.StudentAnswerForShortAnswer;
+import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Set;
@@ -13,7 +14,11 @@ public interface StudentAnswerForShortAnswerRepository
         extends CrudRepository<StudentAnswerForShortAnswer, Long>{
     StudentAnswerForShortAnswer findById(long id);
 
+    @Query("MATCH (n:ShortAnswerQuestion)-[:resolve]->(q:StudentAnswerForShortAnswer) WHERE ID(n)={0}" +
+            "RETURN q")
     Set<StudentAnswerForShortAnswer> findByQuestion_Id(long questionId);
 
+    @Query("MATCH (n:Student)-[:resolve]->(q:StudentAnswerForShortAnswer) WHERE ID(n)={0}" +
+            "RETURN q")
     Set<StudentAnswerForShortAnswer> findByStudent_Id(long studentId);
 }

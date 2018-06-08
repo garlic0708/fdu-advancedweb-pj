@@ -68,7 +68,7 @@ public class ShortAnswerServiceImpl implements ShortAnswerService {
 
     @Override
     public Set<StudentAnswerForShortAnswer> getAnswersByQuestionId(long questionId) {
-        return answerForShortAnswerRepository.findByStudent_Id(questionId);
+        return answerForShortAnswerRepository.findByQuestion_Id(questionId);
     }
 
     @Override
