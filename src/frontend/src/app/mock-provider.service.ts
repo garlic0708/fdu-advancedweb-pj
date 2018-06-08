@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from "@angular/common/http";
-import {Observable} from "rxjs/index";
-import {mockData} from "../assets/mock-data";
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from "@angular/common/http";
+import { Observable } from "rxjs/index";
+import { of } from 'rxjs';
+import { mockData } from "../assets/mock-data";
 import * as _ from 'lodash';
 
 @Injectable()
@@ -21,8 +22,10 @@ export class MockProviderService implements HttpInterceptor {
     };
     if (mockDatum && mockDatum !== true)
       response['body'] = mockDatum;
-    return mockDatum ? Observable.create(new HttpResponse(response)) : next.handle(req);
+    return mockDatum ?
+      of(new HttpResponse(response)) : next.handle(req);
   }
 
-  constructor() { }
+  constructor() {
+  }
 }
