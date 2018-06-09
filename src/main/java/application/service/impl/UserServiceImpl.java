@@ -31,18 +31,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User addUser(String name, String email, String password, Role role) {
+    public User addUser(UserCreateForm form) {
+
         User user;
+        Role role = form.getRole();
         if (role == Role.TEACHER)
             user = new Teacher();
         else
             user = new Student();
-        user.setName(name);
-        user.setEmail(email);
+        user.setName(form.getName());
+        user.setEmail(form.getEmail());
         user.setRole(role);
-        user.setPasswordHash(new BCryptPasswordEncoder().encode(password));
-        userRepository.save(user);
-        return user;
+        user.setPasswordHash(new BCryptPasswordEncoder().encode(form.getPassword()));
+        return userRepository.save(user);
     }
 
     @Override

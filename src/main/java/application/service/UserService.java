@@ -1,16 +1,13 @@
 package application.service;
 
-import application.entity.Role;
-import application.entity.Student;
-import application.entity.Teacher;
-import application.entity.User;
+import application.entity.*;
 
 import java.util.Optional;
 import java.util.Set;
 
 public interface UserService {
 
-    User addUser(String name, String email, String password, Role role);
+    User addUser(UserCreateForm form);
 
     User getById(long id);
 
