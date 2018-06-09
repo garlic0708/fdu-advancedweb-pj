@@ -111,4 +111,11 @@ public class CourseServiceTest {
         Course test = courseService.getByName("ics");
         assertEquals(course.getId(), test.getId());
     }
+
+    @Test
+    public void testGetWithDepth() {
+        Set<Course> courseSet = courseService.getByTeacherId(129);
+        Course course = courseSet.iterator().next();
+        assertEquals(course.getId().longValue(), 122);
+    }
 }

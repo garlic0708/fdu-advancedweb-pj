@@ -1,5 +1,7 @@
 package application.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -20,6 +22,8 @@ public class MindMap {
 
     @Relationship(type = "hasRootNode")
     private Node rootNode;
+
+    @JsonIgnore
     @Relationship(type = "hasMap", direction = INCOMING)
     private Course course;
 

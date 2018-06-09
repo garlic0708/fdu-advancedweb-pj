@@ -40,6 +40,21 @@ public class Student extends User {
         return this.courses;
     }
 
+    public void deleteCourse(long id) {
+        Course tmp = null;
+        for (Course course: courses) {
+            if (course.getId() == id) {
+                tmp = course;
+                break;
+            }
+        }
+        courses.remove(tmp);
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
+
     public Set<StudentAnswerForMultipleChoice> getStudentAnswerForMultipleChoice() {
         return studentAnswerForMultipleChoice;
     }

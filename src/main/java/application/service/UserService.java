@@ -5,6 +5,7 @@ import application.entity.Student;
 import application.entity.Teacher;
 import application.entity.User;
 
+import java.util.List;
 import java.util.Set;
 
 public interface UserService {

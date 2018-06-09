@@ -1,5 +1,6 @@
 package application.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -20,6 +21,7 @@ public class Resource {
     private String fileLocation;
     private ResourceType type;
 
+    @JsonIgnore
     @Relationship(type = "hasResource", direction = INCOMING)
     private Node fatherNode;
 

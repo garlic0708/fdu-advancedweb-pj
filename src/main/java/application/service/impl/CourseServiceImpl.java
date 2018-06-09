@@ -41,13 +41,21 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Set<Course> getByTeacherId(long id) {
         Teacher teacher = teacherRepository.findById(id);
-        return teacher.getCourses();
+        Set<Course> courseSet = teacher.getCourses();
+        for (Course course: courseSet) {
+            courseRepository.findById(course.getId().longValue());
+        }
+        return courseSet;
     }
 
     @Override
     public Set<Course> getByStudentId(long id) {
         Student student = studentRepository.findById(id);
-        return student.getCourses();
+        Set<Course> courseSet = student.getCourses();
+        for (Course course: courseSet) {
+            courseRepository.findById(course.getId().longValue());
+        }
+        return courseSet;
     }
 
     @Override

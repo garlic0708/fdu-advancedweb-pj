@@ -1,5 +1,6 @@
 package application.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -33,9 +34,10 @@ public class Node {
     @Relationship(type = "hasResource")
     private Set<Resource> resources;
 
+    @JsonIgnore
     @Relationship(type = "hasRootNode", direction = INCOMING)
     private MindMap fatherMap;
-
+    @JsonIgnore
     @Relationship(type = "hasChild", direction = INCOMING)
     private Node fatherNode;
 

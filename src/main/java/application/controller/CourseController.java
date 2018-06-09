@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Set;
 
 /**
  * Creator: DreamBoy
@@ -35,5 +36,21 @@ public class CourseController {
             @PathVariable String id,
             Principal principal) {
         courseService.deleteCourse(Long.parseLong(id));
+    }
+
+    // @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @RequestMapping(value="/api/course/get/{id}", method = RequestMethod.GET)
+    public @ResponseBody Set<Course> getCourse (
+            @PathVariable String id,
+            Principal principal) {
+        return courseService.getByTeacherId(Long.parseLong(id));
+    }
+
+    // @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @RequestMapping(value="/api/course/get2/{id}", method = RequestMethod.GET)
+    public @ResponseBody Set<Course> getCourse2 (
+            @PathVariable String id,
+            Principal principal) {
+        return courseService.getByStudentId(Long.parseLong(id));
     }
 }
