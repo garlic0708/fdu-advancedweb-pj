@@ -7,24 +7,28 @@ import application.repository.TeacherRepository;
 import application.repository.UserRepository;
 import application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private final UserRepository userRepository;
+    private final CourseRepository courseRepository;
+    private final StudentRepository studentRepository;
+    private final TeacherRepository teacherRepository;
+
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private CourseRepository courseRepository;
-    @Autowired
-    private StudentRepository studentRepository;
-    @Autowired
-    private TeacherRepository teacherRepository;
+    public UserServiceImpl(UserRepository userRepository, CourseRepository courseRepository, StudentRepository studentRepository, TeacherRepository teacherRepository) {
+        this.userRepository = userRepository;
+        this.courseRepository = courseRepository;
+        this.studentRepository = studentRepository;
+        this.teacherRepository = teacherRepository;
+    }
 
     @Override
     public User addUser(String name, String email, String password, Role role) {
@@ -36,12 +40,8 @@ public class UserServiceImpl implements UserService {
         user.setName(name);
         user.setEmail(email);
         user.setRole(role);
-        user.setPasswordHash(getPasswordHash(password));
+        user.setPasswordHash(new BCryptPasswordEncoder().encode(password));
         userRepository.save(user);
-//        if (role == Role.TEACHER)
-//            teacherRepository.save(user);
-//        else
-//            studentRepository
         return user;
     }
 
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getByEmail(String email) {
+    public Optional<User> getByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
@@ -116,35 +116,5 @@ public class UserServiceImpl implements UserService {
     public Set<Student> getStudentsByCourseId(long courseId) {
         Course course = courseRepository.findById(courseId);
         return course.getStudents();
-    }
-
-    /**
-     * 生成32位md5码
-     * @param password
-     * @return
-     */
-    private String getPasswordHash(String password) {
-        try {
-            // 得到一个信息摘要器
-            MessageDigest digest = MessageDigest.getInstance("md5");
-            byte[] result = digest.digest(password.getBytes());
-            StringBuilder buffer = new StringBuilder();
-            // 把每一个byte 做一个与运算 0xff;
-            for (byte b : result) {
-                // 与运算
-                int number = b & 0xff;// 加盐
-                String str = Integer.toHexString(number);
-                if (str.length() == 1) {
-                    buffer.append("0");
-                }
-                buffer.append(str);
-            }
-
-            // 标准的md5加密后的结果
-            return buffer.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return "";
-        }
     }
 }

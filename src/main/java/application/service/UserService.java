@@ -5,7 +5,7 @@ import application.entity.Student;
 import application.entity.Teacher;
 import application.entity.User;
 
-import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public interface UserService {
@@ -16,7 +16,7 @@ public interface UserService {
 
     User getByName(String name);
 
-    User getByEmail(String email);
+    Optional<User> getByEmail(String email);
 
     Teacher getTeacherById(long id);
 

@@ -1,12 +1,19 @@
 export const mockData = {
-  'GET /api/node/attachments/:id': [
-    {type: 'multipleChoice', description: 'Multiple Choice 1',},
-    {type: 'multipleChoice', description: 'Multiple Choice 2',},
-    {type: 'shortAnswer', description: 'Short Answer 1',},
-    {type: 'courseWare', description: 'Course Ware 1',},
-    {type: 'resource', description: 'Resource 1',},
-    {type: 'resource', description: 'Resource 2',},
-  ],
+  'GET /api/node/attachments/:id': {
+    'questions': [
+      {id: 1, type: 'multipleChoice', description: 'Multiple Choice 1',},
+      {id: 2, type: 'multipleChoice', description: 'Multiple Choice 2',},
+      {id: 3, type: 'shortAnswer', description: 'Short Answer 1',},
+    ],
+    'courseWares': [
+      {id: 4, description: 'CW 1',},
+      {id: 5, description: 'CW 2',},
+    ],
+    'resources': [
+      {id: 6, type: 'file', description: 'File 1',},
+      {id: 7, type: 'url', description: 'URL 1',},
+    ],
+  },
 
   'GET /api/mindmaps/list/:courseid': [
     {id: 0, name: '...'},

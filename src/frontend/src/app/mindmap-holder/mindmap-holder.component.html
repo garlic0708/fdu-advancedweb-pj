@@ -1,7 +1,35 @@
 <app-mindmap-body (manipulation)="mindmapEvent($event)"></app-mindmap-body>
-<mat-chip-list [selectable]="false">
-  <mat-chip *ngFor="let attachment of attachments" [selected]="true"
-            [color]="availableColors[attachment.type]">
-    {{attachment.description}}
-  </mat-chip>
-</mat-chip-list>
+<mat-list>
+  <mat-divider></mat-divider>
+  <ng-container *ngIf="attachments$ | async as attachments; else loading">
+    <mat-list-item>
+      <mat-chip-list [selectable]="false" id="questions">
+        <mat-chip *ngFor="let question of attachments.questions" [selected]="true">
+          {{question.description}}
+        </mat-chip>
+      </mat-chip-list>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+      <mat-chip-list [selectable]="false" id="courseWares">
+        <mat-chip *ngFor="let courseWare of attachments.courseWares" [selected]="true">
+          {{courseWare.description}}
+        </mat-chip>
+      </mat-chip-list>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+      <mat-chip-list [selectable]="false" id="resources">
+        <mat-chip *ngFor="let resource of attachments.resources" [selected]="true">
+          {{resource.description}}
+        </mat-chip>
+      </mat-chip-list>
+    </mat-list-item>
+  </ng-container>
+
+  <ng-template #loading>
+    <mat-list-item id="spinner-container">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </mat-list-item>
+  </ng-template>
+</mat-list>
