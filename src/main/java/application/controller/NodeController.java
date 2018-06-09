@@ -22,7 +22,8 @@ public class NodeController {
     public @ResponseBody List<Node> getAllNodesByMindMapId(
             @PathVariable String mindMapId,
             Principal principal) {
-//        CurrentUser user = ((CurrentUser) principal);
+//        CurrentUser user = ((CurrentUser) principal); //权限测试
+
 
         return nodeService.getAll(Long.parseLong(mindMapId));
 //
