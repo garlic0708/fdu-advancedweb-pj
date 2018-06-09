@@ -47,3 +47,5 @@
     }
 ]
 ```
+
+###/api/mindmap/add/{id}

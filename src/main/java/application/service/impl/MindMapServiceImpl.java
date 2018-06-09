@@ -66,12 +66,12 @@ public class MindMapServiceImpl implements MindMapService {
     }
 
     @Override
-    public void addMindMap(long courseId, String name) {
+    public MindMap addMindMap(long courseId, String name) {
         Course course = courseRepository.findById(courseId);
         MindMap mindMap = new MindMap();
         mindMap.setName(name);
-        course.addMap(mindMap);
-        courseRepository.save(course);
+        mindMap.setCourse(course);
+        return mindMapRepository.save(mindMap);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class MindMapServiceImpl implements MindMapService {
     }
 
     @Override
-    public void updateMindMap(MindMap mindMap) {
-        mindMapRepository.save(mindMap);
+    public MindMap updateMindMap(MindMap mindMap) {
+        return mindMapRepository.save(mindMap);
     }
 }

@@ -20,9 +20,9 @@ public interface MindMapService {
 
     Set<MindMap> getByTeacherId(long teacherId);
 
-    void addMindMap(long courseId, String name);
+    MindMap addMindMap(long courseId, String name);
 
     void deleteMindMap(long id);
 
-    void updateMindMap(MindMap mindMap);
+    MindMap updateMindMap(MindMap mindMap);
 }
