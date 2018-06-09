@@ -17,7 +17,7 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { SidenavComponent } from './sidenav/sidenav.component';
 
-
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -31,10 +31,11 @@ import { SidenavComponent } from './sidenav/sidenav.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    NoopAnimationsModule,
+    // NoopAnimationsModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [
     environment.production ? [] : {
@@ -42,6 +43,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
       useClass: MockProviderService,
       multi: true,
     },
+
   ],
   bootstrap: [AppComponent]
 })
