@@ -104,4 +104,11 @@ public class CourseServiceTest {
         Course course = courseService.getByMindMapId(mindMap.getId());
         assertEquals(apue.getId(), course.getId());
     }
+
+    @Test
+    public void testAdd2() {
+        Course course = courseService.addCourse(129, "ics");
+        Course test = courseService.getByName("ics");
+        assertEquals(course.getId(), test.getId());
+    }
 }

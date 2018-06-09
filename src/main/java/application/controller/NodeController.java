@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.security.Principal;
 import java.util.List;
 
-@Controller
+@Controller()
 public class NodeController {
 
     // todo example of getting user
-    @RequestMapping(value = "/...")
+    @RequestMapping("/kkk")
     public String test(Principal principal) {
         long id = ((CurrentUser) principal).getId();
         return null;

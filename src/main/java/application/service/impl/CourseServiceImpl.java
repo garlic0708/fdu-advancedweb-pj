@@ -57,12 +57,12 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void addCourse(long teacherId, String courseName) {
+    public Course addCourse(long teacherId, String courseName) {
         Teacher teacher = (Teacher) userRepository.findById(teacherId);
         Course course = new Course();
         course.setName(courseName);
-        teacher.addCourse(course);
-        userRepository.save(teacher);
+        course.setTeacher(teacher);
+        return courseRepository.save(course);
     }
 
     @Override

@@ -19,7 +19,7 @@ public interface CourseService {
 
     Course getByMindMapId(long mindMapId);
 
-    void addCourse(long teacherId, String courseName);
+    Course addCourse(long teacherId, String courseName);
 
     void selectCourse(long studentId, long courseId);
 
