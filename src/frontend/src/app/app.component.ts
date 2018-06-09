@@ -11,4 +11,8 @@ export class AppComponent {
   log(e): void {
     console.log(e)
   }
+
+  test() {
+
+  }
 }

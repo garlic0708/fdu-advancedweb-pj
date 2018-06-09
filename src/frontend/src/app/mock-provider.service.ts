@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from "@angular/common/http";
 import { Observable } from "rxjs/index";
 import { of } from 'rxjs';
+import { delay, mapTo } from "rxjs/internal/operators";
 import { mockData } from "../assets/mock-data";
 import * as _ from 'lodash';
 
@@ -23,7 +24,9 @@ export class MockProviderService implements HttpInterceptor {
     if (mockDatum && mockDatum !== true)
       response['body'] = mockDatum;
     return mockDatum ?
-      of(new HttpResponse(response)) : next.handle(req);
+      // of(new HttpResponse(response))
+      of(null).pipe(mapTo(new HttpResponse(response)), delay(2000))
+      : next.handle(req);
   }
 
   constructor() {
