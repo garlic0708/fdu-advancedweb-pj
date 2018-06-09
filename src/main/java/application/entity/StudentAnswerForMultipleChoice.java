@@ -14,7 +14,7 @@ public class StudentAnswerForMultipleChoice {
     @Id
     @GeneratedValue
     private Long id;
-    private Set<String> answers;
+    private String answer;
     @StartNode
     private Student student;
     @EndNode
@@ -28,15 +28,12 @@ public class StudentAnswerForMultipleChoice {
         this.id = id;
     }
 
-    public Set<String> getAnswers() {
-        return answers;
+    public String getAnswer() {
+        return answer;
     }
 
-    public void addAnswer(String answer) { //a,b,c,d...
-        if (answers == null) {
-            answers = new HashSet<>();
-        }
-        answers.add(answer);
+    public void setAnswer(String answer) { //a,b,c,d...
+        this.answer = answer;
     }
 
     public Student getStudent() {

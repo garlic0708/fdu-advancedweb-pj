@@ -3,6 +3,7 @@ package application.controller;
 import application.controller.result.JsonResult;
 import application.entity.Course;
 import application.entity.CurrentUser;
+import application.entity.Role;
 import application.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,12 +39,15 @@ public class CourseController {
         courseService.deleteCourse(Long.parseLong(id));
     }
 
-    // @PreAuthorize("hasAnyAuthority('TEACHER')")
     @RequestMapping(value="/api/course/get/{id}", method = RequestMethod.GET)
     public @ResponseBody Set<Course> getCourse (
             @PathVariable String id,
             Principal principal) {
-        return courseService.getByTeacherId(Long.parseLong(id));
+        CurrentUser user = (CurrentUser) principal;
+        if (user.getRole() == Role.TEACHER)
+            return courseService.getByTeacherId(Long.parseLong(id));
+        else
+            return courseService.getByStudentId(Long.parseLong(id));
     }
 
     // @PreAuthorize("hasAnyAuthority('TEACHER')")

@@ -45,25 +45,25 @@ public class ShortAnswerServiceImpl implements ShortAnswerService {
     }
 
     @Override
-    public void addShortAnswer(long nodeId, String content, String correctAnswer) {
+    public ShortAnswerQuestion addShortAnswer(long nodeId, String content, String correctAnswer) {
         ShortAnswerQuestion question = new ShortAnswerQuestion();
         question.setContent(content);
         question.setCorrectAnswer(correctAnswer);
 
         Node node = nodeRepository.findById(nodeId);
-        node.addQuestion(question);
-        nodeRepository.save(node);
+        question.setFatherNode(node);
+        return shortAnswerRepository.save(question);
     }
 
     @Override
-    public void addStudentAnswer(long questionId, long studentId, String answer) {
+    public StudentAnswerForShortAnswer addStudentAnswer(long questionId, long studentId, String answer) {
         ShortAnswerQuestion question = shortAnswerRepository.findById(questionId);
         Student student = studentRepository.findById(studentId);
         StudentAnswerForShortAnswer answerForShortAnswer = new StudentAnswerForShortAnswer();
         answerForShortAnswer.setAnswer(answer);
         answerForShortAnswer.setStudent(student);
         answerForShortAnswer.setQuestion(question);
-        answerForShortAnswerRepository.save(answerForShortAnswer);
+        return answerForShortAnswerRepository.save(answerForShortAnswer);
     }
 
     @Override
@@ -82,7 +82,11 @@ public class ShortAnswerServiceImpl implements ShortAnswerService {
     }
 
     @Override
-    public void update(ShortAnswerQuestion question) {
-        shortAnswerRepository.save(question);
+    public ShortAnswerQuestion update(ShortAnswerQuestion question) {
+        ShortAnswerQuestion question1 = shortAnswerRepository.findById(question.getId().longValue());
+        question1.setContent(question.getContent());
+        question1.setCorrectAnswer(question.getCorrectAnswer());
+        question1.setStudentAnswerForShortAnswers(null);
+        return shortAnswerRepository.save(question1);
     }
 }

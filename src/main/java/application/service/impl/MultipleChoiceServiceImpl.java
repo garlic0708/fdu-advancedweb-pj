@@ -1,17 +1,12 @@
 package application.service.impl;
 
-import application.entity.MultipleChoiceQuestion;
-import application.entity.Node;
-import application.entity.Student;
-import application.entity.StudentAnswerForMultipleChoice;
+import application.entity.*;
 import application.repository.*;
 import application.service.MultipleChoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Creator: DreamBoy
@@ -48,27 +43,34 @@ public class MultipleChoiceServiceImpl implements MultipleChoiceService {
     }
 
     @Override
-    public void addMutipleChoice(long nodeId, String content, Map<String, String> answers, String correctAnswer) {
+    public MultipleChoiceQuestion addMutipleChoice(long nodeId, AddMCQ mcq) {
+        Map<String, String> answers = new HashMap<>();
+        List<String> choices = mcq.getChoices();
+
+        char ch = 'A';
+        for (int i = 0; i < choices.size();i++) {
+            answers.put(String.valueOf((ch + i)), choices.get(i));
+        }
+
         MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion();
-        multipleChoiceQuestion.setContent(content);
-        multipleChoiceQuestion.addCorrectAnswer(correctAnswer);
+        multipleChoiceQuestion.setContent(mcq.getContent());
+        multipleChoiceQuestion.addCorrectAnswer(String.valueOf((ch + mcq.getCorrect())));
         multipleChoiceQuestion.setAnswers(answers);
 
         Node node = nodeRepository.findById(nodeId);
-        node.addQuestion(multipleChoiceQuestion);
-        nodeRepository.save(node);
-
+        multipleChoiceQuestion.setFatherNode(node);
+        return choiceRepository.save(multipleChoiceQuestion);
     }
 
     @Override
-    public void addStudentAnswer(long questionId, long studentId, String answer) {
+    public StudentAnswerForMultipleChoice addStudentAnswer(long questionId, long studentId, String answer) {
         MultipleChoiceQuestion question = choiceRepository.findById(questionId);
         Student student = studentRepository.findById(studentId);
         StudentAnswerForMultipleChoice answerForMultipleChoice = new StudentAnswerForMultipleChoice();
-        answerForMultipleChoice.addAnswer(answer);
+        answerForMultipleChoice.setAnswer(answer);
         answerForMultipleChoice.setQuestion(question);
         answerForMultipleChoice.setStudent(student);
-        answerForMultipleChoiceRepository.save(answerForMultipleChoice);
+        return answerForMultipleChoiceRepository.save(answerForMultipleChoice);
     }
 
     @Override
@@ -87,7 +89,23 @@ public class MultipleChoiceServiceImpl implements MultipleChoiceService {
     }
 
     @Override
-    public void update(MultipleChoiceQuestion question) {
-        choiceRepository.save(question);
+    public MultipleChoiceQuestion update(AddMCQ mcq) {
+        Map<String, String> answers = new HashMap<>();
+        List<String> choices = mcq.getChoices();
+
+        char ch = 'A';
+        for (int i = 0; i < choices.size();i++) {
+            answers.put(String.valueOf((ch + i)), choices.get(i));
+        }
+
+        MultipleChoiceQuestion multipleChoiceQuestion = choiceRepository.findById(mcq.getId());
+        multipleChoiceQuestion.setContent(mcq.getContent());
+        multipleChoiceQuestion.addCorrectAnswer(String.valueOf((ch + mcq.getCorrect())));
+        multipleChoiceQuestion.setAnswers(answers);
+
+        // 可能关系没有删除干净
+        multipleChoiceQuestion.setStudentAnswerForMultipleChoices(null);
+
+        return choiceRepository.save(multipleChoiceQuestion);
     }
 }

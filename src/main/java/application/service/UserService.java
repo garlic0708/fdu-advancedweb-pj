@@ -36,5 +36,7 @@ public interface UserService {
 
     Teacher getTeacherByCourseId(long courseId);
 
+    Teacher getTeacherByNodeId(long nodeId);
+
     Set<Student> getStudentsByCourseId(long courseId);
 }

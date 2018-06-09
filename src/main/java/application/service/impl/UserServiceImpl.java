@@ -108,6 +108,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Teacher getTeacherByNodeId(long nodeId) {
+        return teacherRepository.findByNodeId(nodeId);
+    }
+
+    @Override
     public Set<Student> getStudentsByCourseId(long courseId) {
         Course course = courseRepository.findById(courseId);
         return course.getStudents();

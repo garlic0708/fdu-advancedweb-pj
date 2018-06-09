@@ -46,14 +46,14 @@ public class MindMapController {
     public @ResponseBody MindMap get(
             @PathVariable String id,
             Principal principal) {
-        CurrentUser user = (CurrentUser) principal;
-        if (user.getRole() == Role.TEACHER) {
-            Teacher teacher = (Teacher) user.getUser();
-            Set<MindMap> maps = mindMapService.getByTeacherId(teacher.getId());
-        }
-        else {
-            Student student = (Student) user.getUser();
-        }
+//        CurrentUser user = (CurrentUser) principal;
+//        if (user.getRole() == Role.TEACHER) {
+//            Teacher teacher = (Teacher) user.getUser();
+//            Set<MindMap> maps = mindMapService.getByTeacherId(teacher.getId());
+//        }
+//        else {
+//            Student student = (Student) user.getUser();
+//        }
         return mindMapService.getById(Long.parseLong(id));
     }
 

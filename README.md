@@ -48,4 +48,111 @@
 ]
 ```
 
-###/api/mindmap/add/{id}
+###/api/node/getAll/{mindMapId}
+
+```json
+[
+    {
+        "id": 123,
+        "name": "rootNode",
+        "childNodes": [
+            {
+                "id": 158,
+                "name": "child1_2",
+                "childNodes": [],
+                "homeWork": [],
+                "coursewares": [],
+                "resources": []
+            },
+            {
+                "id": 133,
+                "name": "child1_1",
+                "childNodes": [
+                    {
+                        "id": 138,
+                        "name": "child2_1",
+                        "childNodes": [
+                            {
+                                "id": 156,
+                                "name": "child3_1",
+                                "childNodes": [],
+                                "homeWork": [],
+                                "coursewares": [],
+                                "resources": []
+                            }
+                        ],
+                        "homeWork": [],
+                        "coursewares": [],
+                        "resources": []
+                    }
+                ],
+                "homeWork": [],
+                "coursewares": [],
+                "resources": []
+            }
+        ],
+        "homeWork": [],
+        "coursewares": [],
+        "resources": []
+    },
+    {
+        "id": 133,
+        "name": "child1_1",
+        "childNodes": [
+            {
+                "id": 138,
+                "name": "child2_1",
+                "childNodes": [
+                    {
+                        "id": 156,
+                        "name": "child3_1",
+                        "childNodes": [],
+                        "homeWork": [],
+                        "coursewares": [],
+                        "resources": []
+                    }
+                ],
+                "homeWork": [],
+                "coursewares": [],
+                "resources": []
+            }
+        ],
+        "homeWork": [],
+        "coursewares": [],
+        "resources": []
+    },
+    {
+        "id": 138,
+        "name": "child2_1",
+        "childNodes": [
+            {
+                "id": 156,
+                "name": "child3_1",
+                "childNodes": [],
+                "homeWork": [],
+                "coursewares": [],
+                "resources": []
+            }
+        ],
+        "homeWork": [],
+        "coursewares": [],
+        "resources": []
+    },
+    {
+        "id": 156,
+        "name": "child3_1",
+        "childNodes": [],
+        "homeWork": [],
+        "coursewares": [],
+        "resources": []
+    },
+    {
+        "id": 158,
+        "name": "child1_2",
+        "childNodes": [],
+        "homeWork": [],
+        "coursewares": [],
+        "resources": []
+    }
+]
+```
