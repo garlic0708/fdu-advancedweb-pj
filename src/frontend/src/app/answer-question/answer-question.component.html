@@ -1,0 +1,20 @@
+<form (ngSubmit)="onSubmit()">
+  <div *ngIf=" question.type=='multipleChoice'">
+    <label>问题： {{content}}</label>
+    <div *ngFor="let x of answerKeys">
+      &nbsp;&nbsp;
+      <label type="radio" name="choose"><input style="display: inline" type="radio" name="correct" [value]="x">
+        {{x}}. {{question.answers[x]}}</label>
+    </div>
+  </div>
+
+  <div *ngIf="question.type=='shortAnswer'">
+    <label>问题： {{content}}</label>
+    &nbsp;&nbsp; <br>
+    <textarea placeholder="请输入问题答案："></textarea>
+  </div>
+
+  <button type="submit"
+          [disabled]="" class="btn btn-success">提交答案
+  </button> &nbsp;
+</form>
