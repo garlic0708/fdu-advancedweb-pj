@@ -1,0 +1,41 @@
+<form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+  <label>
+    <h3>选择问题类型：</h3>
+    <select class="form-control" [formControl]="questionType">
+      <option selected class="center-block" value="choice">选择题</option>
+      <option class="center-block" value="answer">问答题</option>
+    </select>
+  </label>
+
+  <br>
+
+  <div *ngIf="questionType.value=='choice'" formArrayName="choices" class="well well-lg">
+    <label><input type="text" class="form-control" placeholder="请输入问题："></label>
+    <br>
+    <div *ngFor="let content of choices.controls; let i=index" [formGroupName]="i">
+      <h5 style="display: inline">选项 {{i + 1}} : </h5>
+      <input style="display: inline" type="text" placeholder="输入选项内容："> &nbsp;
+
+      <label><input style="display: inline" type="radio" name="correct" [value]="i"
+      [formControl]="correct" (change)="test()"></label> &nbsp;
+
+      <button (click)="deleteChoice(i)" type="button" [disabled]="choices.length <= 2">Delete</button>
+      <!-- End of the repeated address template -->
+    </div>
+    <br>
+    <button (click)="addChoices()" type="button">Add a Choice</button>
+  </div>
+
+
+  <div *ngIf="questionType.value=='answer'">
+    <label><input type="text" class="form-control" placeholder="请输入问题："></label>
+    <br>
+    <textarea placeholder="请输入问题正确答案："></textarea>
+  </div>
+
+  <br>
+  <button type="submit"
+          [disabled]="" class="btn btn-success">提交问题
+  </button> &nbsp;
+</form>
+
