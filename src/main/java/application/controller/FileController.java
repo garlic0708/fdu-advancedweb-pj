@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.controller.result.JsonResult;
 import application.entity.CurrentUser;
 import application.entity.Role;
 import application.entity.User;
@@ -7,6 +8,7 @@ import application.service.CoursewareService;
 import application.service.UserService;
 import ch.qos.logback.core.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,8 +33,8 @@ public class FileController {
     private CoursewareService coursewareService;
 
     //处理文件上传
-    @RequestMapping(value="/uploadCourseware", method = RequestMethod.POST)
-    public @ResponseBody String uploadImg(
+    @RequestMapping(value="/api/uploadCourseware", method = RequestMethod.POST)
+    public @ResponseBody JsonResult jsonResult(
             @RequestParam("courseware") MultipartFile file,
             @RequestParam("nodeId") long nodeId,
             Principal principal,
@@ -49,13 +51,13 @@ public class FileController {
                 coursewareService.addCourseware(nodeId, fileName, filePath);
             } catch (Exception e) {
                 //json 格式可以用String返回吗？
-                return "upload courseware failed";
+                return new JsonResult("upload courseware", "failed");
             }
             //返回json
-            return "upload courseware success";
+            return new JsonResult("upload courseware", "success");
         }
         else
-            return "upload courseware reject";
+            return new JsonResult("upload courseware", "reject");
 
     }
 }

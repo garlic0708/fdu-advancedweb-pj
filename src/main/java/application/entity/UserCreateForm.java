@@ -8,6 +8,14 @@ import javax.validation.constraints.NotNull;
  * Date: 2018/6/5.
  */
 public class UserCreateForm {
+    public UserCreateForm(@NotEmpty String name, @NotEmpty String email, @NotEmpty String password, @NotEmpty String passwordRepeated, @NotNull Role role) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.passwordRepeated = passwordRepeated;
+        this.role = role;
+    }
+
     @NotEmpty
     private String name = "";
     @NotEmpty
@@ -64,4 +72,11 @@ public class UserCreateForm {
                 '}';
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

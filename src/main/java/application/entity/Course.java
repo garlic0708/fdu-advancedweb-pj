@@ -1,11 +1,15 @@
 package application.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
+import javax.validation.constraints.Null;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.neo4j.ogm.annotation.Relationship.INCOMING;
@@ -25,9 +29,11 @@ public class Course {
     private Set<MindMap> maps;
 
     @Relationship(type = "Open Course", direction = INCOMING)
+    @JsonIgnore
     private Teacher teacher;
 
     @Relationship(type = "Select Course" , direction = INCOMING)
+    @JsonIgnore
     private Set<Student> students;
 
     public Course() {

@@ -1,21 +1,19 @@
 package application.service;
 
-import application.entity.Role;
-import application.entity.Student;
-import application.entity.Teacher;
-import application.entity.User;
+import application.entity.*;
 
+import java.util.Optional;
 import java.util.Set;
 
 public interface UserService {
 
-    User addUser(String name, String email, String password, Role role);
+    User addUser(UserCreateForm form);
 
     User getById(long id);
 
     User getByName(String name);
 
-    User getByEmail(String email);
+    Optional<User> getByEmail(String email);
 
     Teacher getTeacherById(long id);
 
@@ -34,6 +32,8 @@ public interface UserService {
     Set<User> getAll();
 
     Teacher getTeacherByCourseId(long courseId);
+
+    Teacher getTeacherByNodeId(long nodeId);
 
     Set<Student> getStudentsByCourseId(long courseId);
 }

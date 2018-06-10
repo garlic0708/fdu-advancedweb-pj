@@ -1,4 +1,22 @@
-export interface Attachment {
+export interface Question {
+  id: number,
   type: string,
   description: string,
+}
+
+export interface CourseWare {
+  id: number,
+  description: string,
+}
+
+export interface Resource {
+  id: number,
+  type: string,
+  description: string,
+}
+
+export interface Attachments {
+  questions: Question[],
+  courseWares: CourseWare[],
+  resources: Resource[],
 }

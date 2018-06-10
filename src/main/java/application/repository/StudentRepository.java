@@ -1,6 +1,7 @@
 package application.repository;
 
 import application.entity.Student;
+import org.springframework.data.neo4j.annotation.Depth;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -9,5 +10,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface StudentRepository extends CrudRepository<Student, Long> {
     Student findByName(String name);
+
     Student findById(long id);
 }

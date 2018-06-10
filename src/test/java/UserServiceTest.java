@@ -1,8 +1,5 @@
 import application.SpringBootWebApplication;
-import application.entity.Role;
-import application.entity.Student;
-import application.entity.Teacher;
-import application.entity.User;
+import application.entity.*;
 import application.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,9 +23,9 @@ public class UserServiceTest {
 
     @Test
     public void testAdd() {
-        userService.addUser("t1","1", "1", Role.TEACHER);
-        userService.addUser("s1", "1", "1", Role.STUDENT);
-        userService.addUser("s2", "2", "2", Role.STUDENT);
+//        userService.addUser("t5","1", "1", Role.TEACHER);
+//        userService.addUser("s6", "1", "1", Role.STUDENT);
+        userService.addUser(new UserCreateForm("s6", "s6@test.com", "2", "2", Role.TEACHER));
     }
 
     @Test

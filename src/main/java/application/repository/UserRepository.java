@@ -3,6 +3,7 @@ package application.repository;
 import application.entity.User;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Optional;
 import java.util.Set;
 
 public interface UserRepository extends CrudRepository<User, Long> {
@@ -10,7 +11,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     User findById(long id);
 
-    User findByEmail(String email);
+    Optional<User> findByEmail(String email);
 
     void deleteById(long id);
 }

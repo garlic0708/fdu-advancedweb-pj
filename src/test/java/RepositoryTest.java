@@ -183,7 +183,7 @@ public class RepositoryTest {
         ShortAnswerQuestion shortAnswerQ = shortAnswerRepository.findById(164);
 
         StudentAnswerForMultipleChoice choice = new StudentAnswerForMultipleChoice();
-        choice.addAnswer("c");
+        choice.setAnswer("c");
         StudentAnswerForShortAnswer shortAnswer = new StudentAnswerForShortAnswer();
         shortAnswer.setAnswer("0");
 

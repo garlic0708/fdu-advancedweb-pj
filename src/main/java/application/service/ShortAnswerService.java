@@ -17,9 +17,9 @@ public interface ShortAnswerService {
 
     Set<ShortAnswerQuestion> getByMindMapId(long mindMapId);
 
-    void addShortAnswer(long nodeId, String content, String correctAnswer);
+    ShortAnswerQuestion addShortAnswer(long nodeId, String content, String correctAnswer);
 
-    void addStudentAnswer(long questionId, long studentId, String answer);
+    StudentAnswerForShortAnswer addStudentAnswer(long questionId, long studentId, String answer);
 
     Set<StudentAnswerForShortAnswer> getAnswersByQuestionId(long questionId);
 
@@ -27,5 +27,5 @@ public interface ShortAnswerService {
 
     void deleteShortAnswer(long id);
 
-    void update(ShortAnswerQuestion question);
+    ShortAnswerQuestion update(ShortAnswerQuestion question);
 }
