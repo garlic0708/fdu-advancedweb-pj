@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.entity.CurrentUser;
 import application.entity.User;
 import application.entity.UserCreateForm;
 import application.service.UserService;
@@ -9,18 +10,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
+import java.util.Currency;
 
 @Controller
 public class UserController {
@@ -38,6 +39,15 @@ public class UserController {
     @InitBinder("form")
     public void initBinder(WebDataBinder binder) {
         binder.addValidators(userCreateFormValidator);
+    }
+
+    @RequestMapping(value = "/afterLogin", method = RequestMethod.POST)
+    public ResponseEntity afterLogin(@RequestParam(required = false) String error,
+                                     @AuthenticationPrincipal CurrentUser user) {
+        if (error == null)
+            return ResponseEntity.ok(user.getUser());
+        else
+            return ResponseEntity.badRequest().build();
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)

@@ -49,7 +49,6 @@ export class RegisterComponent implements OnInit {
   }
 
   updateConfirmPasswordControl() {
-    var save = this.confirmPassword;
     this.confirmPasswordPattern = "^" + this.password + "$";
     this.confirmPasswordFormControl = new FormControl('', [
       Validators.required,

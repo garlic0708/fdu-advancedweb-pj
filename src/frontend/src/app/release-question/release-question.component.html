@@ -1,7 +1,7 @@
 <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+  <h3>选择问题类型：</h3>
   <label>
-    <h3>选择问题类型：</h3>
-    <select class="form-control" [formControl]="questionType">
+    <select class="form-control" [formControlName]="'questionType'" (change)="test()">
       <option selected class="center-block" value="choice">选择题</option>
       <option class="center-block" value="answer">问答题</option>
     </select>
@@ -17,7 +17,7 @@
       <input style="display: inline" type="text" placeholder="输入选项内容："> &nbsp;
 
       <label><input style="display: inline" type="radio" name="correct" [value]="i"
-      [formControl]="correct" (change)="test()"></label> &nbsp;
+      [formControl]="correct" (change)="test()" [checked]="i === correct.value"></label> &nbsp;
 
       <button (click)="deleteChoice(i)" type="button" [disabled]="choices.length <= 2">Delete</button>
       <!-- End of the repeated address template -->

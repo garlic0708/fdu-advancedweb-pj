@@ -9,7 +9,7 @@ import * as _ from 'lodash';
 @Injectable()
 export class MockProviderService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log(req.url);
+    console.log(req);
     const key = `${req.method} ${req.url}`;
     const mockDatum = mockData[
       Object.keys(mockData).find(k => {
