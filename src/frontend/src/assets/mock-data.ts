@@ -15,22 +15,32 @@ export const mockData = {
     ],
   },
 
-  'GET /api/mindmaps/list/:courseid': [
-    {id: 0, name: '...'},
-  ],
+    'GET /api/mindmaps/list/:courseid': [
+      {id: 0, name: '...'},
+    ],
 
-  'GET /api/question/:qid': {
-    type: 'multipleChoice',
-    content: '1 + 1 = ?',
-    answers: {
-      a: "1",
-      b: '2',
-      c: '3',
+    'GET /api/question/:qid':
+      {
+        type: 'multipleChoice',
+        content: '1 + 1 = ?',
+        answers: {
+          a: "1",
+          b: '2',
+          c: '3',
+        }
+      },
+    // {
+    //   type: 'shortAnswer',
+    //   content: 'What is the result of 1 + 1?',
+    // }
+
+    'GET /api/questionResult/:qid': {
+      result: {
+        a: "23",
+        b: "12",
+        c: "7",
+        d: "17",
+      }
     }
-  },
-
-  // {
-  //   type: 'shortAnswer',
-  //   content: 'What is the result of 1 + 1?',
-  // }
-};
+  }
+;

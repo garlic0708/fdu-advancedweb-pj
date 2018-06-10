@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-
 import {AppComponent} from './app.component';
 import {MindmapBodyComponent} from './mindmap-body/mindmap-body.component';
 import {LoginComponent} from './login/login.component';
@@ -14,22 +13,23 @@ import { MindmapHolderComponent } from './mindmap-holder/mindmap-holder.componen
 import { MaterialModule } from "./material/material.module";
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 
-import { SidenavComponent } from './sidenav/sidenav.component';
-
-import {HttpClientModule} from "@angular/common/http";
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ReleaseQuestionComponent} from './release-question/release-question.component';
+import {AnswerQuestionComponent} from './answer-question/answer-question.component';
+import {PieChartComponent} from "./pie-chart/pie-chart.component";
 
 @NgModule({
   declarations: [
     AppComponent,
+    PieChartComponent,
     MindmapBodyComponent,
     LoginComponent,
     RegisterComponent,
     MindmapHolderComponent,
+    ReleaseQuestionComponent,
+    AnswerQuestionComponent,
     SidenavComponent
   ],
   imports: [
@@ -51,7 +51,6 @@ import {HttpClientModule} from "@angular/common/http";
       useClass: MockProviderService,
       multi: true,
     },
-
   ],
   bootstrap: [AppComponent]
 })

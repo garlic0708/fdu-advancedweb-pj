@@ -7,6 +7,7 @@ import {MindmapEvent} from "./mindmap-event";
   templateUrl: './mindmap-body.component.html',
   styleUrls: ['./mindmap-body.component.css']
 })
+
 export class MindmapBodyComponent implements OnInit, AfterViewInit {
 
   @ViewChild('container') container;
@@ -23,7 +24,7 @@ export class MindmapBodyComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.mapModel = init(this.container.nativeElement);
-    const events = ['nodeCreated', 'nodeRemoved', 'nodeAttrChanged', ];
+    const events = ['nodeCreated', 'nodeRemoved', 'nodeAttrChanged',];
     events.forEach(eventName => {
       this.mapModel.addEventListener(eventName, e => {
         this.manipulation.emit({
