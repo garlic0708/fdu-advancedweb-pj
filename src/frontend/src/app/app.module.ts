@@ -20,9 +20,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 
 import {ReleaseQuestionComponent} from './release-question/release-question.component';
-import {AnswerQuestionComponent} from './answer-question/answer-question.component';
 import {PieChartComponent} from "./pie-chart/pie-chart.component";
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { DeleteDialogComponent } from "./sidenav/sidenav.component";
+import { AnswerQuestionComponent } from "./answer-question/answer-question.component";
 
 import {HttpClientModule} from "@angular/common/http";
 
@@ -36,7 +37,9 @@ import {HttpClientModule} from "@angular/common/http";
     MindmapHolderComponent,
     ReleaseQuestionComponent,
     AnswerQuestionComponent,
-    SidenavComponent
+    SidenavComponent,
+    AnswerQuestionComponent,
+    DeleteDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,8 @@ import {HttpClientModule} from "@angular/common/http";
     },
 
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DeleteDialogComponent]
 })
 export class AppModule {
 }

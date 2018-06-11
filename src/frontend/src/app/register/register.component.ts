@@ -21,6 +21,7 @@ export class RegisterComponent implements OnInit {
   name: string;
   password: string;
   confirmPassword: string;
+  user: string;
 
   confirmPasswordPattern = "^$";
 
@@ -43,7 +44,13 @@ export class RegisterComponent implements OnInit {
 
   matcher = new MyErrorStateMatcher();
 
-  constructor() { }
+  constructor() {
+    this.email = "";
+    this.name = "";
+    this.password = "";
+    this.confirmPassword = "";
+    this.user = "";
+  }
 
   ngOnInit() {
   }
@@ -56,8 +63,21 @@ export class RegisterComponent implements OnInit {
     ]);
   }
 
+  valid() {
+    if (this.email.search("^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$") == -1) return true;
+    if (this.name.search("^[a-zA-Z0-9\u4e00-\u9fa5]{6,32}$") == -1) return true;
+    if (this.password.search("^[a-zA-Z0-9]{6,32}$") == -1) return true;
+    if (this.password != this.confirmPassword) return true;
+    if (this.user == "") return true;
+    return false;
+  }
+
   test233() {
-    alert(this.confirmPasswordPattern);
+    console.log(this.email);
+    console.log(this.name);
+    console.log(this.password);
+    console.log(this.confirmPassword);
+    console.log(this.user);
   }
 
 }

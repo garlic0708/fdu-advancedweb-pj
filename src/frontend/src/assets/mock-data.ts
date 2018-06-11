@@ -19,19 +19,62 @@ export const mockData = {
     {id: 0, name: '...'},
   ],
 
-  'GET /api/question/:qid':
-    {
-    type: 'multipleChoice',
-    content: '1 + 1 = ?',
-    answers: {
-      a: "1",
-      b: '2',
-      c: '3',
-    }
+  'GET /api/question/:qid': {
+//    type: 'multipleChoice',
+//    content: '1 + 1 = ?',
+//    answers: {
+//      a: "1",
+//      b: '2',
+//      c: '3',
+//    }
+
+     type: 'shortAnswer',
+     content: '1 + 1 = ?',
+     answers: '2'
   },
 
-  // {
-  //   type: 'shortAnswer',
-  //   content: 'What is the result of 1 + 1?',
-  // }
+  'GET /api/course/get/:id': [
+    {
+        "id": 122,
+        "name": "apue",
+        "maps": [
+            {
+                "id": 168,
+                "name": "map3",
+                "rootNode": null
+            },
+            {
+                "id": 169,
+                "name": "map2",
+                "rootNode": null
+            },
+            {
+                "id": 167,
+                "name": "map1",
+                "rootNode": null
+            }
+        ]
+    },
+    {
+        "id": 120,
+        "name": "ooad",
+        "maps": [
+            {
+                "id": 176,
+                "name": "mp4",
+                "rootNode": null
+            }
+        ]
+    },
+    {
+        "id": 125,
+        "name": "ics",
+        "maps": []
+    },
+    {
+        "id": 171,
+        "name": "sss",
+        "maps": []
+    }
+]
 };

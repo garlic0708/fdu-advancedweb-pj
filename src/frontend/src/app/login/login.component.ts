@@ -8,8 +8,12 @@ import {Component, OnInit} from '@angular/core';
 export class LoginComponent implements OnInit {
   email: string;
   password: string;
+  user: string;
 
   constructor() {
+    this.email = "";
+    this.password = "";
+    this.user = "";
   }
 
   ngOnInit() {
@@ -18,4 +22,14 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
   }
+
+  valid() {
+    if (this.email == "" || this.password == "" || this.user == "") return true;
+    else return false;
+  }
+
+  test233() {
+    console.log(this.user);
+  }
+
 }

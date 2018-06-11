@@ -16,7 +16,7 @@ export class PieChartComponent implements OnInit {
 
   @ViewChild('chartTarget') chartTarget: ElementRef;
 
-  chart: Highcharts.ChartObject;
+ chart: Highcharts.ChartObject;
 
   title = 'bv';
 

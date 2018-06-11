@@ -1,0 +1,7 @@
+<div mat-dialog-content>
+  <p>真的要删除吗？</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">取消</button>
+  <button mat-button [mat-dialog-close]="1" cdkFocusInitial>确认删除</button>
+</div>

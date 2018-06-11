@@ -1,20 +1,21 @@
 <form (ngSubmit)="onSubmit()">
   <div *ngIf=" question.type=='multipleChoice'">
     <label>问题： {{content}}</label>
-    <div *ngFor="let x of answerKeys">
+    <mat-radio-group>
       &nbsp;&nbsp;
-      <label type="radio" name="choose"><input style="display: inline" type="radio" name="correct" [value]="x">
-        {{x}}. {{question.answers[x]}}</label>
-    </div>
+        <mat-radio-button *ngFor="let x of answerKeys" [value]="x">{{x}}. {{question.answers[x]}}</mat-radio-button>
+    </mat-radio-group>
   </div>
 
   <div *ngIf="question.type=='shortAnswer'">
-    <label>问题： {{content}}</label>
-    &nbsp;&nbsp; <br>
-    <textarea placeholder="请输入问题答案："></textarea>
+      <label>问题： {{content}}</label>
+      <br>
+      <mat-form-field class="example-full-width">
+        <textarea matInput placeholder="请输入问题答案："></textarea>
+      </mat-form-field>
   </div>
+ &nbsp;
 
-  <button type="submit"
-          [disabled]="" class="btn btn-success">提交答案
-  </button> &nbsp;
+  <button mat-raised-button type="submit" [disabled]="" class="btn btn-success">提交</button>
+
 </form>
