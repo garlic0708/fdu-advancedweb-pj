@@ -20,7 +20,7 @@ public interface NodeService {
 
     Node getRootNodeByMindMapId(long mindMapId);
 
-    List<Node> getAll(long mindMapId);
+    Node getAll(long mindMapId);
 
     void addRootNode(long mindMapId, String nodeName);
 

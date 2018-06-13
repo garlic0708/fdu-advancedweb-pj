@@ -19,7 +19,7 @@ public class NodeController {
     private NodeService nodeService;
 
     @RequestMapping(value = "/api/node/getAll/{mindMapId}", method = RequestMethod.GET)
-    public @ResponseBody List<Node> getAllNodesByMindMapId(
+    public @ResponseBody Node getAllNodesByMindMapId(
             @PathVariable String mindMapId,
             Principal principal) {
 //        CurrentUser user = ((CurrentUser) principal); //权限测试

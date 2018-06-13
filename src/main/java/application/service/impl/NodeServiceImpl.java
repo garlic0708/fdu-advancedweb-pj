@@ -52,8 +52,8 @@ public class NodeServiceImpl implements NodeService {
     }
 
     @Override
-    public List<Node> getAll(long mindMapId) {
-        return nodeRepository.findByMindMapId(mindMapId);
+    public Node getAll(long mindMapId) {
+        return nodeRepository.findByMindMapId(mindMapId).get(0);
     }
 
     @Override
