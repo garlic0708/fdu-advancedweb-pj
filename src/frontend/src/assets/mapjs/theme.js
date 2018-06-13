@@ -1,11 +1,12 @@
 /*global module */
-module.exports = {};
-module.exports.default = {
+export const defaultColor = '#E0E0E0';
+export const level1Color = '#22AAE0';
+export default {
   'name': 'MindMup V1',
   'node': [{
     'name': 'default',
     'cornerRadius': 10.0,
-    'backgroundColor': '#E0E0E0',
+    'backgroundColor': defaultColor,
     'border': {
       'type': 'surround',
       'line': {
@@ -66,7 +67,7 @@ module.exports.default = {
       'border': {
         'type': 'surround',
         'line': {
-          'color': '#22AAE0',
+          'color': level1Color,
           'width': 3.0,
           'style': 'dotted'
         }

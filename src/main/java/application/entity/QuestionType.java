@@ -5,5 +5,5 @@ package application.entity;
  * Date: 2018/6/6.
  */
 public enum QuestionType {
-    MUTIPLECHOICE, SHORTANSWER
+    MULTIPLE_CHOICE, SHORT_ANSWER
 }

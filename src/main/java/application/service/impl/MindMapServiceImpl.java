@@ -1,18 +1,18 @@
 package application.service.impl;
 
-import application.entity.Course;
-import application.entity.MindMap;
-import application.entity.Node;
-import application.entity.Teacher;
+import application.entity.*;
 import application.repository.CourseRepository;
 import application.repository.MindMapRepository;
 import application.repository.NodeRepository;
 import application.repository.TeacherRepository;
 import application.service.MindMapService;
+import application.service.util.ListCacheUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -21,14 +21,19 @@ import java.util.Set;
  */
 @Service
 public class MindMapServiceImpl implements MindMapService {
+    private final MindMapRepository mindMapRepository;
+    private final NodeRepository nodeRepository;
+    private final TeacherRepository teacherRepository;
+    private final CourseRepository courseRepository;
+
     @Autowired
-    private MindMapRepository mindMapRepository;
-    @Autowired
-    private NodeRepository nodeRepository;
-    @Autowired
-    private TeacherRepository teacherRepository;
-    @Autowired
-    private CourseRepository courseRepository;
+    public MindMapServiceImpl(MindMapRepository mindMapRepository, NodeRepository nodeRepository, TeacherRepository teacherRepository, CourseRepository courseRepository) {
+        this.mindMapRepository = mindMapRepository;
+        this.nodeRepository = nodeRepository;
+        this.teacherRepository = teacherRepository;
+        this.courseRepository = courseRepository;
+    }
+
     @Override
     public MindMap getById(long id) {
         return mindMapRepository.findById(id);
@@ -82,5 +87,42 @@ public class MindMapServiceImpl implements MindMapService {
     @Override
     public MindMap updateMindMap(MindMap mindMap) {
         return mindMapRepository.save(mindMap);
+    }
+
+    @Override
+    public void manipulate(long id, List<MindMapManipulation> manipulations) {
+        List<Node> nodes = nodeRepository.findByMindMapId(id);
+        ListCacheUtil<Integer, Node> cacheUtil = new ListCacheUtil<>(nodes,
+                (i, t) -> t.getInternalId() == i);
+        List<Node> nodesToRemove = new ArrayList<>();
+        loop:
+        for (MindMapManipulation manipulation : manipulations) {
+            Node node, root;
+            switch (manipulation.getAction()) {
+                case "addNode":
+                    node = new Node(manipulation.getId());
+                    root = cacheUtil.getItem(manipulation.getParentId());
+                    cacheUtil.addItem(manipulation.getId(), node);
+                    root.getChildNodes().add(node);
+                    break;
+                case "removeNode":
+                    node = cacheUtil.getItem(manipulation.getId());
+                    if ((root = node.getFatherNode()) == null)
+                        continue loop;
+                    Set<Node> childNodes = root.getChildNodes();
+                    childNodes.addAll(node.getChildNodes());
+                    childNodes.remove(node);
+                    cacheUtil.removeItem(manipulation.getId());
+                    nodesToRemove.add(node);
+                    break;
+                case "changeName":
+                    cacheUtil.getItem(manipulation.getId()).setName(manipulation.getValue());
+                    break;
+                case "changeColor":
+                    cacheUtil.getItem(manipulation.getId()).setColor(manipulation.getValue());
+            }
+        }
+        nodeRepository.deleteAll(nodesToRemove);
+        nodeRepository.save(nodes.get(0));
     }
 }

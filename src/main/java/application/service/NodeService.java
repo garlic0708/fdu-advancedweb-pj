@@ -1,6 +1,7 @@
 package application.service;
 
 import application.entity.Node;
+import application.entity.view.NodeAttachments;
 
 import java.util.List;
 import java.util.Set;
@@ -31,4 +32,6 @@ public interface NodeService {
     void deleteAll();
 
     void update(Node node);
+
+    NodeAttachments getAttachments(long id);
 }

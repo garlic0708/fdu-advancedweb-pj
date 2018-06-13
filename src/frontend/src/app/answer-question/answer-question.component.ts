@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {mockData} from "../../assets/mock-data";
-import {FormGroup, FormBuilder} from "@angular/forms";
 
 @Component({
   selector: 'app-answer-question',

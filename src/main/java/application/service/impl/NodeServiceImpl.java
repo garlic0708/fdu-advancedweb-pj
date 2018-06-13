@@ -2,15 +2,15 @@ package application.service.impl;
 
 import application.entity.MindMap;
 import application.entity.Node;
-import application.repository.MindMapRepository;
-import application.repository.NodeRepository;
-import application.service.MindMapService;
+import application.entity.view.DescriptionView;
+import application.entity.view.NodeAttachments;
+import application.entity.view.TypeDescriptionView;
+import application.repository.*;
 import application.service.NodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Min;
-import java.util.ArrayList;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Set;
 
@@ -20,10 +20,21 @@ import java.util.Set;
  */
 @Service
 public class NodeServiceImpl implements NodeService {
+    private final NodeRepository nodeRepository;
+    private final MindMapRepository mindMapRepository;
+    private final HomeWorkRepository homeWorkRepository;
+    private final CoursewareRepository coursewareRepository;
+    private final ResourceRepository resourceRepository;
+
     @Autowired
-    private NodeRepository nodeRepository;
-    @Autowired
-    private MindMapRepository mindMapRepository;
+    public NodeServiceImpl(NodeRepository nodeRepository, MindMapRepository mindMapRepository, HomeWorkRepository homeWorkRepository, CoursewareRepository coursewareRepository, ResourceRepository resourceRepository) {
+        this.nodeRepository = nodeRepository;
+        this.mindMapRepository = mindMapRepository;
+        this.homeWorkRepository = homeWorkRepository;
+        this.coursewareRepository = coursewareRepository;
+        this.resourceRepository = resourceRepository;
+    }
+
     @Override
     public Node getById(long id) {
         return nodeRepository.findById(id);
@@ -87,5 +98,13 @@ public class NodeServiceImpl implements NodeService {
     @Override
     public void update(Node node) {
         nodeRepository.save(node);
+    }
+
+    @Override
+    public NodeAttachments getAttachments(long id) {
+        Set<TypeDescriptionView> questions = homeWorkRepository.findByFatherNode_Id(id);
+        Set<DescriptionView> coursewares = coursewareRepository.findByFatherNode_Id(id);
+        Set<TypeDescriptionView> resources = resourceRepository.findByFatherNode_Id(id);
+        return new NodeAttachments(questions, resources, coursewares);
     }
 }

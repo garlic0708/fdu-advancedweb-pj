@@ -20,12 +20,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 
 import {ReleaseQuestionComponent} from './release-question/release-question.component';
+import {AnswerQuestionComponent} from './answer-question/answer-question.component';
 import {PieChartComponent} from "./pie-chart/pie-chart.component";
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { DeleteDialogComponent } from "./sidenav/sidenav.component";
-import { AnswerQuestionComponent } from "./answer-question/answer-question.component";
 
-import {HttpClientModule} from "@angular/common/http";
+import { HttpClientModule } from "@angular/common/http";
+import { ColorPickerModule } from "ngx-color-picker";
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from "@angular/material";
 
 @NgModule({
   declarations: [
@@ -49,10 +51,7 @@ import {HttpClientModule} from "@angular/common/http";
     ReactiveFormsModule,
     HttpClientModule,
     // NoopAnimationsModule,
-    MaterialModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
+    ColorPickerModule,
   ],
   providers: [
     environment.production ? [] : {
@@ -60,7 +59,7 @@ import {HttpClientModule} from "@angular/common/http";
       useClass: MockProviderService,
       multi: true,
     },
-
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}},
   ],
   bootstrap: [AppComponent],
   entryComponents: [DeleteDialogComponent]

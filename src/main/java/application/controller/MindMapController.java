@@ -1,13 +1,16 @@
 package application.controller;
 
+import application.controller.result.JsonResult;
 import application.entity.*;
 import application.service.MindMapService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -63,5 +66,13 @@ public class MindMapController {
     public @ResponseBody MindMap getByRootNode(
             @PathVariable String id) {
         return mindMapService.getByRootNodeId(Long.parseLong(id));
+    }
+
+    @RequestMapping(value = "/api/mindmap/manipulate/{id}", method = RequestMethod.POST)
+    public ResponseEntity manipulate(
+            @PathVariable String id, @RequestBody List<MindMapManipulation> mapManipulations
+            ) {
+        mindMapService.manipulate(Long.parseLong(id), mapManipulations);
+        return ResponseEntity.ok(new JsonResult("status", "ok"));
     }
 }

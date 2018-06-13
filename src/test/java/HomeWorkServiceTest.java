@@ -49,7 +49,7 @@ public class HomeWorkServiceTest {
 //        answers.put("c", "0.5");
 //        answers.put("d", "0.6");
 //        String correctAnswer = "c";
-//        multipleChoiceService.addMutipleChoice(nodeId, content, answers, correctAnswer);
+//        multipleChoiceService.addMultipleChoice(nodeId, content, answers, correctAnswer);
 //
 //        content = "cos60=?";
 //        answers.clear();
@@ -58,7 +58,7 @@ public class HomeWorkServiceTest {
 //        answers.put("c", "0.5");
 //        answers.put("d", "0.6");
 //        correctAnswer = "c";
-//        multipleChoiceService.addMutipleChoice(nodeId1, content, answers, correctAnswer);
+//        multipleChoiceService.addMultipleChoice(nodeId1, content, answers, correctAnswer);
 //
 //        // for short answer
 //        content = "sin90=?";
