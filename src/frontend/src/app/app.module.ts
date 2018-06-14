@@ -25,7 +25,12 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { DeleteDialogComponent } from "./sidenav/sidenav.component";
 import { AnswerQuestionComponent } from "./answer-question/answer-question.component";
 
-import {HttpClientModule} from "@angular/common/http";
+import { HttpClientModule } from "@angular/common/http";
+import { ColorPickerModule } from "ngx-color-picker";
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from "@angular/material";
+import { NavComponent } from './nav/nav.component';
+import { ModifyComponent } from './modify/modify.component';
+import { UploadComponent } from './upload/upload.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +44,10 @@ import {HttpClientModule} from "@angular/common/http";
     AnswerQuestionComponent,
     SidenavComponent,
     AnswerQuestionComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    NavComponent,
+    ModifyComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +57,11 @@ import {HttpClientModule} from "@angular/common/http";
     ReactiveFormsModule,
     HttpClientModule,
     // NoopAnimationsModule,
-    ColorPickerModule,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    ColorPickerModule
   ],
   providers: [
     environment.production ? [] : {
@@ -57,6 +69,7 @@ import {HttpClientModule} from "@angular/common/http";
       useClass: MockProviderService,
       multi: true,
     },
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}},
 
   ],
   bootstrap: [AppComponent],
