@@ -133,5 +133,4 @@ export class MindmapHolderComponent implements OnInit {
     }
     console.log(this.manipulations)
   }
-
 }
