@@ -1,5 +1,6 @@
 package application.entity;
 
+import application.entity.view.TypeDescriptionView;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
@@ -13,7 +14,7 @@ import static org.neo4j.ogm.annotation.Relationship.INCOMING;
  * Date: 2018/6/1.
  */
 @NodeEntity
-public class HomeWork {
+public class HomeWork implements TypeDescriptionView {
     @Id
     @GeneratedValue
     private Long id;
@@ -28,6 +29,11 @@ public class HomeWork {
         return id;
     }
 
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -40,11 +46,16 @@ public class HomeWork {
         this.fatherNode = fatherNode;
     }
 
-    public QuestionType getType() {
+    public QuestionType getQuestionType() {
         return type;
     }
 
     public void setType(QuestionType type) {
         this.type = type;
+    }
+
+    @Override
+    public String getType() {
+        return type.toString();
     }
 }

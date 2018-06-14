@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {mockData} from "../../assets/mock-data";
-import {FormGroup, FormBuilder} from "@angular/forms";
+import {GetQuestionService} from "./get-question.service";
+import {MultipleChoiceQuestion, ShortAnswerQuestion} from "./question";
 
 @Component({
   selector: 'app-answer-question',
@@ -9,16 +9,31 @@ import {FormGroup, FormBuilder} from "@angular/forms";
 })
 export class AnswerQuestionComponent implements OnInit {
 
-  question = mockData['GET /api/question/:qid'];
-  answer = this.question.answers;
-  content = this.question.content;
+  question: MultipleChoiceQuestion | ShortAnswerQuestion;
+  id: number = 8;
+  // type: string = 'multipleChoice';
+  type: string = 'shortAnswer';
 
-  constructor() {
+  // answer = this.question.answers;
+  // content = this.question.content;
+
+  constructor(private getQuestionService: GetQuestionService) {
   }
-
 
   ngOnInit() {
+    if (this.type == 'multipleChoice') {
+      this.getQuestionService.getMultipleChoiceQuestion(this.id)
+        .subscribe(q => {
+          console.log(q);
+          this.question = q;
+        });
+    }
+    else if (this.type == 'shortAnswer') {
+      this.getQuestionService.getShortAnswerQuestion(this.id)
+        .subscribe(q => this.question = q);
+    }
   }
+
 
   get answerKeys(): string[] {
     return Object.keys(this.question.answers);

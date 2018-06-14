@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { RegisterForm, User } from './user';
-import * as _ from 'lodash';
+import get = require('lodash/get');
 import { Observable } from "rxjs/index";
 import { map } from 'rxjs/operators'
 import { convert } from "./http-util";
@@ -36,6 +36,6 @@ export class CurrentUserService {
   }
 
   get currentRole() {
-    return _.has(this.currentUser, 'role')
+    return get(this.currentUser, 'role')
   }
 }

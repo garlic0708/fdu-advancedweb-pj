@@ -1,6 +1,7 @@
 package application.service;
 
 import application.entity.HomeWork;
+import application.entity.view.TypeDescriptionView;
 
 import java.util.Set;
 
@@ -11,7 +12,7 @@ import java.util.Set;
 public interface HomeWorkService {
     HomeWork getById(long id);
 
-    Set<HomeWork> getByNodeId(long nodeId);
+    Set<TypeDescriptionView> getByNodeId(long nodeId);
 
     Set<HomeWork> getByMindMapId(long mindMapId);
 

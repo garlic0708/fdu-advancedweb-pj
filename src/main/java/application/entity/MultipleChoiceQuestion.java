@@ -20,7 +20,7 @@ public class MultipleChoiceQuestion extends HomeWork {
     private String correctAnswers;
 
     public MultipleChoiceQuestion() {
-        this.setType(QuestionType.MUTIPLECHOICE);
+        this.setType(QuestionType.MULTIPLE_CHOICE);
     }
 
     @Relationship(type = "resolve", direction = INCOMING)

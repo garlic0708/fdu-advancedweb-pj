@@ -2,6 +2,7 @@ package application.service.impl;
 
 import application.entity.HomeWork;
 import application.entity.Node;
+import application.entity.view.TypeDescriptionView;
 import application.repository.HomeWorkRepository;
 import application.repository.NodeRepository;
 import application.service.HomeWorkService;
@@ -26,7 +27,7 @@ public class HomeWorkServiceImpl implements HomeWorkService {
     }
 
     @Override
-    public Set<HomeWork> getByNodeId(long nodeId) {
+    public Set<TypeDescriptionView> getByNodeId(long nodeId) {
         return homeWorkRepository.findByFatherNode_Id(nodeId);
     }
 

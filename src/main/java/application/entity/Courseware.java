@@ -1,5 +1,6 @@
 package application.entity;
 
+import application.entity.view.DescriptionView;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
@@ -13,7 +14,7 @@ import static org.neo4j.ogm.annotation.Relationship.INCOMING;
  * Date: 2018/6/1.
  */
 @NodeEntity
-public class Courseware {
+public class Courseware implements DescriptionView {
     @Id
     @GeneratedValue
     private Long id;
@@ -26,6 +27,11 @@ public class Courseware {
 
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
     }
 
     public void setId(Long id) {

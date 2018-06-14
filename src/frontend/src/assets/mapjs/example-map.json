@@ -43,6 +43,17 @@
             "style": {
               "background": "#ffff00"
             }
+          },
+          "ideas": {
+            "6": {
+              "title": "green",
+              "id": 100,
+              "attr": {
+                "style": {
+                  "background": "#80ff80"
+                }
+              }
+            }
           }
         },
         "6": {

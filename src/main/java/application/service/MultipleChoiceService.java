@@ -17,15 +17,15 @@ public interface MultipleChoiceService {
 
     Set<MultipleChoiceQuestion> getByMindMapId(long mindMapId);
 
-    MultipleChoiceQuestion addMutipleChoice(long nodeId, AddMCQ mcq);
+    MultipleChoiceQuestion addMultipleChoice(long nodeId, AddMCQ mcq);
 
     StudentAnswerForMultipleChoice addStudentAnswer(long questionId, long studentId, String answer);
 
-    Set<StudentAnswerForMultipleChoice> getAnswersByQuestionId(long questionId);
+    Map<String, Long> getAnswersByQuestionId(long questionId);
 
     Set<StudentAnswerForMultipleChoice> getAnswersByStudentId(long studentId);
 
-    void deleteMutipleChoiceQuestion(long id);
+    void deleteMultipleChoiceQuestion(long id);
 
     MultipleChoiceQuestion update(AddMCQ mcq);
 }

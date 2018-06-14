@@ -1,8 +1,11 @@
 package application.repository;
 
 import application.entity.Resource;
+import application.entity.view.TypeDescriptionView;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.repository.CrudRepository;
+
+import java.util.Set;
 
 /**
  * Creator: DreamBoy
@@ -15,7 +18,7 @@ public interface ResourceRepository extends CrudRepository<Resource, Long> {
 
     @Query("MATCH (n:Node)-[:hasResource]->(q:Resource) WHERE ID(n)={0}" +
             "RETURN q")
-    Resource findByFatherNode_Id(long nodeId);
+    Set<TypeDescriptionView> findByFatherNode_Id(long nodeId);
 
     void deleteById(long id);
 }

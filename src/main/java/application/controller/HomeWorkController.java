@@ -11,8 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -41,7 +39,7 @@ public class HomeWorkController {
         Teacher teacher = (Teacher) user.getUser();
         long testId = userService.getTeacherByNodeId(Long.parseLong(id)).getId();
         if (testId == teacher.getId())
-            return multipleChoiceService.addMutipleChoice(Long.parseLong(id), mcq);
+            return multipleChoiceService.addMultipleChoice(Long.parseLong(id), mcq);
         else
             return null;
     }
@@ -72,7 +70,7 @@ public class HomeWorkController {
         Teacher teacher = (Teacher) user.getUser();
         long testId = userService.getTeacherByNodeId(Long.parseLong(id)).getId();
         if (testId == teacher.getId())
-            multipleChoiceService.deleteMutipleChoiceQuestion(Long.parseLong(id));
+            multipleChoiceService.deleteMultipleChoiceQuestion(Long.parseLong(id));
     }
 
     @PreAuthorize("hasAnyAuthority('TEACHER')")
@@ -149,9 +147,9 @@ public class HomeWorkController {
         return shortAnswerService.addStudentAnswer(sa.getQuestionId(), sa.getStudentId(), sa.getAnswer());
     }
 
-    @PreAuthorize("hasAnyAuthority('STUDENT')")
+    @PreAuthorize("hasAnyAuthority('TEACHER')")
     @RequestMapping(value = "/api/homework/getMCA/{questionId}", method = RequestMethod.GET)
-    public @ResponseBody Set<StudentAnswerForMultipleChoice> getMCA(
+    public @ResponseBody Map<String, Long> getMCA(
             @PathVariable String questionId,
             Principal principal) { //权限添加
         return multipleChoiceService.getAnswersByQuestionId(Long.parseLong(questionId));

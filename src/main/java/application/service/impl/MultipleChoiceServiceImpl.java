@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * Creator: DreamBoy
@@ -43,12 +45,12 @@ public class MultipleChoiceServiceImpl implements MultipleChoiceService {
     }
 
     @Override
-    public MultipleChoiceQuestion addMutipleChoice(long nodeId, AddMCQ mcq) {
+    public MultipleChoiceQuestion addMultipleChoice(long nodeId, AddMCQ mcq) {
         Map<String, String> answers = new HashMap<>();
         List<String> choices = mcq.getChoices();
 
         char ch = 'A';
-        for (int i = 0; i < choices.size();i++) {
+        for (int i = 0; i < choices.size(); i++) {
             answers.put(String.valueOf((ch + i)), choices.get(i));
         }
 
@@ -74,8 +76,11 @@ public class MultipleChoiceServiceImpl implements MultipleChoiceService {
     }
 
     @Override
-    public Set<StudentAnswerForMultipleChoice> getAnswersByQuestionId(long questionId) {
-        return answerForMultipleChoiceRepository.findByQuestion_Id(questionId);
+    public Map<String, Long> getAnswersByQuestionId(long questionId) {
+        return StreamSupport.stream(
+                choiceRepository.findAnswersToQuestion(questionId).spliterator(), false)
+                .collect(Collectors.toMap(map -> (String) map.get("answer"),
+                        map -> (Long) map.get("count")));
     }
 
     @Override
@@ -84,7 +89,7 @@ public class MultipleChoiceServiceImpl implements MultipleChoiceService {
     }
 
     @Override
-    public void deleteMutipleChoiceQuestion(long id) {
+    public void deleteMultipleChoiceQuestion(long id) {
         nodeRepository.deleteById(id);
     }
 
@@ -94,7 +99,7 @@ public class MultipleChoiceServiceImpl implements MultipleChoiceService {
         List<String> choices = mcq.getChoices();
 
         char ch = 'A';
-        for (int i = 0; i < choices.size();i++) {
+        for (int i = 0; i < choices.size(); i++) {
             answers.put(String.valueOf((ch + i)), choices.get(i));
         }
 

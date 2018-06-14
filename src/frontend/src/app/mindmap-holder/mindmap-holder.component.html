@@ -1,35 +1,60 @@
-<app-mindmap-body (manipulation)="mindmapEvent($event)"></app-mindmap-body>
-<mat-list>
-  <mat-divider></mat-divider>
-  <ng-container *ngIf="attachments$ | async as attachments; else loading">
+<ng-container *ngIf="map$ | async as map; else bodyLoading">
+  <mat-list>
     <mat-list-item>
-      <mat-chip-list [selectable]="false" id="questions">
-        <mat-chip *ngFor="let question of attachments.questions" [selected]="true">
-          {{question.description}}
-        </mat-chip>
-      </mat-chip-list>
+      <button mat-raised-button (click)="body.addSubIdea()">Add Child</button>
+      <button mat-raised-button (click)="body.removeSubIdea()">Remove</button>
+      <button mat-raised-button [(colorPicker)]="selectedColor" [style.background]="selectedColor"
+              [style.color]="colorForeground">
+        Color
+      </button>
+      <button mat-raised-button (click)="body.undo()" [disabled]="!body.canUndo">Undo</button>
+      <button mat-raised-button (click)="body.redo()" [disabled]="!body.canRedo">Redo</button>
+      <button mat-raised-button (click)="saveManipulation()" color="primary"
+              [disabled]="!manipulations.length || saving">Save
+      </button>
+      <mat-spinner *ngIf="saving"></mat-spinner>
     </mat-list-item>
     <mat-divider></mat-divider>
-    <mat-list-item>
-      <mat-chip-list [selectable]="false" id="courseWares">
-        <mat-chip *ngFor="let courseWare of attachments.courseWares" [selected]="true">
-          {{courseWare.description}}
-        </mat-chip>
-      </mat-chip-list>
-    </mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item>
-      <mat-chip-list [selectable]="false" id="resources">
-        <mat-chip *ngFor="let resource of attachments.resources" [selected]="true">
-          {{resource.description}}
-        </mat-chip>
-      </mat-chip-list>
-    </mat-list-item>
-  </ng-container>
+  </mat-list>
 
-  <ng-template #loading>
-    <mat-list-item id="spinner-container">
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    </mat-list-item>
-  </ng-template>
-</mat-list>
+  <app-mindmap-body #body (manipulation)="mindmapEvent($event)" [map]="map"></app-mindmap-body>
+
+  <mat-list>
+    <mat-divider></mat-divider>
+    <ng-container *ngIf="attachments$ | async as attachments; else loading">
+      <mat-list-item>
+        <mat-chip-list [selectable]="false" id="questions">
+          <mat-chip *ngFor="let question of attachments.questions" [selected]="true">
+            {{question.description}}
+          </mat-chip>
+        </mat-chip-list>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <mat-chip-list [selectable]="false" id="courseWares">
+          <mat-chip *ngFor="let courseWare of attachments.courseWares" [selected]="true">
+            {{courseWare.description}}
+          </mat-chip>
+        </mat-chip-list>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <mat-chip-list [selectable]="false" id="resources">
+          <mat-chip *ngFor="let resource of attachments.resources" [selected]="true">
+            {{resource.description}}
+          </mat-chip>
+        </mat-chip-list>
+      </mat-list-item>
+    </ng-container>
+
+    <ng-template #loading>
+      <mat-list-item id="spinner-container">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </mat-list-item>
+    </ng-template>
+  </mat-list>
+</ng-container>
+
+<ng-template #bodyLoading>
+  <mat-spinner></mat-spinner>
+</ng-template>

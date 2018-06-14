@@ -26,9 +26,6 @@ import { DeleteDialogComponent } from "./sidenav/sidenav.component";
 import { AnswerQuestionComponent } from "./answer-question/answer-question.component";
 
 import {HttpClientModule} from "@angular/common/http";
-import { NavComponent } from './nav/nav.component';
-import { ModifyComponent } from './modify/modify.component';
-import { UploadComponent } from './upload/upload.component';
 
 @NgModule({
   declarations: [
@@ -42,10 +39,7 @@ import { UploadComponent } from './upload/upload.component';
     AnswerQuestionComponent,
     SidenavComponent,
     AnswerQuestionComponent,
-    DeleteDialogComponent,
-    NavComponent,
-    ModifyComponent,
-    UploadComponent
+    DeleteDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -55,10 +49,7 @@ import { UploadComponent } from './upload/upload.component';
     ReactiveFormsModule,
     HttpClientModule,
     // NoopAnimationsModule,
-    MaterialModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule
+    ColorPickerModule,
   ],
   providers: [
     environment.production ? [] : {

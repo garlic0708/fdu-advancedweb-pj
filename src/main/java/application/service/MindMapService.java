@@ -1,8 +1,9 @@
 package application.service;
 
-import application.entity.Course;
 import application.entity.MindMap;
+import application.entity.MindMapManipulation;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -25,4 +26,6 @@ public interface MindMapService {
     void deleteMindMap(long id);
 
     MindMap updateMindMap(MindMap mindMap);
+
+    void manipulate(long id, List<MindMapManipulation> manipulations);
 }

@@ -7,6 +7,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.neo4j.ogm.annotation.Relationship.INCOMING;
@@ -21,6 +22,9 @@ public class Node {
     @GeneratedValue
     private Long id;
     private String name;
+
+    private Integer internalId;
+    private String color;
 
     @Relationship(type = "hasChild")
     private Set<Node> childNodes;
@@ -41,11 +45,32 @@ public class Node {
     @Relationship(type = "hasChild", direction = INCOMING)
     private Node fatherNode;
 
+    public int getInternalId() {
+        return internalId;
+    }
+
+    public void setInternalId(int internalId) {
+        this.internalId = internalId;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
     public Node() {
         childNodes = new HashSet<>();
         homeWork = new HashSet<>();
         coursewares = new HashSet<>();
         resources = new HashSet<>();
+    }
+
+    public Node(Integer internalId) {
+        this();
+        this.internalId = internalId;
     }
 
     public String getName() {

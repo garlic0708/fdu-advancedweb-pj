@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CurrentUserService } from "./current-user.service";
 import { catchError } from "rxjs/internal/operators";
 import { Observable } from "rxjs/index";
 import { getOrError } from "./http-util";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import { getOrError } from "./http-util";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private service: CurrentUserService) {
+  constructor(private http: HttpClient) {
   }
 
   title = 'app';
@@ -20,9 +21,13 @@ export class AppComponent {
   }
 
   test() {
-    getOrError(() => this.service.login("a@best.com", 2),
-      data => console.log(data),
-      err => console.log(err))
+    // this.http.post('http://localhost:8080/api/mindmap/manipulate/43', [
+    //     {action: 'addNode', parentId: 56, id: 100, value: 'new test'},
+    //     {action: 'changeName', id: 50, value: 'change test'},
+    //     {action: 'changeColor', id: 25, value: 'green'},
+    //     {action: 'removeNode', id: 52},
+    //   ]
+    // ).subscribe(data => console.log(data));
   }
 }
 
