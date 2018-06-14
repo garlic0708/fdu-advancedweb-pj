@@ -1,0 +1,11 @@
+.nav {
+  width: 100%;
+  background-color: #ddffff!important;
+  padding: 14px;
+  border-left: 6px solid #ccc!important;
+  border-color: #2196F3!important;
+}
+
+.button{
+  float: right;
+}

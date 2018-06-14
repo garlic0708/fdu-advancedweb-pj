@@ -83,8 +83,11 @@ export class ChecklistDatabase {
   }
 
   /** Add an item to to-do list */
-  insert(parent: Node, name: string) {
-    const child = <Node>{name: name};
+  insert(parent: Node, name: string, level: number) {
+    console.log(level);
+    var child;
+    if (level = 0) child = <Node>{name: name, children:[]};
+    else child = <Node>{name: name};
     if (parent.children) {
       parent.children.push(child);
       this.dataChange.next(this.data);
@@ -203,7 +206,7 @@ export class SidenavComponent {
     this.creating = 1;
 
     const parentNode = this.flatNodeMap.get(node);
-    this.database.insert(parentNode!, '');
+    this.database.insert(parentNode!, '', node.level);
     this.treeControl.expand(node);
   }
 

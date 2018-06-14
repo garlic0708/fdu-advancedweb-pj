@@ -52,7 +52,7 @@ import {
     MatDividerModule,
     // MatExpansionModule,
     // MatGridListModule,
-    // MatIconModule,
+    MatIconModule,
     MatInputModule,
     MatListModule,
     // MatMenuModule,
