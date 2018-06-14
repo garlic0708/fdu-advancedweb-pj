@@ -19,7 +19,7 @@ export const mockData = {
     {id: 0, name: '...'},
   ],
 
-  'GET /api/question/:qid':
+  'GET /api/multipleChoiceQuestion/:qid':
     {
       type: 'multipleChoice',
       content: '1 + 1 = ?',
@@ -27,13 +27,15 @@ export const mockData = {
         a: "1",
         b: '2',
         c: '3',
-      }
+      },
+      correct: 'b',
     },
 
   'GET /api/shortAnswerQuestion/:qid': {
     type: 'shortAnswer',
     content: '1 + 1 = ?',
-    answers: '2'
+    answers: '2',
+    correct: '2',
   },
 
   'GET /api/node/getAll/:mapId': {

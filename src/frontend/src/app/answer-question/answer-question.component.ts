@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {GetQuestionService} from "./get-question.service";
 import {MultipleChoiceQuestion, ShortAnswerQuestion} from "./question";
+import {Observable} from "rxjs/internal/Observable";
 
 @Component({
   selector: 'app-answer-question',
@@ -9,7 +10,7 @@ import {MultipleChoiceQuestion, ShortAnswerQuestion} from "./question";
 })
 export class AnswerQuestionComponent implements OnInit {
 
-  question: MultipleChoiceQuestion | ShortAnswerQuestion;
+  question$: Observable<MultipleChoiceQuestion> | Observable<ShortAnswerQuestion>;
   id: number = 8;
   // type: string = 'multipleChoice';
   type: string = 'shortAnswer';
@@ -21,22 +22,12 @@ export class AnswerQuestionComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.type == 'multipleChoice') {
-      this.getQuestionService.getMultipleChoiceQuestion(this.id)
-        .subscribe(q => {
-          console.log(q);
-          this.question = q;
-        });
-    }
-    else if (this.type == 'shortAnswer') {
-      this.getQuestionService.getShortAnswerQuestion(this.id)
-        .subscribe(q => this.question = q);
-    }
+    this.question$ = this.getQuestionService.getQuestion(this.type, this.id)
   }
 
 
-  get answerKeys(): string[] {
-    return Object.keys(this.question.answers);
+  getAnswerKeys(question): string[] {
+    return Object.keys(question.answers);
   }
 
   onSubmit() {
