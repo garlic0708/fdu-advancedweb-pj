@@ -1,0 +1,7 @@
+html, body {
+  height: 100%;
+}
+
+.my-drop-zone {
+  border: dotted 3px lightgray;
+}

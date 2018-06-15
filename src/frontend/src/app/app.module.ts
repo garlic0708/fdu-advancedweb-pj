@@ -30,7 +30,11 @@ import { ColorPickerModule } from "ngx-color-picker";
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from "@angular/material";
 import { NavComponent } from './nav/nav.component';
 import { ModifyComponent } from './modify/modify.component';
-import { UploadComponent } from './upload/upload.component';
+import { UploadCourceComponent } from './upload-cource/upload-cource.component';
+
+import { CommonModule } from '@angular/common';
+import { FileUploadModule } from 'ng2-file-upload';
+import { UploadResourceComponent } from './upload-resource/upload-resource.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +51,8 @@ import { UploadComponent } from './upload/upload.component';
     DeleteDialogComponent,
     NavComponent,
     ModifyComponent,
-    UploadComponent
+    UploadCourceComponent,
+    UploadResourceComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +66,9 @@ import { UploadComponent } from './upload/upload.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ColorPickerModule
+    ColorPickerModule,
+    CommonModule,
+    FileUploadModule
   ],
   providers: [
     environment.production ? [] : {

@@ -1,0 +1,22 @@
+<form class="container" (ngSubmit)="onSubmit()">
+  <h3>选择问题类型：</h3>
+
+  <mat-form-field class="full-width">
+    <mat-select [(ngModel)]="type" name="type" class="form-control">
+      <mat-option class="center-block" value="file">文件</mat-option>
+      <mat-option class="center-block" value="url">链接</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <app-upload-cource *ngIf="type=='file'"></app-upload-cource>
+  <div *ngIf="type=='url'">
+    <mat-form-field class="full-width">
+      <input [(ngModel)]="url" name="url" matInput placeholder="url">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <input [(ngModel)]="description" name="description" matInput placeholder="文件描述">
+    </mat-form-field>
+    <button mat-raised-button type="submit" [disabled]="valid()">上传</button>
+  </div>
+</form>
+
