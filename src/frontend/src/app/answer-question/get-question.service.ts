@@ -21,4 +21,13 @@ export class GetQuestionService {
   getShortAnswerQuestion(id): Observable<ShortAnswerQuestion> {
     return this.http.get<ShortAnswerQuestion>(`${this.shortAnswerQuestionUrl}/${id}`)
   }
+
+  getQuestion(type, id): Observable<any> {
+    if (type == 'multipleChoice') {
+      return this.getMultipleChoiceQuestion(id)
+    }
+    else if (type == 'shortAnswer') {
+      return this.getShortAnswerQuestion(id)
+    }
+  }
 }
