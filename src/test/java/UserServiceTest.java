@@ -25,7 +25,7 @@ public class UserServiceTest {
     public void testAdd() {
 //        userService.addUser("t5","1", "1", Role.TEACHER);
 //        userService.addUser("s6", "1", "1", Role.STUDENT);
-        userService.addUser(new UserCreateForm("s6", "s6@test.com", "2", "2", Role.TEACHER));
+        User user = userService.addUser(new UserCreateForm("s6", "s6@test.com", "2", "2", Role.TEACHER));
     }
 
     @Test
