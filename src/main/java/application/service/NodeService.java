@@ -23,9 +23,9 @@ public interface NodeService {
 
     Node getAll(long mindMapId);
 
-    void addRootNode(long mindMapId, String nodeName);
+    Node addRootNode(long mindMapId, String nodeName);
 
-    void addNode(long fatherNodeId, String childName);
+    Node addNode(long fatherNodeId, String childName);
 
     void deleteNode(long id);
 

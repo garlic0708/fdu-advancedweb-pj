@@ -20,5 +20,7 @@ public interface ResourceRepository extends CrudRepository<Resource, Long> {
             "RETURN q")
     Set<TypeDescriptionView> findByFatherNode_Id(long nodeId);
 
+    Set<Resource> findByFatherNode_Name(String name);
+
     void deleteById(long id);
 }

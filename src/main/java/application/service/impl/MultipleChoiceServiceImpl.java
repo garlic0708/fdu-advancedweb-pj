@@ -94,6 +94,11 @@ public class MultipleChoiceServiceImpl implements MultipleChoiceService {
     }
 
     @Override
+    public void deleteAll() {
+        nodeRepository.deleteAll();
+    }
+
+    @Override
     public MultipleChoiceQuestion update(AddMCQ mcq) {
         Map<String, String> answers = new HashMap<>();
         List<String> choices = mcq.getChoices();

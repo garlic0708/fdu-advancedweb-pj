@@ -19,7 +19,7 @@ public class PersistenceContext {
     public org.neo4j.ogm.config.Configuration configuration() {
         return new org.neo4j.ogm.config.Configuration.Builder()
                 .uri("bolt://localhost")
-                .credentials("neo4j", "www.27027.cn")
+                .credentials("neo4j", "123456")
                 .build();
     }
 }

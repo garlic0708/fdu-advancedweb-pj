@@ -20,5 +20,7 @@ public interface ResourceService {
 
     void deleteResource(long id);
 
+    void deleteAll();
+
     void updateResource(Resource resource);
 }

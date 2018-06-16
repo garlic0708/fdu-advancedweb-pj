@@ -20,6 +20,8 @@ public interface CoursewareService {
 
     void deleteCourseware(long id);
 
+    void deleteAll();
+
     void updateCourseware(Courseware courseware);
 
     void uploadFile(byte[] file, String filePath, String fileName) throws IOException;

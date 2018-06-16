@@ -89,4 +89,9 @@ public class ShortAnswerServiceImpl implements ShortAnswerService {
         question1.setStudentAnswerForShortAnswers(null);
         return shortAnswerRepository.save(question1);
     }
+
+    @Override
+    public void deleteAll() {
+        shortAnswerRepository.deleteAll();
+    }
 }

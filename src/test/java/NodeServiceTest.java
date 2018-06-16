@@ -43,13 +43,13 @@ public class NodeServiceTest {
         root.addChild(node1);
         root.addChild(node2);
         nodeService.update(root);
+
     }
 
     @Test
     public void testGetAll() {
-        //List<Node> nodes = nodeService.getAll(167);
-        //Node root = nodes.get(0);
-        //assertEquals(root.getChildNodes().size(), 2);
+        Node node = nodeService.getAll(167);
+        assertEquals(node.getChildNodes().size(), 2);
     }
 
     @Test

@@ -9,6 +9,7 @@ import application.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -33,7 +34,12 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public Set<Resource> getByNodeId(long nodeId) {
-        return null;
+        Node node = nodeRepository.findById(nodeId);
+        Set<Resource> resourceSet = new HashSet<>();
+        for (Resource resource: node.getResources()) {
+            resourceSet.add(resourceRepository.findById(resource.getId().longValue()));
+        }
+        return resourceSet;
     }
 
     @Override
@@ -51,6 +57,11 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public void deleteResource(long id) {
         resourceRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteAll() {
+        resourceRepository.deleteAll();
     }
 
     @Override

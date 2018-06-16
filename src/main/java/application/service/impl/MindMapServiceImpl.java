@@ -85,6 +85,11 @@ public class MindMapServiceImpl implements MindMapService {
     }
 
     @Override
+    public void deleteAll() {
+        mindMapRepository.deleteAll();
+    }
+
+    @Override
     public MindMap updateMindMap(MindMap mindMap) {
         return mindMapRepository.save(mindMap);
     }

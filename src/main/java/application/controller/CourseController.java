@@ -31,11 +31,12 @@ public class CourseController {
         return courseService.addCourse(129, course.getName());
     }
 
-    // @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('TEACHER')")
     @RequestMapping(value="/api/course/delete/{id}", method = RequestMethod.DELETE)
     public @ResponseBody void deleteCourse (
             @PathVariable String id,
             Principal principal) {
+
         courseService.deleteCourse(Long.parseLong(id));
     }
 

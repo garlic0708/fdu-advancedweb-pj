@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -35,7 +36,12 @@ public class CoursewareServiceImpl implements CoursewareService {
 
     @Override
     public Set<Courseware> getByNodeId(long nodeId) {
-        return null;
+        Node node = nodeRepository.findById(nodeId);
+        Set<Courseware> coursewareSet = new HashSet<>();
+        for (Courseware courseware: node.getCoursewares()) {
+            coursewareSet.add(coursewareRepository.findById(courseware.getId().longValue()));
+        }
+        return coursewareSet;
     }
 
     @Override
@@ -52,6 +58,11 @@ public class CoursewareServiceImpl implements CoursewareService {
     @Override
     public void deleteCourseware(long id) {
         coursewareRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteAll() {
+        coursewareRepository.deleteAll();
     }
 
     @Override
