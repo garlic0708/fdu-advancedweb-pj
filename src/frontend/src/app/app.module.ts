@@ -35,6 +35,11 @@ import { UploadCourceComponent } from './upload-cource/upload-cource.component';
 import { CommonModule } from '@angular/common';
 import { FileUploadModule } from 'ng2-file-upload';
 import { UploadResourceComponent } from './upload-resource/upload-resource.component';
+import { AppRoutingModule} from "./app-routing.module";
+import {HttpModule, JsonpModule} from "@angular/http";
+import { GithubComponent } from './github/github.component';
+import {RouterModule} from "@angular/router";
+
 
 @NgModule({
   declarations: [
@@ -52,7 +57,8 @@ import { UploadResourceComponent } from './upload-resource/upload-resource.compo
     NavComponent,
     ModifyComponent,
     UploadCourceComponent,
-    UploadResourceComponent
+    UploadResourceComponent,
+    GithubComponent
   ],
   imports: [
     BrowserModule,
@@ -60,15 +66,18 @@ import { UploadResourceComponent } from './upload-resource/upload-resource.compo
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpModule,
+    JsonpModule,
     HttpClientModule,
     // NoopAnimationsModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
     ColorPickerModule,
     CommonModule,
-    FileUploadModule
+    FileUploadModule,
+    AppRoutingModule,
+    RouterModule
   ],
   providers: [
     environment.production ? [] : {
