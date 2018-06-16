@@ -25,6 +25,8 @@ public interface MindMapService {
 
     void deleteMindMap(long id);
 
+    void deleteAll();
+
     MindMap updateMindMap(MindMap mindMap);
 
     void manipulate(long id, List<MindMapManipulation> manipulations);

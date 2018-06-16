@@ -27,5 +27,7 @@ public interface MultipleChoiceService {
 
     void deleteMultipleChoiceQuestion(long id);
 
+    void deleteAll();
+
     MultipleChoiceQuestion update(AddMCQ mcq);
 }

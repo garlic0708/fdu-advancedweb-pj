@@ -68,21 +68,21 @@ public class NodeServiceImpl implements NodeService {
     }
 
     @Override
-    public void addRootNode(long mindMapId, String nodeName) {
+    public Node addRootNode(long mindMapId, String nodeName) {
         MindMap map = mindMapRepository.findById(mindMapId);
         Node root = new Node();
         root.setName(nodeName);
-        map.setRootNode(root);
-        mindMapRepository.save(map);
+        root.setFatherMap(map);
+        return nodeRepository.save(root);
     }
 
     @Override
-    public void addNode(long fatherNodeId, String childName) {
+    public Node addNode(long fatherNodeId, String childName) {
         Node father = nodeRepository.findById(fatherNodeId);
         Node child = new Node();
         child.setName(childName);
-        father.addChild(child);
-        nodeRepository.save(father);
+        child.setFatherNode(father);
+        return nodeRepository.save(child);
     }
 
     @Override

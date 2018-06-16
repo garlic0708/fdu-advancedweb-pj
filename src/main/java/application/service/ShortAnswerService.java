@@ -28,4 +28,6 @@ public interface ShortAnswerService {
     void deleteShortAnswer(long id);
 
     ShortAnswerQuestion update(ShortAnswerQuestion question);
+
+    void deleteAll();
 }
