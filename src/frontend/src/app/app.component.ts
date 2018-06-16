@@ -5,6 +5,9 @@ import { Observable } from "rxjs/index";
 import { getOrError } from "./http-util";
 import { HttpClient } from "@angular/common/http";
 
+import { RouterModule } from "@angular/router";
+import {LoginComponent} from "./login/login.component";
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
