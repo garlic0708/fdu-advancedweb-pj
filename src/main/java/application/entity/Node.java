@@ -89,7 +89,9 @@ public class Node {
         this.id = id;
     }
 
-    public void addChild(Node child) { childNodes.add(child); }
+    public void addChild(Node child) {
+        childNodes.add(child);
+    }
 
     // 不确定是否能拿到对应的child
     public void removeChild(Node child) {
@@ -97,19 +99,27 @@ public class Node {
         //childNodes.remove(child);
     }
 
-    public Set<Node> getChildNodes() { return childNodes; }
+    public Set<Node> getChildNodes() {
+        if (childNodes == null)
+            childNodes = new HashSet<>();
+        return childNodes;
+    }
 
     private Node findChildById(long childId) {
-        for (Node node: childNodes) {
+        for (Node node : childNodes) {
             if (node.getId() == childId)
                 return node;
         }
         return null;
     }
 
-    public void addQuestion(HomeWork question) { homeWork.add(question); }
+    public void addQuestion(HomeWork question) {
+        homeWork.add(question);
+    }
 
-    public Set<HomeWork> getHomeWork() { return homeWork; }
+    public Set<HomeWork> getHomeWork() {
+        return homeWork;
+    }
 
     public void removeQuestion(HomeWork question) {
         homeWork.remove(findQuestionById(question.getId()));
@@ -117,16 +127,20 @@ public class Node {
     }
 
     private HomeWork findQuestionById(long questionId) {
-        for (HomeWork question: homeWork) {
+        for (HomeWork question : homeWork) {
             if (question.getId() == questionId)
                 return question;
         }
         return null;
     }
 
-    public void addCourseware(Courseware courseware) { coursewares.add(courseware); }
+    public void addCourseware(Courseware courseware) {
+        coursewares.add(courseware);
+    }
 
-    public Set<Courseware> getCoursewares() { return coursewares; }
+    public Set<Courseware> getCoursewares() {
+        return coursewares;
+    }
 
     public void removeCourseware(Courseware courseware) {
         coursewares.remove(findCoursewareById(courseware.getId()));
@@ -134,16 +148,20 @@ public class Node {
     }
 
     private Courseware findCoursewareById(long id) {
-        for (Courseware courseware: coursewares) {
+        for (Courseware courseware : coursewares) {
             if (courseware.getId() == id)
                 return courseware;
         }
         return null;
     }
 
-    public void addResource(Resource resource) { resources.add(resource); }
+    public void addResource(Resource resource) {
+        resources.add(resource);
+    }
 
-    public Set<Resource> getResources() { return resources; }
+    public Set<Resource> getResources() {
+        return resources;
+    }
 
     public void removeResource(Resource resource) {
         resources.remove(findResourceById(resource.getId()));
@@ -151,7 +169,7 @@ public class Node {
     }
 
     private Resource findResourceById(long resourceId) {
-        for (Resource resource: resources) {
+        for (Resource resource : resources) {
             if (resource.getId() == resourceId)
                 return resource;
         }

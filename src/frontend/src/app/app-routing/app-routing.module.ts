@@ -4,6 +4,7 @@ import { MindmapHolderComponent } from "../mindmap-holder/mindmap-holder.compone
 
 const routes: Routes = [
   // { path: 'mindmap/:id', component: MindmapHolderComponent },
+  { path: '', redirectTo: 'app', pathMatch: 'full' }
   // todo
 ];
 

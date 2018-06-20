@@ -16,7 +16,7 @@
     <input name="name" matInput placeholder="姓名"  [formControlName]="'name'" [errorStateMatcher]="matcher">
     <mat-hint>请输入您的姓名，6-32位字符，支持中英文</mat-hint>
     <mat-error *ngIf="nameFormControl.hasError('pattern') && !nameFormControl.hasError('required')">
-      请输入正确的姓名格式
+      请输入正确的姓名格式，6-32位字符
     </mat-error>
     <mat-error *ngIf="nameFormControl.hasError('required')">
       姓名不能为空
@@ -27,7 +27,7 @@
     <input type="password" name="password" matInput placeholder="密码"  [formControlName]="'password'" [errorStateMatcher]="matcher">
     <mat-hint>请输入您的密码，6-32位字符，包括数字、大小写英文字母</mat-hint>
     <mat-error *ngIf="passwordFormControl.hasError('pattern') && !passwordFormControl.hasError('required')">
-      请输入正确的密码格式
+      请输入正确的密码格式，6-32位字符，包括数字、大小写英文字母
     </mat-error>
     <mat-error *ngIf="passwordFormControl.hasError('required')">
       密码不能为空

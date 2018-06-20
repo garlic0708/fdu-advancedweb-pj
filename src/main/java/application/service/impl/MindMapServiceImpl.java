@@ -76,6 +76,10 @@ public class MindMapServiceImpl implements MindMapService {
         MindMap mindMap = new MindMap();
         mindMap.setName(name);
         mindMap.setCourse(course);
+        Node node = new Node();
+        node.setName(name);
+        node.setInternalId(1);
+        mindMap.setRootNode(node);
         return mindMapRepository.save(mindMap);
     }
 
@@ -129,6 +133,7 @@ public class MindMapServiceImpl implements MindMapService {
                 case "changeParent":
                     node = cacheUtil.getItem(manipulation.getId());
                     node.getFatherNode().getChildNodes().remove(node);
+                    node.setFatherNode(null);
                     cacheUtil.getItem(manipulation.getParentId()).getChildNodes().add(node);
             }
         }

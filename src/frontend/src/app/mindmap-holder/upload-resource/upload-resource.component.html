@@ -28,6 +28,6 @@
 </div>
 <div *ngIf="type == 'url' && !editing">
   <p>{{description}}</p>
-  <p><a [href]="url">{{url}}</a></p>
+  <p><a [href]="convertUrl(url)">{{url}}</a></p>
   <button mat-button *ngIf="canEdit()" (click)="editing = true">编辑</button>
 </div>

@@ -30,17 +30,20 @@
       <app-attachment-display [attachmentList]="attachments.questions"
                               (chooseItem)="edit('question', $event)"
                               (newItem)="newItem('question')"
-                              [displayNewItem]="role == 'TEACHER'"></app-attachment-display>
+                              [displayNewItem]="role == 'TEACHER'"
+                              [type]="'作业'"></app-attachment-display>
       <mat-divider></mat-divider>
       <app-attachment-display [attachmentList]="attachments.coursewares"
                               (chooseItem)="getFile('courseware', $event)"
                               (newItem)="newItem('courseware')"
-                              [displayNewItem]="newItemRequireSave"></app-attachment-display>
+                              [displayNewItem]="newItemRequireSave"
+                              [type]="'课件'"></app-attachment-display>
       <mat-divider></mat-divider>
       <app-attachment-display [attachmentList]="attachments.resources"
                               (chooseItem)="getFile('resource', $event)"
                               (newItem)="newItem('resource')"
-                              [displayNewItem]="newItemRequireSave"></app-attachment-display>
+                              [displayNewItem]="newItemRequireSave"
+                              [type]="'资源'"></app-attachment-display>
     </ng-container>
 
     <ng-template #loading>

@@ -63,12 +63,12 @@ public class MultipleChoiceServiceImpl implements MultipleChoiceService {
 
         char ch = 'A';
         for (int i = 0; i < choices.size(); i++) {
-            answers.put(String.valueOf((ch + i)), choices.get(i));
+            answers.put(String.valueOf((char) (ch + i)), choices.get(i));
         }
 
         MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion();
         multipleChoiceQuestion.setContent(mcq.getContent());
-        multipleChoiceQuestion.addCorrectAnswer(String.valueOf((ch + mcq.getCorrect())));
+        multipleChoiceQuestion.addCorrectAnswer(String.valueOf((char) (ch + mcq.getCorrect())));
         multipleChoiceQuestion.setAnswers(answers);
 
         Node node = nodeRepository.findById(nodeId);

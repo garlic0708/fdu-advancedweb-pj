@@ -9,6 +9,7 @@ export class CourseService {
 
   private courseUrl = '/api/course/get';
   private addCourseUrl = '/api/course/add';
+  private addMindMapUrl = '/api/mindmap/add';
   private deleteCourseUrl = '/api/course/delete';
   private deleteMindMapUrl = '/api/mindmap/delete';
   private selectCourseUrl = '/api/course/select';
@@ -24,6 +25,10 @@ export class CourseService {
 
   addCourse(name): Observable<any> {
     return this.http.post(this.addCourseUrl, { name })
+  }
+
+  addMindmap(courseId, name): Observable<any> {
+    return this.http.post(`${this.addMindMapUrl}/${courseId}`, { name })
   }
 
   deleteCourse(id): Observable<any> {

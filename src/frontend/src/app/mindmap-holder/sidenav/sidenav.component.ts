@@ -203,6 +203,7 @@ export class SidenavComponent implements OnInit {
   dataSource: MatTreeFlatDataSource<Node, FlatNode>;
 
   creating = 0;
+  parentNodeId: number;
 
   options = [];
 
@@ -298,17 +299,23 @@ export class SidenavComponent implements OnInit {
     this.treeControl.expand(node);
     if (!this.isTeacher())
       this.options = [];
+    this.parentNodeId = node.id;
   }
 
   /** Save the node to database */
   saveNode(node: FlatNode, value: string) {
     if (value != "") {
       this.creating = 2;
-      this.courseService.addCourse(value).subscribe(({ id, name }) => {
+      const next = ({ id, name }) => {
         this.creating = 0;
         const nestedNode = this.flatNodeMap.get(node);
         this.database.update(nestedNode!, name, id);
-      })
+      };
+      if (node.level == 1)
+        this.courseService.addCourse(value).subscribe(next);
+      else
+        this.courseService.addMindmap(this.parentNodeId, value)
+          .subscribe(next)
     } else this.cancelAddNode(node)
   }
 
@@ -347,8 +354,9 @@ export class SidenavComponent implements OnInit {
   }
 
   openMap(id) {
+    console.log('id', id);
     // this.router.navigate(['/mindmap', id.toString()], {relativeTo: this.route})
-    this.router.navigateByUrl(`/mindmap/${id}`);
+    this.router.navigateByUrl(`/app/mindmap/${id}`);
     // this.database.markSelected(id);
   }
 

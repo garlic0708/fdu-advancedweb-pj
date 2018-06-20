@@ -29,7 +29,7 @@ export class NavComponent implements OnInit {
 
   logout() {
     this.currentUser.logout()
-      .subscribe(() => this.router.navigate(['/login']))
+      .subscribe(() => this.router.navigate(['/app/login']))
   }
 
 }

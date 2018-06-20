@@ -6,7 +6,7 @@ import { ModifyComponent } from "../modify/modify.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'app',
     canActivate: [AuthGuard],
     data: { noAuth: true },
     children: [
@@ -15,7 +15,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'changePassword',
+    path: 'app/changePassword',
     canActivate: [AuthGuard],
     component: ModifyComponent,
   }

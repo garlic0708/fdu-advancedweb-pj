@@ -32,7 +32,7 @@ public class MindMapController {
     @PreAuthorize("hasAnyAuthority('TEACHER')")
     @RequestMapping(value = "/api/mindmap/add/{id}", method = RequestMethod.POST)
     public @ResponseBody MindMap addMindMap(
-            @PathVariable String courseId,
+            @PathVariable("id") String courseId,
             @RequestBody MindMap map) {
         return mindMapService.addMindMap(Long.parseLong(courseId), map.getName());
     }
@@ -76,7 +76,7 @@ public class MindMapController {
     }
 
     @RequestMapping(value = "/api/mindmap/manipulate/{id}", method = RequestMethod.POST)
-    public Node manipulate(
+    public @ResponseBody Node manipulate(
             @PathVariable String id, @RequestBody List<MindMapManipulation> mapManipulations
             ) {
         mindMapService.manipulate(Long.parseLong(id), mapManipulations);

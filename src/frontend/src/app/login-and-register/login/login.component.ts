@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
     this.currentUser.login(this.email, this.password)
       .subscribe(() => {
         this.submitting = false;
-        this.router.navigateByUrl('/')
+        this.router.navigateByUrl('/app')
       }, (x) => {
         console.log(x);
         this.submitting = false;

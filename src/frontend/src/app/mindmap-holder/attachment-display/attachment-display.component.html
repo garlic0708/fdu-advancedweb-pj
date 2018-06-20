@@ -1,4 +1,5 @@
 <mat-list-item>
+  {{type}}
   <mat-chip-list [selectable]="false" id="resources">
     <mat-chip *ngFor="let attachment of attachmentList" [selected]="true"
               (click)="itemClicked(attachment)">

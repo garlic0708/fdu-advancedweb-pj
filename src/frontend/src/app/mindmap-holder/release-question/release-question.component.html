@@ -67,7 +67,7 @@
         <br>
         <mat-radio-group>
           &nbsp;&nbsp;&nbsp;&nbsp;
-          <mat-radio-button *ngFor="let x of getAnswerKeys(question); let i = index">选项{{i}}. {{question.answers[x]}}
+          <mat-radio-button *ngFor="let x of getAnswerKeys(question); let i = index">选项{{x}}. {{question.answers[x]}}
           </mat-radio-button>
           <br>
         </mat-radio-group>

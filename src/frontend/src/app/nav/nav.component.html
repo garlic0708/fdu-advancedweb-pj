@@ -1,15 +1,15 @@
 <div *ngIf="user == null" class="nav">
   <button mat-button [matMenuTriggerFor]="menu" class="button">未登录</button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item [routerLink]="['/login']">登录</button>
-    <button mat-menu-item [routerLink]="['/register']">注册</button>
+    <button mat-menu-item [routerLink]="['/app/login']">登录</button>
+    <button mat-menu-item [routerLink]="['/app/register']">注册</button>
   </mat-menu>
 </div>
 
 <div *ngIf="user != null" class="nav">
   <button mat-button [matMenuTriggerFor]="menu" class="button"><mat-icon>person</mat-icon>{{user.name}}</button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item [routerLink]="['/changePassword']">修改密码</button>
+    <button mat-menu-item [routerLink]="['/app', 'changePassword']">修改密码</button>
     <button mat-menu-item (click)="logout()">注销</button>
   </mat-menu>
 </div>

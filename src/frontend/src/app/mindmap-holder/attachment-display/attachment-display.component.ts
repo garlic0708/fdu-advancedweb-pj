@@ -10,6 +10,7 @@ export class AttachmentDisplayComponent implements OnInit {
 
   @Input() attachmentList: Question | CourseWare | Resource;
   @Input() displayNewItem: boolean | 'needSave';
+  @Input() type: string;
   @Output() chooseItem: EventEmitter<any> = new EventEmitter<any>();
   @Output() newItem: EventEmitter<any> = new EventEmitter<any>();
 

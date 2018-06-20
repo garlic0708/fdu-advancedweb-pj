@@ -71,7 +71,7 @@ export class RegisterComponent implements OnInit {
     this.currentUser.register(this.formGroup.value)
       .subscribe(() => {
         this.submitting = false;
-        this.router.navigateByUrl('/')
+        this.router.navigateByUrl('/app')
       })
   }
 }

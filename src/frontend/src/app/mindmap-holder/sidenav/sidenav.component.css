@@ -12,7 +12,7 @@
 
 
 .node-with-delete {
-  width:200px;
+  width:150px;
   overflow:hidden;
   text-overflow:ellipsis;
   -o-text-overflow:ellipsis;

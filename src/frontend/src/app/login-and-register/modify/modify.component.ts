@@ -59,7 +59,7 @@ export class ModifyComponent implements OnInit {
     this.currentUser.changePassword(this.formGroup.value)
       .subscribe(() => {
         this.submitting = false;
-        this.router.navigateByUrl('/login');
+        this.router.navigateByUrl('/app/login');
       })
   }
 }

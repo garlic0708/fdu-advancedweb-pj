@@ -93,7 +93,7 @@ export class ReleaseQuestionComponent implements OnInit {
     let formValue = this.questionForm.value;
     formValue = formValue.questionType == 'multipleChoice' ?
       { ...formValue, choices: formValue.choices.map(c => c.content), }
-      : formValue;
+      : { ...formValue, correctAnswer: formValue.correct };
     if (!this.qid) {
       this.nodeService.addQuestion(formValue)
         .subscribe(next);

@@ -7,7 +7,7 @@ import { map } from "rxjs/internal/operators";
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate, CanActivateChild {
 
   constructor(private currentUser: CurrentUserService,
               private router: Router) {
@@ -18,12 +18,16 @@ export class AuthGuard implements CanActivate {
       map(user => {
         const noAuth = route.data['noAuth'];
         const check = noAuth ? !user : !!user;
-        const redirect = noAuth ? '/' : '/login';
+        const redirect = noAuth ? '/app' : '/app/login';
         if (check) return true;
         this.router.navigate([redirect]);
         return false
       })
     );
+  }
+
+  canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    return this.canActivate(childRoute, state);
   }
 
 }

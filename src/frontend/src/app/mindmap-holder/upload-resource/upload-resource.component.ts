@@ -66,4 +66,8 @@ export class UploadResourceComponent implements OnInit {
   canEdit() {
     return this.currentUser.currentUserRole == 'TEACHER'
   }
+
+  convertUrl(url:string) {
+    return url.startsWith('http') ? url : `http://${url}`
+  }
 }

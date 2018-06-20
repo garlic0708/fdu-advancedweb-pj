@@ -63,6 +63,7 @@ export class NodeService {
   }
 
   getAttachments(id): Observable<Attachments> {
+    console.log(id, this.activeNodeId);
     if (id != this.activeNodeId) {
       this.activeNodeId = id;
       // re-assigning will make the previous subject automatically garbage collected
@@ -142,7 +143,6 @@ export class NodeService {
       const url = questionType == 'multipleChoice' ? this.addChoiceUrl : this.addAnswerUrl;
       observable = this.http.post<Question>(`${url}/${nodeId}`, rest)
     }
-    // todo
     return pipe ? observable.pipe(map(pipe)) : observable;
   }
 
@@ -172,6 +172,7 @@ export class NodeService {
   }
 
   getMap(mapId) {
+    this.activeNodeId = null;
     return this.http.get<MindMapNode>(`${this.mapUrl}/${mapId}`)
       .pipe(map(data => this.transform(data)))
   }
@@ -186,7 +187,6 @@ export class NodeService {
           this.postObservable(this.cachedItem.get(q.id), 'question', entry[1], newQ => {
             q.id = newQ.id // Update current active node, for the id should be updated
           })),
-        // todo
       );
     })
   }

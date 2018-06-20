@@ -6,7 +6,7 @@
           <mat-list-item class="list-leaf-node" [class.list-selected]="node.selected" (click)="openMap(node.id)">
             <button mat-icon-button disabled></button>
             <div class="node-with-delete">
-              {{node.name}}&nbsp;{{node.id}}
+              {{node.name}}
             </div>
             <button mat-icon-button *ngIf="isTeacher()" (click)="openDialog(node, 'mindmap')">
               <mat-icon>delete</mat-icon>
@@ -18,7 +18,7 @@
           <div *ngIf="isTeacher()">
             <button mat-icon-button disabled></button>
             <mat-form-field>
-              <input matInput #itemValue placeholder="New item...">
+              <input matInput #itemValue placeholder="{{node.level == 1 ? '添加课程' : '添加Mindmap'}}">
             </mat-form-field>
             <button mat-button (click)="saveNode(node, itemValue.value)">
               {{itemValue.value ? 'Save' : 'Cancel'}}
@@ -27,7 +27,8 @@
           </div>
           <div *ngIf="!isTeacher()">
             <mat-form-field>
-              <input matInput [matAutocomplete]="auto" (input)="inputChanged($event.target.value)">
+              <input matInput [matAutocomplete]="auto" placeholder="搜索课程名称"
+                     (input)="inputChanged($event.target.value)">
             </mat-form-field>
 
             <mat-autocomplete #auto="matAutocomplete">
@@ -49,7 +50,7 @@
             <button mat-icon-button disabled></button>
           </ng-template>
           <div class="node-with-delete">
-            {{node.name}}&nbsp;{{node.id}}
+            {{node.name}}
             <button *ngIf="creating == 0 && canAdd(node)" mat-icon-button (click)="addNode(node)">
               <mat-icon>add</mat-icon>
             </button>

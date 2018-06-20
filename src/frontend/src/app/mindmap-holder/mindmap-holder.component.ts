@@ -71,7 +71,7 @@ export class MindmapHolderComponent implements OnInit, AfterViewInit {
 
   closeEditPanel() {
     // noinspection JSIgnoredPromiseFromCall
-    this.router.navigateByUrl(`/mindmap/${this.mapId}`)
+    this.router.navigateByUrl(`/app/mindmap/${this.mapId}`)
   }
 
   edit(type, item) {
@@ -205,6 +205,6 @@ export class MindmapHolderComponent implements OnInit, AfterViewInit {
 
   get newItemRequireSave() {
     return this.role != 'TEACHER' ? false :
-      (this.nodeService.isNodeActive(this.nodeId) ? true : 'needSave')
+      (findLast(this.manipulations, { action: 'addNode', id: this.nodeId }) ? 'needSave' : true)
   }
 }

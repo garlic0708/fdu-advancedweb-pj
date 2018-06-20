@@ -10,7 +10,7 @@ import { UploadResourceComponent } from "../upload-resource/upload-resource.comp
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'app',
     component: SidenavComponent,
     canActivate: [AuthGuard],
     children: [
@@ -18,26 +18,50 @@ const routes: Routes = [
         path: 'mindmap/:mapId',
         component: MindmapHolderComponent,
         children: [
+          // {
+          //   path: '', // todo student role checker
+          //   children: [
           {
-            path: '', // todo student role checker
-            children: [
-              { path: 'answer/:qType/:qid', component: AnswerQuestionComponent },
-            ],
+            path: 'answer/:qType/:qid', component: AnswerQuestionComponent,
             canActivateChild: [RoleGuard],
             data: { role: 'STUDENT' },
           },
+          // ],
+          // canActivateChild: [RoleGuard],
+          // data: { role: 'STUDENT' },
+          // },
+          // {
+          //   path: '', // todo teacher role checker
+          //   children: [
           {
-            path: '', // todo teacher role checker
-            children: [
-              { path: 'question/:nodeId/new', component: ReleaseQuestionComponent },
-              { path: 'question/:qType/:qid', component: ReleaseQuestionComponent },
-              { path: 'courseware/:nodeId/new', component: UploadCourseComponent },
-              { path: 'resource/:nodeId/new', component: UploadResourceComponent },
-              { path: 'resource/:rid', component: UploadResourceComponent },
-            ],
+            path: 'question/:nodeId/new', component: ReleaseQuestionComponent,
             canActivateChild: [RoleGuard],
             data: { role: 'TEACHER' },
           },
+          {
+            path: 'question/:qType/:qid', component: ReleaseQuestionComponent,
+            canActivateChild: [RoleGuard],
+            data: { role: 'TEACHER' },
+          },
+          {
+            path: 'courseware/:nodeId/new', component: UploadCourseComponent,
+            canActivateChild: [RoleGuard],
+            data: { role: 'TEACHER' },
+          },
+          {
+            path: 'resource/:nodeId/new', component: UploadResourceComponent,
+            canActivateChild: [RoleGuard],
+            data: { role: 'TEACHER' },
+          },
+          {
+            path: 'resource/:rid', component: UploadResourceComponent,
+            canActivateChild: [RoleGuard],
+            data: { role: 'TEACHER' },
+          },
+          // ],
+          // canActivateChild: [RoleGuard],
+          // data: { role: 'TEACHER' },
+          // },
         ]
       },
     ],
