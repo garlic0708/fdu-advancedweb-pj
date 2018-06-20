@@ -1,5 +1,6 @@
 package application.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.neo4j.ogm.annotation.*;
 
 /**
@@ -15,8 +16,10 @@ public class StudentAnswerForShortAnswer {
     private String answer;
 
     @StartNode
+    @JsonIgnore
     private Student student;
     @EndNode
+    @JsonIgnore
     private ShortAnswerQuestion question;
 
     public Long getId() {

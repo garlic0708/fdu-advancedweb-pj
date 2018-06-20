@@ -17,6 +17,6 @@ export interface Resource {
 
 export interface Attachments {
   questions: Question[],
-  courseWares: CourseWare[],
+  coursewares: CourseWare[],
   resources: Resource[],
 }

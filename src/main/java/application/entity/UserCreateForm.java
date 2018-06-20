@@ -17,18 +17,18 @@ public class UserCreateForm {
     }
 
     @NotEmpty
-    private String name = "";
+    private String name;
     @NotEmpty
-    private String email = "";
+    private String email;
 
     @NotEmpty
-    private String password = "";
+    private String password;
 
     @NotEmpty
-    private String passwordRepeated = "";
+    private String passwordRepeated;
 
     @NotNull
-    private Role role = Role.TEACHER;
+    private Role role;
 
     public String getEmail() {
         return email;

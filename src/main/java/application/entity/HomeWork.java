@@ -1,7 +1,9 @@
 package application.entity;
 
+import application.entity.view.RoleViews;
 import application.entity.view.TypeDescriptionView;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -17,13 +19,18 @@ import static org.neo4j.ogm.annotation.Relationship.INCOMING;
 public class HomeWork implements TypeDescriptionView {
     @Id
     @GeneratedValue
+    @JsonView(RoleViews.PublicView.class)
     private Long id;
 
+    @JsonView(RoleViews.PublicView.class)
     private QuestionType type;
 
     @JsonIgnore
     @Relationship(type = "hasHomeWork", direction = INCOMING)
     private Node fatherNode;
+
+    @JsonView(RoleViews.StudentView.class)
+    private String answer;
 
     public Long getId() {
         return id;
@@ -57,5 +64,13 @@ public class HomeWork implements TypeDescriptionView {
     @Override
     public String getType() {
         return type.toString();
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 }

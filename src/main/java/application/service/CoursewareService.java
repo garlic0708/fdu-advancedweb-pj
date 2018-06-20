@@ -2,6 +2,7 @@ package application.service;
 
 import application.entity.Courseware;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ public interface CoursewareService {
 
     Set<Courseware> getByNodeId(long nodeId);
 
-    void addCourseware(long nodeId, String name, String location);
+    Courseware addCourseware(long nodeId, String name, String location);
 
     void deleteCourseware(long id);
 
@@ -24,5 +25,5 @@ public interface CoursewareService {
 
     void updateCourseware(Courseware courseware);
 
-    void uploadFile(byte[] file, String filePath, String fileName) throws IOException;
+    String getFilePath(long id);
 }

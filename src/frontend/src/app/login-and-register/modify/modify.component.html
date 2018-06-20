@@ -1,0 +1,34 @@
+<h1>修改密码</h1>
+
+<form class="form" [formGroup]="formGroup" (submit)="submit()">
+  <mat-form-field class="full-width">
+    <input type="password" name="old_password" matInput placeholder="原密码" [formControlName]="'oldPassword'">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input type="password" name="password" matInput placeholder="新密码"
+           [formControl]="passwordFormControl" [errorStateMatcher]="matcher">
+    <mat-hint>请输入您的密码，6-32位字符，包括数字、大小写英文字母</mat-hint>
+    <mat-error *ngIf="passwordFormControl.hasError('pattern') && !passwordFormControl.hasError('required')">
+      请输入正确的密码格式
+    </mat-error>
+    <mat-error *ngIf="passwordFormControl.hasError('required')">
+      密码不能为空
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input type="password" name="confirmPassword" matInput placeholder="确认密码"
+           [formControl]="confirmPasswordFormControl" [errorStateMatcher]="matcher">
+    <mat-hint>请再次输入密码</mat-hint>
+    <mat-error *ngIf="confirmPasswordFormControl.hasError('pattern') && !confirmPasswordFormControl.hasError('required')">
+      两次输入密码不一致
+    </mat-error>
+    <mat-error *ngIf="confirmPasswordFormControl.hasError('required')">
+      密码不能为空
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button type="submit" [disabled]="!formGroup.valid">提交</button>
+  <mat-spinner *ngIf="submitting"></mat-spinner>
+</form>

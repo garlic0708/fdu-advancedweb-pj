@@ -1,0 +1,33 @@
+<div *ngIf="!rid">
+  <h3>选择资源类型：</h3>
+
+  <mat-form-field class="full-width">
+    <mat-select [(ngModel)]="type" class="form-control">
+      <mat-option class="center-block" value="file">文件</mat-option>
+      <mat-option class="center-block" value="url">链接</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<app-upload-course *ngIf="type=='file'"></app-upload-course>
+<div *ngIf="type=='url' && editing">
+  <form class="container" (ngSubmit)="onSubmit()">
+    <mat-form-field class="full-width">
+      <input [(ngModel)]="url" name="url" matInput placeholder="url">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="full-width">
+      <input [(ngModel)]="description" name="description" matInput placeholder="文件描述">
+    </mat-form-field>
+    <br>
+    <button mat-raised-button type="submit" [disabled]="invalid()">
+      {{rid ? '保存' : '添加'}}
+    </button>
+    <mat-spinner *ngIf="submitting"></mat-spinner>
+  </form>
+</div>
+<div *ngIf="type == 'url' && !editing">
+  <p>{{description}}</p>
+  <p><a [href]="url">{{url}}</a></p>
+  <button mat-button *ngIf="canEdit()" (click)="editing = true">编辑</button>
+</div>

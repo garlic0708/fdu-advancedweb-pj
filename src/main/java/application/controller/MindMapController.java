@@ -3,6 +3,7 @@ package application.controller;
 import application.controller.result.JsonResult;
 import application.entity.*;
 import application.service.MindMapService;
+import application.service.NodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,8 +20,14 @@ import java.util.Set;
  */
 @Controller
 public class MindMapController {
+    private final MindMapService mindMapService;
+    private final NodeService nodeService;
+
     @Autowired
-    private MindMapService mindMapService;
+    public MindMapController(NodeService nodeService, MindMapService mindMapService) {
+        this.nodeService = nodeService;
+        this.mindMapService = mindMapService;
+    }
 
     @PreAuthorize("hasAnyAuthority('TEACHER')")
     @RequestMapping(value = "/api/mindmap/add/{id}", method = RequestMethod.POST)
@@ -69,10 +76,10 @@ public class MindMapController {
     }
 
     @RequestMapping(value = "/api/mindmap/manipulate/{id}", method = RequestMethod.POST)
-    public ResponseEntity manipulate(
+    public Node manipulate(
             @PathVariable String id, @RequestBody List<MindMapManipulation> mapManipulations
             ) {
         mindMapService.manipulate(Long.parseLong(id), mapManipulations);
-        return ResponseEntity.ok(new JsonResult("status", "ok"));
+        return nodeService.getAll(Long.parseLong(id));
     }
 }

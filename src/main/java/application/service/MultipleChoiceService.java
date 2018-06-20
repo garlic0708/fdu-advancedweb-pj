@@ -13,6 +13,8 @@ import java.util.Set;
 public interface MultipleChoiceService {
     MultipleChoiceQuestion getById(long id);
 
+    MultipleChoiceQuestion getById(long id, long studentId);
+
     Set<MultipleChoiceQuestion> getByNodeId(long nodeId);
 
     Set<MultipleChoiceQuestion> getByMindMapId(long mindMapId);
@@ -29,5 +31,5 @@ public interface MultipleChoiceService {
 
     void deleteAll();
 
-    MultipleChoiceQuestion update(AddMCQ mcq);
+    MultipleChoiceQuestion update(long id, AddMCQ mcq);
 }

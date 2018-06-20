@@ -20,6 +20,7 @@ public class Resource implements TypeDescriptionView {
     private Long id;
     private String name;
     private String fileLocation;
+    private String url;
     private ResourceType type;
 
     @JsonIgnore
@@ -33,7 +34,7 @@ public class Resource implements TypeDescriptionView {
 
     @Override
     public String getDescription() {
-        return null;
+        return name;
     }
 
     public void setId(Long id) {
@@ -75,5 +76,13 @@ public class Resource implements TypeDescriptionView {
     @Override
     public String getType() {
         return type.toString();
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

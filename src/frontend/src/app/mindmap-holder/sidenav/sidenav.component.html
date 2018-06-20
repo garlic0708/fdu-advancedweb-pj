@@ -1,0 +1,69 @@
+<mat-drawer-container class="example-container">
+  <mat-drawer class="example-events" #sidenav mode="side" [(opened)]="opened">
+    <mat-nav-list>
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+          <mat-list-item class="list-leaf-node" [class.list-selected]="node.selected" (click)="openMap(node.id)">
+            <button mat-icon-button disabled></button>
+            <div class="node-with-delete">
+              {{node.name}}&nbsp;{{node.id}}
+            </div>
+            <button mat-icon-button *ngIf="isTeacher()" (click)="openDialog(node, 'mindmap')">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-tree-node>
+
+        <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
+          <div *ngIf="isTeacher()">
+            <button mat-icon-button disabled></button>
+            <mat-form-field>
+              <input matInput #itemValue placeholder="New item...">
+            </mat-form-field>
+            <button mat-button (click)="saveNode(node, itemValue.value)">
+              {{itemValue.value ? 'Save' : 'Cancel'}}
+            </button>
+            <mat-spinner *ngIf="creating == 2"></mat-spinner>
+          </div>
+          <div *ngIf="!isTeacher()">
+            <mat-form-field>
+              <input matInput [matAutocomplete]="auto" (input)="inputChanged($event.target.value)">
+            </mat-form-field>
+
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let option of options" [value]="option.id"
+                          (onSelectionChange)="selectCourse(node, $event.source.value)">
+                {{option.name}}</mat-option>
+            </mat-autocomplete>
+
+          </div>
+        </mat-tree-node>
+
+        <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+          <button mat-icon-button matTreeNodeToggle *ngIf="node.hasChildren; else placeholderIcon">
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+          </button>
+          <ng-template #placeholderIcon>
+            <button mat-icon-button disabled></button>
+          </ng-template>
+          <div class="node-with-delete">
+            {{node.name}}&nbsp;{{node.id}}
+            <button *ngIf="creating == 0 && canAdd(node)" mat-icon-button (click)="addNode(node)">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+          <button *ngIf="node.level == 1" mat-icon-button (click)="openDialog(node, 'course')">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-tree-node>
+      </mat-tree>
+    </mat-nav-list>
+  </mat-drawer>
+  <router-outlet></router-outlet>
+</mat-drawer-container>
+
+<!-- Copyright 2018 Google Inc. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->

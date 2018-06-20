@@ -5,3 +5,7 @@
 button {
   margin: 0 20px;
 }
+
+mat-drawer {
+  width: 30%;
+}

@@ -1,25 +1,27 @@
+import random = require('lodash/random')
+
 export const mockData = {
   'GET /api/node/attachments/:id': {
     'questions': [
-      {id: 1, type: 'multipleChoice', description: 'Multiple Choice 1',},
-      {id: 2, type: 'multipleChoice', description: 'Multiple Choice 2',},
-      {id: 3, type: 'shortAnswer', description: 'Short Answer 1',},
+      { id: 1, type: 'multipleChoice', description: 'Multiple Choice 1', },
+      { id: 2, type: 'multipleChoice', description: 'Multiple Choice 2', },
+      { id: 3, type: 'shortAnswer', description: 'Short Answer 1', },
     ],
-    'courseWares': [
-      {id: 4, description: 'CW 1',},
-      {id: 5, description: 'CW 2',},
+    'coursewares': [
+      { id: 4, description: 'CW 1', },
+      { id: 5, description: 'CW 2', },
     ],
     'resources': [
-      {id: 6, type: 'file', description: 'File 1',},
-      {id: 7, type: 'url', description: 'URL 1',},
+      { id: 6, type: 'file', description: 'File 1', },
+      { id: 7, type: 'url', description: 'URL 1', },
     ],
   },
 
-  'GET /api/mindmaps/list/:courseid': [
-    {id: 0, name: '...'},
+  'GET /api/mindmaps/list/:courseId': [
+    { id: 0, name: '...' },
   ],
 
-  'GET /api/multipleChoiceQuestion/:qid':
+  'GET /api/homework/getMC/:qid':
     {
       type: 'multipleChoice',
       content: '1 + 1 = ?',
@@ -29,14 +31,20 @@ export const mockData = {
         c: '3',
       },
       correct: 'b',
+      answer: 'c',
     },
 
-  'GET /api/shortAnswerQuestion/:qid': {
+  'GET /api/homework/getSA/:qid': {
     type: 'shortAnswer',
     content: '1 + 1 = ?',
-    answers: '2',
+    answer: '2...',
     correct: '2',
   },
+
+  'POST /api/homework/updateMC/:qid': true,
+  'POST /api/homework/updateSA/:qid': true,
+  'POST /api/homework/addMCA/:qid': true,
+  'POST /api/homework/addSAA/:qid': true,
 
   'GET /api/node/getAll/:mapId': {
     "id": 123,
@@ -125,11 +133,93 @@ export const mockData = {
   },
 
   'POST /api/mindmap/manipulate/:mapId': {
-    key: 'status',
-    value: 'OK',
+    "id": 123,
+    internalId: 123,
+    "name": "rootNode",
+    "childNodes": [
+      {
+        "id": 158,
+        internalId: 158,
+        "name": "child1_2",
+        "childNodes": [],
+        "homeWork": [],
+        "coursewares": [],
+        "resources": []
+      },
+      {
+        "id": 159,
+        internalId: 159,
+        "name": "child1_3",
+        "childNodes": [],
+        "homeWork": [],
+        "coursewares": [],
+        "resources": []
+      },
+      {
+        "id": 160,
+        internalId: 160,
+        "name": "child1_4",
+        "childNodes": [],
+        "homeWork": [],
+        "coursewares": [],
+        "resources": []
+      },
+      {
+        "id": 133,
+        internalId: 133,
+        "name": "child1_1",
+        "childNodes": [
+          {
+            "id": 138,
+            internalId: 138,
+            color: '#80ff80',
+            "name": "child2_1",
+            "childNodes": [
+              {
+                "id": 200,
+                internalId: 200,
+                "name": "child3_2",
+                "childNodes": [],
+                "homeWork": [],
+                "coursewares": [],
+                "resources": []
+              },
+              {
+                "id": 201,
+                internalId: 201,
+                "name": "child3_3",
+                "childNodes": [],
+                "homeWork": [],
+                "coursewares": [],
+                "resources": []
+              },
+              {
+                "id": 156,
+                internalId: 156,
+                "name": "child3_1",
+                "childNodes": [],
+                "homeWork": [],
+                "coursewares": [],
+                "resources": []
+              }
+            ],
+            "homeWork": [],
+            "coursewares": [],
+            "resources": []
+          }
+        ],
+        "homeWork": [],
+        "coursewares": [],
+        "resources": []
+      },
+      { id: 200, internalId: 202, name: 'newly added', childNodes: [] }
+    ],
+    "homeWork": [],
+    "coursewares": [],
+    "resources": []
   },
 
-  'GET /api/course/get/:id': [
+  'GET /api/course/get': [
     {
       "id": 122,
       "name": "apue",
@@ -172,5 +262,33 @@ export const mockData = {
       "name": "sss",
       "maps": []
     }
-  ]
+  ],
+
+  'POST /api/course/add': {
+    id: random(10000),
+    name: 'just added',
+  },
+
+  'DELETE /api/course/delete/:id': true,
+  'DELETE /api/mindmap/delete/:id': true,
+
+  'POST /login': {
+    id: 78,
+    name: 'garlic0708',
+    role: 'TEACHER',
+  },
+  'POST /logout': true,
+
+  'POST /api/homework/addMC/:id':
+    { id: random(10000), type: 'multipleChoice', description: 'Just added MC', },
+
+  'POST /api/homework/addSA/:id':
+    { id: random(10000), type: 'shortAnswer', description: 'Just added SA', },
+
+  'GET /api/homework/getMCA/:id': {
+    a: 24,
+    b: 21,
+    c: 30,
+    d: 4,
+  }
 };

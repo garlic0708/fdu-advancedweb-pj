@@ -1,0 +1,87 @@
+<div>
+
+  <div style="margin-bottom: 40px">
+    <h3>上传列表</h3>
+
+    <table mat-table [dataSource]="queue">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let item"><strong>{{ item?.file?.name }}</strong></td>
+      </ng-container>
+      <ng-container matColumnDef="size">
+        <th mat-header-cell *matHeaderCellDef>Size</th>
+        <td mat-cell *matCellDef="let item">{{ getFileSize(item?.file?.size) }}</td>
+      </ng-container>
+      <ng-container matColumnDef="progress">
+        <th mat-header-cell *matHeaderCellDef>Progress</th>
+        <td mat-cell *matCellDef="let item">
+          <mat-progress-bar mode="determinate" [value]="item.progress"></mat-progress-bar>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let item">
+          <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+          <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+          <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let item">
+          <button type="button" class="btn btn-success btn-xs"
+                  (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+            <span class="glyphicon glyphicon-upload"></span> Upload
+          </button>
+          <button type="button" class="btn btn-warning btn-xs"
+                  (click)="item.cancel()" [disabled]="!item.isUploading">
+            <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+          </button>
+          <button type="button" class="btn btn-danger btn-xs"
+                  (click)="item.remove()">
+            <span class="glyphicon glyphicon-trash"></span> Remove
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let _; columns: columns"></tr>
+    </table>
+
+    <div>
+      <div>
+        Queue progress:
+        <div class="progress" style="">
+          <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-success btn-s"
+              (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+        <span class="glyphicon glyphicon-upload"></span> Upload all
+      </button>
+      <button type="button" class="btn btn-warning btn-s"
+              (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+        <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+      </button>
+      <button type="button" class="btn btn-danger btn-s"
+              (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+        <span class="glyphicon glyphicon-trash"></span> Remove all
+      </button>
+    </div>
+
+  </div>
+
+  <div>
+    <h3>上传文件</h3>
+    <div ng2FileDrop
+         [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+         (fileOver)="fileOverBase($event)"
+         [uploader]="uploader"
+         class="well my-drop-zone">
+      <mat-icon>add</mat-icon>
+      拖动文件到此处
+    </div>
+    <input type="file" ng2FileSelect [uploader]="uploader"/>
+  </div>
+
+</div>

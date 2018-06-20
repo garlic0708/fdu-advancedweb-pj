@@ -16,11 +16,13 @@ public interface ResourceService {
 
     Set<Resource> getByNodeId(long nodeId);
 
-    void addResource(long nodeId, String name, String location, ResourceType type);
+    Resource addResource(long nodeId, String name, String location, ResourceType type);
 
     void deleteResource(long id);
 
     void deleteAll();
 
-    void updateResource(Resource resource);
+    Resource updateResource(long id, Resource resource);
+
+    String getFilePath(long id);
 }

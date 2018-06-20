@@ -125,6 +125,11 @@ public class MindMapServiceImpl implements MindMapService {
                     break;
                 case "changeColor":
                     cacheUtil.getItem(manipulation.getId()).setColor(manipulation.getValue());
+                    break;
+                case "changeParent":
+                    node = cacheUtil.getItem(manipulation.getId());
+                    node.getFatherNode().getChildNodes().remove(node);
+                    cacheUtil.getItem(manipulation.getParentId()).getChildNodes().add(node);
             }
         }
         nodeRepository.deleteAll(nodesToRemove);

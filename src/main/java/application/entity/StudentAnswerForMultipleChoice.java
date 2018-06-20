@@ -1,5 +1,6 @@
 package application.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.neo4j.ogm.annotation.*;
 
 import java.util.HashSet;
@@ -16,8 +17,10 @@ public class StudentAnswerForMultipleChoice {
     private Long id;
     private String answer;
     @StartNode
+    @JsonIgnore
     private Student student;
     @EndNode
+    @JsonIgnore
     private MultipleChoiceQuestion question;
 
     public Long getId() {

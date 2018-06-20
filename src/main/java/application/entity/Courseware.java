@@ -31,7 +31,7 @@ public class Courseware implements DescriptionView {
 
     @Override
     public String getDescription() {
-        return null;
+        return name;
     }
 
     public void setId(Long id) {

@@ -1,0 +1,13 @@
+<mat-list-item>
+  <mat-chip-list [selectable]="false" id="resources">
+    <mat-chip *ngFor="let attachment of attachmentList" [selected]="true"
+              (click)="itemClicked(attachment)">
+      {{attachment.description}}
+    </mat-chip>
+    <mat-chip *ngIf="displayNewItem" (click)="newItemClicked()" [selected]="displayNewItem == true"
+              [color]="'accent'">
+      <mat-icon>add</mat-icon>
+      {{displayNewItem == true ? 'New Item' : 'Please save graph first'}}
+    </mat-chip>
+  </mat-chip-list>
+</mat-list-item>

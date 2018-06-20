@@ -1,0 +1,23 @@
+{
+  "/api": {
+    "target": "http://localhost:8080"
+  },
+  "/login": {
+    "target": "http://localhost:8080"
+  },
+  "/register": {
+    "target": "http://localhost:8080"
+  },
+  "/changePassword": {
+    "target": "http://localhost:8080"
+  },
+  "/logout": {
+    "target": "http://localhost:8080"
+  },
+  "/afterLogin": {
+    "target": "http://localhost:8080"
+  },
+  "/afterLogout": {
+    "target": "http://localhost:8080"
+  }
+}

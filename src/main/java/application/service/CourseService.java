@@ -21,11 +21,15 @@ public interface CourseService {
 
     Course addCourse(long teacherId, String courseName);
 
-    void selectCourse(long studentId, long courseId);
+    Course selectCourse(long studentId, long courseId);
+
+    void deselectCourse(long studentId, long courseId);
 
     void deleteCourse(long id);
 
     void deleteAll();
 
     void updateCourse(Course course);
+
+    Set<Course> queryByName(String name, long studentId);
 }

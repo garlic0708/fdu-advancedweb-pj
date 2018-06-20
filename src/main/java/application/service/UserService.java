@@ -9,6 +9,8 @@ public interface UserService {
 
     User addUser(UserCreateForm form);
 
+    User changePassword(User user, String newPassword);
+
     User getById(long id);
 
     User getByName(String name);

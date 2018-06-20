@@ -1,0 +1,8 @@
+<div mat-dialog-content>
+  <p *ngIf="!deleting">真的要删除吗？</p>
+  <mat-spinner *ngIf="deleting"></mat-spinner>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">取消</button>
+  <button mat-button (click)="onClick()" cdkFocusInitial>确认删除</button>
+</div>

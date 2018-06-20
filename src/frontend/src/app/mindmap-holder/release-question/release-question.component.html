@@ -1,0 +1,145 @@
+<form *ngIf="!qid" class="form" [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+  <mat-form-field class="full-width">
+    <mat-select class="form-control" [formControlName]="'questionType'">
+      <mat-option class="center-block" value="multipleChoice">选择题</mat-option>
+      <mat-option class="center-block" value="shortAnswer">问答题</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <br>
+
+  <div *ngIf="questionType.value=='multipleChoice'" formArrayName="choices">
+    <mat-form-field class="full-width">
+      <input matInput type="text" class="form-control" placeholder="请输入问题：" [formControl]="content">
+    </mat-form-field>
+    <br>
+    <mat-list>
+      <mat-list-item *ngFor="let ignored of choices.controls; let i = index" [formGroupName]="i">
+        <h5 style="display: inline">选项 {{i + 1}} : </h5>
+
+        <label style="display: inline">
+          <mat-form-field>
+            <input matInput type="text" class="form-control" placeholder="Input choice content..." formControlName="content">
+          </mat-form-field>
+        </label>
+
+        <label><input style="display: inline" type="radio" name="correct" [value]="i"
+                      [formControl]="correct" [checked]="i === correct.value"></label> &nbsp;
+
+        <button mat-raised-button (click)="deleteChoice(i)" type="button" [disabled]="choices.length <= 2">
+          <mat-icon>delete</mat-icon>
+          删除选项
+        </button>
+        <!-- End of the repeated address template -->
+      </mat-list-item>
+    </mat-list>
+    <br>
+    <button mat-raised-button (click)="addChoices()" type="button">
+      <mat-icon>add</mat-icon>
+      添加选项
+    </button>
+  </div>
+
+  <div *ngIf="questionType.value=='shortAnswer'">
+    <mat-form-field class="full-width">
+      <input matInput type="text" class="form-control" placeholder="请输入问题：" [formControl]="content">
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field class="full-width">
+      <textarea matInput placeholder="请输入问题正确答案：" [formControl]="correct"></textarea>
+    </mat-form-field>
+  </div>
+
+  <br>
+  <button mat-raised-button color="primary" type="submit" class="btn btn-success">提交问题</button>
+  &nbsp;
+</form>
+
+<ng-container *ngIf="qid">
+  <ng-container *ngIf="question$ | async as question; else loading">
+
+    <form *ngIf="!isModified" class="form" [formGroup]="questionForm" (ngSubmit)="modify()">
+      <div *ngIf="questionRouterType=='multipleChoice'">
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <mat-label>问题： {{question.content}}</mat-label>
+        <br>
+        <mat-radio-group>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <mat-radio-button *ngFor="let x of getAnswerKeys(question); let i = index">选项{{i}}. {{question.answers[x]}}
+          </mat-radio-button>
+          <br>
+        </mat-radio-group>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <mat-label>正确答案：</mat-label>
+        <mat-label>{{question.correctAnswers}}</mat-label>
+        <app-pie-chart [qid]="qid"></app-pie-chart>
+      </div>
+
+      <div *ngIf="questionRouterType=='shortAnswer'">
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <mat-label>问题： {{question.content}}</mat-label>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <mat-label>正确答案：</mat-label>
+        <mat-label>{{question.correctAnswer}}</mat-label>
+      </div>
+      <br>
+      <button mat-raised-button color="primary" type="submit" class="btn btn-success">修改问题</button>
+    </form>
+
+
+    <form *ngIf="isModified" class="form" [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+      <div *ngIf="questionRouterType=='multipleChoice'" formArrayName="choices">
+        <mat-form-field class="full-width">
+          <input matInput type="text" class="form-control" placeholder="请输入问题内容：" [formControl]="content">
+        </mat-form-field>
+        <br>
+        <div *ngFor="let x of choices.controls; let i = index" [formGroupName]="i">
+          <h5 style="display: inline">选项 {{i + 1}} :</h5>
+          <mat-label style="display: inline">
+            <mat-form-field>
+              <input matInput type="text" class="form-control" placeholder="输入选项内容：" formControlName="content">
+            </mat-form-field>
+          </mat-label>
+
+          <label><input style="display: inline" type="radio" name="correct" [value]="i"
+                        [formControl]="correct" [checked]="i === correct.value"></label> &nbsp;
+
+          <button mat-raised-button (click)="deleteChoice(i)" type="button" [disabled]="choices.length <= 2">
+            <mat-icon>delete</mat-icon>
+            删除选项
+          </button>
+          <!-- End of the repeated address template -->
+        </div>
+        <br>
+        <button mat-raised-button (click)="addChoices()" type="button">
+          <mat-icon>add</mat-icon>
+          添加选项
+        </button>
+      </div>
+
+      <form class="full-width" *ngIf="questionRouterType=='shortAnswer'">
+        <mat-form-field class="full-width">
+          <input matInput class="form-control" placeholder="请输入问题内容：" [formControl]="content">
+        </mat-form-field>
+        <br>
+
+        <mat-form-field class="full-width">
+          <textarea matInput class="form-control" placeholder="请输入问题答案:" [formControl]="correct"></textarea>
+        </mat-form-field>
+      </form>
+
+      <br>
+      <button mat-raised-button color="primary" type="submit" class="btn btn-success">提交问题</button>
+      &nbsp;
+    </form>
+  </ng-container>
+
+  <ng-template #loading>
+    <mat-spinner></mat-spinner>
+  </ng-template>
+</ng-container>
+
+<mat-spinner *ngIf="submitting"></mat-spinner>

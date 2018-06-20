@@ -1,9 +1,6 @@
 package application.service.impl;
 
-import application.entity.Node;
-import application.entity.ShortAnswerQuestion;
-import application.entity.Student;
-import application.entity.StudentAnswerForShortAnswer;
+import application.entity.*;
 import application.repository.NodeRepository;
 import application.repository.ShortAnswerRepository;
 import application.repository.StudentAnswerForShortAnswerRepository;
@@ -20,18 +17,34 @@ import java.util.Set;
  */
 @Service
 public class ShortAnswerServiceImpl implements ShortAnswerService {
+    private final ShortAnswerRepository shortAnswerRepository;
+    private final NodeRepository nodeRepository;
+    private final StudentRepository studentRepository;
+    private final StudentAnswerForShortAnswerRepository answerForShortAnswerRepository;
+
     @Autowired
-    private ShortAnswerRepository shortAnswerRepository;
-    @Autowired
-    private NodeRepository nodeRepository;
-    @Autowired
-    private StudentRepository studentRepository;
-    @Autowired
-    private StudentAnswerForShortAnswerRepository answerForShortAnswerRepository;
+    public ShortAnswerServiceImpl(ShortAnswerRepository shortAnswerRepository, NodeRepository nodeRepository, StudentRepository studentRepository, StudentAnswerForShortAnswerRepository answerForShortAnswerRepository) {
+        this.shortAnswerRepository = shortAnswerRepository;
+        this.nodeRepository = nodeRepository;
+        this.studentRepository = studentRepository;
+        this.answerForShortAnswerRepository = answerForShortAnswerRepository;
+    }
 
     @Override
     public ShortAnswerQuestion getById(long id) {
         return shortAnswerRepository.findById(id);
+    }
+
+    @Override
+    public ShortAnswerQuestion getById(long id, long studentId) {
+        ShortAnswerQuestion question = getById(id);
+        Set<StudentAnswerForShortAnswer> answers = question.getStudentAnswerForShortAnswers();
+        if (answers != null)
+            question.setAnswer(answers
+                    .stream().filter(answer -> answer.getStudent() != null &&
+                            answer.getStudent().getId() == studentId)
+                    .findFirst().map(StudentAnswerForShortAnswer::getAnswer).orElse(null));
+        return question;
     }
 
     @Override
@@ -59,10 +72,16 @@ public class ShortAnswerServiceImpl implements ShortAnswerService {
     public StudentAnswerForShortAnswer addStudentAnswer(long questionId, long studentId, String answer) {
         ShortAnswerQuestion question = shortAnswerRepository.findById(questionId);
         Student student = studentRepository.findById(studentId);
-        StudentAnswerForShortAnswer answerForShortAnswer = new StudentAnswerForShortAnswer();
-        answerForShortAnswer.setAnswer(answer);
-        answerForShortAnswer.setStudent(student);
-        answerForShortAnswer.setQuestion(question);
+        StudentAnswerForShortAnswer answerForShortAnswer =
+                answerForShortAnswerRepository.findByStudentAndQuestion(studentId, questionId);
+        if (answerForShortAnswer != null)
+            answerForShortAnswer.setAnswer(answer);
+        else {
+            answerForShortAnswer = new StudentAnswerForShortAnswer();
+            answerForShortAnswer.setAnswer(answer);
+            answerForShortAnswer.setStudent(student);
+            answerForShortAnswer.setQuestion(question);
+        }
         return answerForShortAnswerRepository.save(answerForShortAnswer);
     }
 
@@ -82,8 +101,8 @@ public class ShortAnswerServiceImpl implements ShortAnswerService {
     }
 
     @Override
-    public ShortAnswerQuestion update(ShortAnswerQuestion question) {
-        ShortAnswerQuestion question1 = shortAnswerRepository.findById(question.getId().longValue());
+    public ShortAnswerQuestion update(long id, ShortAnswerQuestion question) {
+        ShortAnswerQuestion question1 = shortAnswerRepository.findById(id);
         question1.setContent(question.getContent());
         question1.setCorrectAnswer(question.getCorrectAnswer());
         question1.setStudentAnswerForShortAnswers(null);

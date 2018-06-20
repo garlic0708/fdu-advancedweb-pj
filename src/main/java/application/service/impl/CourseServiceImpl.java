@@ -17,16 +17,20 @@ import java.util.Set;
  */
 @Service
 public class CourseServiceImpl implements CourseService {
+    private final CourseRepository courseRepository;
+    private final UserRepository userRepository;
+    private final MindMapRepository mindMapRepository;
+    private final TeacherRepository teacherRepository;
+    private final StudentRepository studentRepository;
+
     @Autowired
-    private CourseRepository courseRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private MindMapRepository mindMapRepository;
-    @Autowired
-    private TeacherRepository teacherRepository;
-    @Autowired
-    private StudentRepository studentRepository;
+    public CourseServiceImpl(CourseRepository courseRepository, UserRepository userRepository, MindMapRepository mindMapRepository, TeacherRepository teacherRepository, StudentRepository studentRepository) {
+        this.courseRepository = courseRepository;
+        this.userRepository = userRepository;
+        this.mindMapRepository = mindMapRepository;
+        this.teacherRepository = teacherRepository;
+        this.studentRepository = studentRepository;
+    }
 
     @Override
     public Course getById(long id) {
@@ -42,7 +46,7 @@ public class CourseServiceImpl implements CourseService {
     public Set<Course> getByTeacherId(long id) {
         Teacher teacher = teacherRepository.findById(id);
         Set<Course> courseSet = teacher.getCourses();
-        for (Course course: courseSet) {
+        for (Course course : courseSet) {
             courseRepository.findById(course.getId().longValue());
         }
         return courseSet;
@@ -52,7 +56,7 @@ public class CourseServiceImpl implements CourseService {
     public Set<Course> getByStudentId(long id) {
         Student student = studentRepository.findById(id);
         Set<Course> courseSet = student.getCourses();
-        for (Course course: courseSet) {
+        for (Course course : courseSet) {
             courseRepository.findById(course.getId().longValue());
         }
         return courseSet;
@@ -74,11 +78,17 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void selectCourse(long studentId, long courseId) {
+    public Course selectCourse(long studentId, long courseId) {
         Student student = (Student) userRepository.findById(studentId);
         Course course = courseRepository.findById(courseId);
         student.addCourses(course);
         userRepository.save(student);
+        return course;
+    }
+
+    @Override
+    public void deselectCourse(long studentId, long courseId) {
+        courseRepository.deselectCourse(studentId, courseId);
     }
 
     @Override
@@ -94,5 +104,12 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public void updateCourse(Course course) {
         courseRepository.save(course);
+    }
+
+    @Override
+    public Set<Course> queryByName(String name, long studentId) {
+        Set<Course> courses = courseRepository.findByNameLike(String.format(".*%s.*", name));
+        courses.removeAll(this.getByStudentId(studentId));
+        return courses;
     }
 }

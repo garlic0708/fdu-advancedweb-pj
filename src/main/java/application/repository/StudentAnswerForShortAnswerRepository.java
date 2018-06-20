@@ -21,4 +21,9 @@ public interface StudentAnswerForShortAnswerRepository
     @Query("MATCH (n:Student)-[:resolve]->(q:StudentAnswerForShortAnswer) WHERE ID(n)={0}" +
             "RETURN q")
     Set<StudentAnswerForShortAnswer> findByStudent_Id(long studentId);
+
+    @Query("MATCH (n:Student)-[r:resolve]->(q:ShortAnswerQuestion) WHERE ID(n)={0}" +
+            "AND ID(q) = {1} RETURN r")
+    StudentAnswerForShortAnswer findByStudentAndQuestion(long studentId, long questionId);
+
 }

@@ -1,5 +1,6 @@
 package application.service.impl;
 
+import application.entity.Course;
 import application.entity.Courseware;
 import application.entity.Node;
 import application.repository.CoursewareRepository;
@@ -20,10 +21,15 @@ import java.util.Set;
  */
 @Service
 public class CoursewareServiceImpl implements CoursewareService {
+    private final CoursewareRepository coursewareRepository;
+    private final NodeRepository nodeRepository;
+
     @Autowired
-    private CoursewareRepository coursewareRepository;
-    @Autowired
-    private NodeRepository nodeRepository;
+    public CoursewareServiceImpl(CoursewareRepository coursewareRepository, NodeRepository nodeRepository) {
+        this.coursewareRepository = coursewareRepository;
+        this.nodeRepository = nodeRepository;
+    }
+
     @Override
     public Courseware getById(long id) {
         return coursewareRepository.findById(id);
@@ -45,14 +51,14 @@ public class CoursewareServiceImpl implements CoursewareService {
     }
 
     @Override
-    public void addCourseware(long nodeId, String name, String location) {
+    public Courseware addCourseware(long nodeId, String name, String location) {
         Courseware courseware = new Courseware();
         courseware.setName(name);
         courseware.setFileLocation(location);
 
         Node node = nodeRepository.findById(nodeId);
         courseware.setFatherNode(node);
-        coursewareRepository.save(courseware);
+        return coursewareRepository.save(courseware);
     }
 
     @Override
@@ -71,14 +77,9 @@ public class CoursewareServiceImpl implements CoursewareService {
     }
 
     @Override
-    public void uploadFile(byte[] file, String filePath, String fileName) throws IOException {
-        File targetFile = new File(filePath);
-        if(!targetFile.exists()){
-            targetFile.mkdirs();
-        }
-        FileOutputStream out = new FileOutputStream(filePath+fileName);
-        out.write(file);
-        out.flush();
-        out.close();
+    public String getFilePath(long id) {
+        Courseware courseware = getById(id);
+        return courseware.getFileLocation() + courseware.getName();
     }
+
 }

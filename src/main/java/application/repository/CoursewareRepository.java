@@ -18,7 +18,7 @@ public interface CoursewareRepository extends CrudRepository<Courseware, Long> {
 
     void deleteById(long id);
 
-    @Query("MATCH (n:Node)-[:hasHomeWork]->(q:Courseware) WHERE ID(n)={0}" +
+    @Query("MATCH (n:Node)-[:hasCourseWares]->(q:Courseware) WHERE ID(n)={0}" +
             "RETURN q")
     Set<DescriptionView> findByFatherNode_Id(long id);
 }

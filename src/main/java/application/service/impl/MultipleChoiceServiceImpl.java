@@ -35,6 +35,18 @@ public class MultipleChoiceServiceImpl implements MultipleChoiceService {
     }
 
     @Override
+    public MultipleChoiceQuestion getById(long id, long studentId) {
+        MultipleChoiceQuestion question = getById(id);
+        Set<StudentAnswerForMultipleChoice> answers = question.getStudentAnswerForMultipleChoices();
+        if (answers != null)
+            question.setAnswer(answers
+                    .stream().filter(answer -> answer.getStudent() != null &&
+                            answer.getStudent().getId() == studentId)
+                    .findFirst().map(StudentAnswerForMultipleChoice::getAnswer).orElse(null));
+        return question;
+    }
+
+    @Override
     public Set<MultipleChoiceQuestion> getByNodeId(long nodeId) {
         return choiceRepository.findByFatherNode_Id(nodeId);
     }
@@ -68,10 +80,16 @@ public class MultipleChoiceServiceImpl implements MultipleChoiceService {
     public StudentAnswerForMultipleChoice addStudentAnswer(long questionId, long studentId, String answer) {
         MultipleChoiceQuestion question = choiceRepository.findById(questionId);
         Student student = studentRepository.findById(studentId);
-        StudentAnswerForMultipleChoice answerForMultipleChoice = new StudentAnswerForMultipleChoice();
-        answerForMultipleChoice.setAnswer(answer);
-        answerForMultipleChoice.setQuestion(question);
-        answerForMultipleChoice.setStudent(student);
+        StudentAnswerForMultipleChoice answerForMultipleChoice =
+                answerForMultipleChoiceRepository.findByStudentAndQuestion(studentId, questionId);
+        if (answerForMultipleChoice != null) {
+            answerForMultipleChoice.setAnswer(answer);
+        } else {
+            answerForMultipleChoice = new StudentAnswerForMultipleChoice();
+            answerForMultipleChoice.setAnswer(answer);
+            answerForMultipleChoice.setQuestion(question);
+            answerForMultipleChoice.setStudent(student);
+        }
         return answerForMultipleChoiceRepository.save(answerForMultipleChoice);
     }
 
@@ -85,7 +103,8 @@ public class MultipleChoiceServiceImpl implements MultipleChoiceService {
 
     @Override
     public Set<StudentAnswerForMultipleChoice> getAnswersByStudentId(long studentId) {
-        return answerForMultipleChoiceRepository.findByStudent_Id(studentId);
+//        return answerForMultipleChoiceRepository.findByStudentAndQuestion(studentId, );
+        return null;
     }
 
     @Override
@@ -99,7 +118,7 @@ public class MultipleChoiceServiceImpl implements MultipleChoiceService {
     }
 
     @Override
-    public MultipleChoiceQuestion update(AddMCQ mcq) {
+    public MultipleChoiceQuestion update(long id, AddMCQ mcq) {
         Map<String, String> answers = new HashMap<>();
         List<String> choices = mcq.getChoices();
 
@@ -108,7 +127,7 @@ public class MultipleChoiceServiceImpl implements MultipleChoiceService {
             answers.put(String.valueOf((ch + i)), choices.get(i));
         }
 
-        MultipleChoiceQuestion multipleChoiceQuestion = choiceRepository.findById(mcq.getId());
+        MultipleChoiceQuestion multipleChoiceQuestion = choiceRepository.findById(id);
         multipleChoiceQuestion.setContent(mcq.getContent());
         multipleChoiceQuestion.addCorrectAnswer(String.valueOf((ch + mcq.getCorrect())));
         multipleChoiceQuestion.setAnswers(answers);

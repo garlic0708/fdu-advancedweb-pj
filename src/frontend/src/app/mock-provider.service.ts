@@ -23,6 +23,7 @@ export class MockProviderService implements HttpInterceptor {
     };
     if (mockDatum && mockDatum !== true)
       response['body'] = mockDatum;
+    console.log(mockDatum);
     return mockDatum ?
       // of(new HttpResponse(response))
       of(null).pipe(mapTo(new HttpResponse(response)), delay(2000))

@@ -1,5 +1,10 @@
+<mat-drawer mode="over" position="end" [opened]="routerActivated">
+  <button mat-button (click)="closeEditPanel()">Close</button>
+  <router-outlet (activate)="routerActivated = true"
+                 (deactivate)="routerActivated = false"></router-outlet>
+</mat-drawer>
 <ng-container *ngIf="map$ | async as map; else bodyLoading">
-  <mat-list>
+  <mat-list *ngIf="!isStudent()">
     <mat-list-item>
       <button mat-raised-button (click)="body.addSubIdea()">Add Child</button>
       <button mat-raised-button (click)="body.removeSubIdea()">Remove</button>
@@ -22,29 +27,20 @@
   <mat-list>
     <mat-divider></mat-divider>
     <ng-container *ngIf="attachments$ | async as attachments; else loading">
-      <mat-list-item>
-        <mat-chip-list [selectable]="false" id="questions">
-          <mat-chip *ngFor="let question of attachments.questions" [selected]="true">
-            {{question.description}}
-          </mat-chip>
-        </mat-chip-list>
-      </mat-list-item>
+      <app-attachment-display [attachmentList]="attachments.questions"
+                              (chooseItem)="edit('question', $event)"
+                              (newItem)="newItem('question')"
+                              [displayNewItem]="role == 'TEACHER'"></app-attachment-display>
       <mat-divider></mat-divider>
-      <mat-list-item>
-        <mat-chip-list [selectable]="false" id="courseWares">
-          <mat-chip *ngFor="let courseWare of attachments.courseWares" [selected]="true">
-            {{courseWare.description}}
-          </mat-chip>
-        </mat-chip-list>
-      </mat-list-item>
+      <app-attachment-display [attachmentList]="attachments.coursewares"
+                              (chooseItem)="getFile('courseware', $event)"
+                              (newItem)="newItem('courseware')"
+                              [displayNewItem]="newItemRequireSave"></app-attachment-display>
       <mat-divider></mat-divider>
-      <mat-list-item>
-        <mat-chip-list [selectable]="false" id="resources">
-          <mat-chip *ngFor="let resource of attachments.resources" [selected]="true">
-            {{resource.description}}
-          </mat-chip>
-        </mat-chip-list>
-      </mat-list-item>
+      <app-attachment-display [attachmentList]="attachments.resources"
+                              (chooseItem)="getFile('resource', $event)"
+                              (newItem)="newItem('resource')"
+                              [displayNewItem]="newItemRequireSave"></app-attachment-display>
     </ng-container>
 
     <ng-template #loading>

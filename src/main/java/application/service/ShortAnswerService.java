@@ -3,7 +3,6 @@ package application.service;
 import application.entity.ShortAnswerQuestion;
 import application.entity.StudentAnswerForShortAnswer;
 
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -12,6 +11,8 @@ import java.util.Set;
  */
 public interface ShortAnswerService {
     ShortAnswerQuestion getById(long id);
+
+    ShortAnswerQuestion getById(long id, long studentId);
 
     Set<ShortAnswerQuestion> getByNodeId(long nodeId);
 
@@ -27,7 +28,7 @@ public interface ShortAnswerService {
 
     void deleteShortAnswer(long id);
 
-    ShortAnswerQuestion update(ShortAnswerQuestion question);
+    ShortAnswerQuestion update(long id, ShortAnswerQuestion question);
 
     void deleteAll();
 }

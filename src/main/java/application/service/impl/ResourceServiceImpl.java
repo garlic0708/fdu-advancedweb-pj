@@ -18,10 +18,15 @@ import java.util.Set;
  */
 @Service
 public class ResourceServiceImpl implements ResourceService {
+    private final ResourceRepository resourceRepository;
+    private final NodeRepository nodeRepository;
+
     @Autowired
-    private ResourceRepository resourceRepository;
-    @Autowired
-    private NodeRepository nodeRepository;
+    public ResourceServiceImpl(ResourceRepository resourceRepository, NodeRepository nodeRepository) {
+        this.resourceRepository = resourceRepository;
+        this.nodeRepository = nodeRepository;
+    }
+
     @Override
     public Resource getById(long id) {
         return resourceRepository.findById(id);
@@ -36,22 +41,25 @@ public class ResourceServiceImpl implements ResourceService {
     public Set<Resource> getByNodeId(long nodeId) {
         Node node = nodeRepository.findById(nodeId);
         Set<Resource> resourceSet = new HashSet<>();
-        for (Resource resource: node.getResources()) {
+        for (Resource resource : node.getResources()) {
             resourceSet.add(resourceRepository.findById(resource.getId().longValue()));
         }
         return resourceSet;
     }
 
     @Override
-    public void addResource(long nodeId, String name, String location, ResourceType type) {
+    public Resource addResource(long nodeId, String name, String location, ResourceType type) {
         Resource resource = new Resource();
         resource.setName(name);
-        resource.setFileLocation(location);
+        if (type == ResourceType.FILE)
+            resource.setFileLocation(location);
+        else
+            resource.setUrl(location);
         resource.setType(type);
 
         Node node = nodeRepository.findById(nodeId);
         resource.setFatherNode(node);
-        resourceRepository.save(resource);
+        return resourceRepository.save(resource);
     }
 
     @Override
@@ -65,7 +73,16 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public void updateResource(Resource resource) {
-        resourceRepository.save(resource);
+    public Resource updateResource(long id, Resource resource) {
+        Resource updated = getById(id);
+        updated.setUrl(resource.getUrl());
+        updated.setName(resource.getName());
+        return resourceRepository.save(updated);
+    }
+
+    @Override
+    public String getFilePath(long id) {
+        Resource resource = getById(id);
+        return resource.getFileLocation() + resource.getName();
     }
 }

@@ -39,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin().usernameParameter("email").successForwardUrl("/afterLogin")
                 .failureForwardUrl("/afterLogin?error")
+                .and().logout().logoutSuccessUrl("/afterLogout")
                 .and().csrf().disable() // todo for testing
         ;
     }

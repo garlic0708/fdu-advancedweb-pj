@@ -18,7 +18,7 @@ public interface StudentAnswerForMultipleChoiceRepository
             "RETURN q")
     Set<StudentAnswerForMultipleChoice> findByQuestion_Id(long questionId);
 
-    @Query("MATCH (n:Student)-[:resolve]->(q:StudentAnswerForMultipleChoice) WHERE ID(n)={0}" +
-            "RETURN q")
-    Set<StudentAnswerForMultipleChoice> findByStudent_Id(long studentId);
+    @Query("MATCH (n:Student)-[r:resolve]->(q:MultipleChoiceQuestion) WHERE ID(n)={0}" +
+            "AND ID(q) = {1} RETURN r")
+    StudentAnswerForMultipleChoice findByStudentAndQuestion(long studentId, long questionId);
 }

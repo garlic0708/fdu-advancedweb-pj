@@ -1,0 +1,26 @@
+.example-container {
+  position: absolute;
+  top: 10%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.example-events {
+  width:350px;
+}
+
+
+.node-with-delete {
+  width:200px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  -o-text-overflow:ellipsis;
+  -webkit-text-overflow:ellipsis;
+  -moz-text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.list-selected {
+  background-color: #eeeeee;
+}
