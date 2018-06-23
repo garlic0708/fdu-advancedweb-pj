@@ -4,23 +4,25 @@
   bottom: 0;
   left: 0;
   right: 0;
+  background-color: #f1f6ff;
+  margin-top: 25px;
+  margin-right: 10px;
 }
 
 .example-events {
-  width:350px;
+  width: 350px;
 }
 
-
 .node-with-delete {
-  width:150px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  -o-text-overflow:ellipsis;
-  -webkit-text-overflow:ellipsis;
-  -moz-text-overflow:ellipsis;
-  white-space:nowrap;
+  width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;
+  -moz-text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .list-selected {
-  background-color: #eeeeee;
+  background-color: aliceblue;
 }

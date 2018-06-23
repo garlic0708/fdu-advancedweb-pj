@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin().usernameParameter("email").successForwardUrl("/afterLogin")
                 .failureForwardUrl("/afterLogin?error")
                 .and().logout().logoutSuccessUrl("/afterLogout")
-//                .and().csrf().disable() // todo for testing
+                .and().csrf().disable() // todo for testing
         ;
     }
 

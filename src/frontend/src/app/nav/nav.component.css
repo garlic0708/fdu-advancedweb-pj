@@ -1,11 +1,21 @@
 .nav {
-  width: 100%;
-  background-color: #ddffff!important;
-  padding: 14px;
-  border-left: 6px solid #ccc!important;
-  border-color: #2196F3!important;
+  margin-bottom: 5%;
+  padding-right: 10%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: aliceblue;
 }
 
-.button{
+.button {
+  width: fit-content;
+  color: white;
   float: right;
+}
+
+mat-label{
+  color: #fed63f;
+  margin-left: 10%;
+  font-family: "Signika", Arial, Helvetica, sans-serif;
+  font-style: italic;
+  font-size: 40px;
 }

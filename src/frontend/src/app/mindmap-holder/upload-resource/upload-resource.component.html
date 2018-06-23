@@ -10,7 +10,8 @@
 </div>
 
 <app-upload-course *ngIf="type=='file'"></app-upload-course>
-<div *ngIf="type=='url' && editing">
+
+<div *ngIf="type=='url' && editing" class="whole">
   <form class="container" (ngSubmit)="onSubmit()">
     <mat-form-field class="full-width">
       <input [(ngModel)]="url" name="url" matInput placeholder="url">
@@ -26,6 +27,7 @@
     <mat-spinner *ngIf="submitting"></mat-spinner>
   </form>
 </div>
+
 <div *ngIf="type == 'url' && !editing">
   <p>{{description}}</p>
   <p><a [href]="convertUrl(url)">{{url}}</a></p>

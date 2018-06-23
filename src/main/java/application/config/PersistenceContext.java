@@ -18,7 +18,7 @@ public class PersistenceContext {
     @Bean
     public org.neo4j.ogm.config.Configuration configuration() {
         return new org.neo4j.ogm.config.Configuration.Builder()
-                .uri("bolt://localhost:11002")
+                .uri("bolt://35.229.18.60")
                 .credentials("neo4j", "0708")
                 .build();
     }

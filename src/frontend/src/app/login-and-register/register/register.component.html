@@ -1,65 +1,69 @@
-<h1>注册</h1>
+<div align="center">
+  <h1>注册</h1>
 
-<form class="form" (submit)="submit()" [formGroup]="formGroup">
-  <mat-form-field class="full-width">
-    <input name="email" matInput placeholder="邮箱"  [formControlName]="'email'" [errorStateMatcher]="matcher">
-    <mat-hint>请输入正确的邮箱格式</mat-hint>
-    <mat-error *ngIf="emailFormControl.hasError('pattern') && !emailFormControl.hasError('required')">
-      请输入正确的邮箱格式
-    </mat-error>
-    <mat-error *ngIf="emailFormControl.hasError('required')">
-      邮箱不能为空
-    </mat-error>
-  </mat-form-field>
+  <form class="form" (submit)="submit()" [formGroup]="formGroup">
+    <mat-form-field class="full-width">
+      <input name="email" matInput placeholder="邮箱" [formControlName]="'email'" [errorStateMatcher]="matcher">
+      <mat-hint>请输入正确的邮箱格式</mat-hint>
+      <mat-error *ngIf="emailFormControl.hasError('pattern') && !emailFormControl.hasError('required')">
+        请输入正确的邮箱格式
+      </mat-error>
+      <mat-error *ngIf="emailFormControl.hasError('required')">
+        邮箱不能为空
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field class="full-width">
-    <input name="name" matInput placeholder="姓名"  [formControlName]="'name'" [errorStateMatcher]="matcher">
-    <mat-hint>请输入您的姓名，6-32位字符，支持中英文</mat-hint>
-    <mat-error *ngIf="nameFormControl.hasError('pattern') && !nameFormControl.hasError('required')">
-      请输入正确的姓名格式，6-32位字符
-    </mat-error>
-    <mat-error *ngIf="nameFormControl.hasError('required')">
-      姓名不能为空
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field class="full-width">
+      <input name="name" matInput placeholder="姓名" [formControlName]="'name'" [errorStateMatcher]="matcher">
+      <mat-hint>请输入您的姓名，6-32位字符，支持中英文</mat-hint>
+      <mat-error *ngIf="nameFormControl.hasError('pattern') && !nameFormControl.hasError('required')">
+        请输入正确的姓名格式，6-32位字符
+      </mat-error>
+      <mat-error *ngIf="nameFormControl.hasError('required')">
+        姓名不能为空
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field class="full-width">
-    <input type="password" name="password" matInput placeholder="密码"  [formControlName]="'password'" [errorStateMatcher]="matcher">
-    <mat-hint>请输入您的密码，6-32位字符，包括数字、大小写英文字母</mat-hint>
-    <mat-error *ngIf="passwordFormControl.hasError('pattern') && !passwordFormControl.hasError('required')">
-      请输入正确的密码格式，6-32位字符，包括数字、大小写英文字母
-    </mat-error>
-    <mat-error *ngIf="passwordFormControl.hasError('required')">
-      密码不能为空
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field class="full-width">
+      <input type="password" name="password" matInput placeholder="密码" [formControlName]="'password'"
+             [errorStateMatcher]="matcher">
+      <mat-hint>请输入您的密码，6-32位字符，包括数字、大小写英文字母</mat-hint>
+      <mat-error *ngIf="passwordFormControl.hasError('pattern') && !passwordFormControl.hasError('required')">
+        请输入正确的密码格式，6-32位字符，包括数字、大小写英文字母
+      </mat-error>
+      <mat-error *ngIf="passwordFormControl.hasError('required')">
+        密码不能为空
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field class="full-width">
-    <input type="password" name="confirmPassword" matInput placeholder="确认密码"  [formControlName]="'passwordRepeated'" [errorStateMatcher]="matcher">
-    <mat-hint>请再次输入密码</mat-hint>
-    <mat-error *ngIf="confirmPasswordFormControl.hasError('pattern') && !confirmPasswordFormControl.hasError('required')">
-      两次输入密码不一致
-    </mat-error>
-    <mat-error *ngIf="confirmPasswordFormControl.hasError('required')">
-      密码不能为空
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field class="full-width">
+      <input type="password" name="confirmPassword" matInput placeholder="确认密码" [formControlName]="'passwordRepeated'"
+             [errorStateMatcher]="matcher">
+      <mat-hint>请再次输入密码</mat-hint>
+      <mat-error
+        *ngIf="confirmPasswordFormControl.hasError('pattern') && !confirmPasswordFormControl.hasError('required')">
+        两次输入密码不一致
+      </mat-error>
+      <mat-error *ngIf="confirmPasswordFormControl.hasError('required')">
+        密码不能为空
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field class="full-width">
-    <mat-select name="user" placeholder="身份" [formControlName]="'role'">
-      <mat-option value="TEACHER">教师</mat-option>
-      <mat-option value="STUDENT">学生</mat-option>
-    </mat-select>
-    <mat-error *ngIf="roleFormControl.hasError('required')">
-      身份不能为空
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-select name="user" placeholder="身份" [formControlName]="'role'">
+        <mat-option value="TEACHER">教师</mat-option>
+        <mat-option value="STUDENT">学生</mat-option>
+      </mat-select>
+      <mat-error *ngIf="roleFormControl.hasError('required')">
+        身份不能为空
+      </mat-error>
+    </mat-form-field>
 
-  <button mat-raised-button type="submit" [disabled]="!formGroup.valid">注册</button>
-  <mat-spinner *ngIf="submitting"></mat-spinner>
-</form>
+    <button mat-flat-button type="submit" [disabled]="!formGroup.valid">注册</button>
+    <mat-spinner *ngIf="submitting"></mat-spinner>
+  </form>
 
-
+</div>
 <!-- Copyright 2018 Google Inc. All Rights Reserved.
     Use of this source code is governed by an MIT-style license that
     can be found in the LICENSE file at http://angular.io/license -->

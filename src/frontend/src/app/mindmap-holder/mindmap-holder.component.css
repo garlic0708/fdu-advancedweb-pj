@@ -1,11 +1,16 @@
 #spinner-container {
+  width: auto;
   margin: 10px;
 }
 
 button {
-  margin: 0 20px;
+  margin: 20px;
 }
 
 mat-drawer {
-  width: 30%;
+  padding: 15px;
+  width: auto;
+  background-color: aliceblue;
 }
+
+

@@ -1,10 +1,23 @@
+div {
+  margin-top: 3%;
+  margin-left: 20%;
+  margin-right: 20%;
+  background-color: aliceblue;
+  padding-top: 1%;
+  padding-bottom: 5%;
+}
+
 .form {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
+  padding-left: 15%;
+  padding-right: 15%;
 }
 
 .full-width {
   height: 100px;
   width: 100%;
+}
+
+.mat-flat-button {
+  margin-left: 40%;
+  margin-right: 15%;
 }
