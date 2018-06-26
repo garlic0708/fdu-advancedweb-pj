@@ -29,13 +29,14 @@ import camelCase = require('lodash/camelCase');
     ])
   ]
 })
-export class MindmapHolderComponent implements OnInit, AfterViewInit {
+export class MindmapHolderComponent implements OnInit {
 
   attachments$: Observable<Attachments>;
   map$: Observable<any>;
   _saving: boolean = false;
 
   private _selectedColor;
+  private _selectedForeGround;
   @ViewChild('body') body;
   private manipulations: Manipulation[] = [];
   private mapId: number;
@@ -58,11 +59,6 @@ export class MindmapHolderComponent implements OnInit, AfterViewInit {
         this.map$ = this.nodeService.getMap(this.mapId);
       }
     );
-  }
-
-  ngAfterViewInit() {
-    if (this.isStudent())
-      this.body.editingEnabled = false
   }
 
   isStudent() {
@@ -120,6 +116,15 @@ export class MindmapHolderComponent implements OnInit, AfterViewInit {
     this._selectedColor = c
   }
 
+  get selectedForeGround() {
+    return this._selectedForeGround
+  }
+
+  set selectedForeGround(c) {
+    this.body.setIdeaColor(c, true);
+    this._selectedForeGround = c
+  }
+
   saveManipulation() {
     this.saving = true;
     this.nodeService.manipulate(this.mapId, this.manipulations)
@@ -130,8 +135,8 @@ export class MindmapHolderComponent implements OnInit, AfterViewInit {
       })
   }
 
-  get colorForeground() {
-    return tinyColor(this.selectedColor).isDark() ? 'white' : 'black'
+  colorForeground(color) {
+    return tinyColor(color).isDark() ? 'white' : 'black'
   }
 
   get saving() {
@@ -161,6 +166,7 @@ export class MindmapHolderComponent implements OnInit, AfterViewInit {
         // This is to circumvent the "Expression has changed after it was checked" error
         setTimeout(() => {
           this._selectedColor = this.body.selectedColor;
+          this._selectedForeGround = this.body.selectedForeGround;
           this.nodeId = e.id;
           this.attachments$ = this.nodeService.getAttachments(e.id);
           console.log(this.attachments$)
@@ -168,11 +174,18 @@ export class MindmapHolderComponent implements OnInit, AfterViewInit {
         break;
       case 'nodeCreated':
         const removal = remove(this.manipulations, { action: 'removeNode', id: e.id });
-        if (!removal.length) this.manipulations.push({
-          action: 'addNode',
-          id: e.id,
-          parentId: e.parentId,
-        });
+        if (!removal.length) {
+          this.manipulations.push({
+            action: 'addNode',
+            id: e.id,
+            parentId: e.parentId,
+          });
+          // This manipulation could be undoing of a removal.
+          // In that case, the node's other attributes should be restored as well.
+          if (e.event.title) insertDistinct(e.event.title, 'changeName');
+          const background = get(e.event, 'attr.style.background');
+          if (background) insertDistinct(background, 'changeColor');
+        }
         break;
       case 'nodeRemoved':
         const creation = findLast(this.manipulations, { action: 'addNode', id: e.id });
@@ -187,6 +200,10 @@ export class MindmapHolderComponent implements OnInit, AfterViewInit {
         break;
       case 'colorChanged':
         insertDistinct(get(e.event, 'attr.style.background'), 'changeColor');
+        setTimeout(() => this._selectedColor = this.body.selectedColor);
+        break;
+      case 'foreGroundChanged':
+        insertDistinct(get(e.event, 'attr.style.color'), 'changeForeGround');
         setTimeout(() => this._selectedColor = this.body.selectedColor);
         break;
       case 'parentNodeChanged':
@@ -206,5 +223,15 @@ export class MindmapHolderComponent implements OnInit, AfterViewInit {
   get newItemRequireSave() {
     return this.role != 'TEACHER' ? false :
       (findLast(this.manipulations, { action: 'addNode', id: this.nodeId }) ? 'needSave' : true)
+  }
+
+  addSiblingIdeaBefore() {
+    if (!this.body.isRootSelected)
+      this.body.addSiblingIdeaBefore()
+  }
+
+  removeSubIdea() {
+    if (!this.body.isRootSelected)
+      this.body.removeSubIdea()
   }
 }

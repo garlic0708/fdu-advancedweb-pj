@@ -1,10 +1,7 @@
 package application.service.impl;
 
 import application.entity.*;
-import application.repository.CourseRepository;
-import application.repository.StudentRepository;
-import application.repository.TeacherRepository;
-import application.repository.UserRepository;
+import application.repository.*;
 import application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,13 +18,15 @@ public class UserServiceImpl implements UserService {
     private final CourseRepository courseRepository;
     private final StudentRepository studentRepository;
     private final TeacherRepository teacherRepository;
+    private final VerificationTokenRepository tokenRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, CourseRepository courseRepository, StudentRepository studentRepository, TeacherRepository teacherRepository) {
+    public UserServiceImpl(UserRepository userRepository, CourseRepository courseRepository, StudentRepository studentRepository, TeacherRepository teacherRepository, VerificationTokenRepository tokenRepository) {
         this.userRepository = userRepository;
         this.courseRepository = courseRepository;
         this.studentRepository = studentRepository;
         this.teacherRepository = teacherRepository;
+        this.tokenRepository = tokenRepository;
     }
 
     @Override
@@ -123,5 +122,19 @@ public class UserServiceImpl implements UserService {
     public Set<Student> getStudentsByCourseId(long courseId) {
         Course course = courseRepository.findById(courseId);
         return course.getStudents();
+    }
+
+    @Override
+    public VerificationToken getToken(String token) {
+        VerificationToken verificationToken = tokenRepository.getByToken(token);
+        if (verificationToken != null)
+            tokenRepository.delete(verificationToken);
+        return verificationToken;
+    }
+
+    @Override
+    public User activateUser(User user) {
+        user.setActivated(true);
+        return userRepository.save(user);
     }
 }

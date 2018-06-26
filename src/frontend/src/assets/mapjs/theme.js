@@ -1,6 +1,8 @@
 /*global module */
 export const defaultColor = '#E0E0E0';
 export const level1Color = '#22AAE0';
+export const foreGround = '#4F4F4F';
+export const lightForeGround = '#EEEEEE';
 export default {
   'name': 'MindMup V1',
   'node': [{
@@ -26,8 +28,8 @@ export default {
     'text': {
       'margin': 5.0,
       'alignment': 'center',
-      'color': '#4F4F4F',
-      'lightColor': '#EEEEEE',
+      'color': foreGround,
+      'lightColor': lightForeGround,
       'darkColor': '#000000',
       'font': {
         'lineSpacing': 2.5,

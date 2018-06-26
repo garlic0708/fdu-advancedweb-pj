@@ -18,6 +18,7 @@ public class User {
     private Role role;
     @JsonIgnore
     private String passwordHash;
+    private boolean activated = false;
 
     public String getEmail() {
         return email;
@@ -57,5 +58,25 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", role=" + role +
+                ", passwordHash='" + passwordHash + '\'' +
+                ", activated=" + activated +
+                '}';
     }
 }

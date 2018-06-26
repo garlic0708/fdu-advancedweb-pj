@@ -8,10 +8,17 @@
   <mat-list *ngIf="!isStudent()">
     <mat-list-item>
       <button mat-raised-button (click)="body.addSubIdea()">Add Child</button>
-      <button mat-raised-button (click)="body.removeSubIdea()">Remove</button>
+      <button mat-raised-button (click)="body.addSiblingIdeaBefore()"
+              [disabled]="body.isRootSelected">Add Sibling</button>
+      <button mat-raised-button (click)="body.removeSubIdea()"
+              [disabled]="body.isRootSelected">Remove</button>
       <button mat-raised-button [(colorPicker)]="selectedColor" [style.background]="selectedColor"
-              [style.color]="colorForeground">
-        Color
+              [style.color]="colorForeground(selectedColor)">
+        Node Color
+      </button>
+      <button mat-raised-button [(colorPicker)]="selectedForeGround" [style.background]="selectedForeGround"
+              [style.color]="colorForeground(selectedForeGround)">
+        Text Color
       </button>
       <button mat-raised-button (click)="body.undo()" [disabled]="!body.canUndo">Undo</button>
       <button mat-raised-button (click)="body.redo()" [disabled]="!body.canRedo">Redo</button>
@@ -23,7 +30,8 @@
     <mat-divider></mat-divider>
   </mat-list>
 
-  <app-mindmap-body #body (manipulation)="mindmapEvent($event)" [map]="map"></app-mindmap-body>
+  <app-mindmap-body #body (manipulation)="mindmapEvent($event)" [map]="map"
+                    [editingEnabled]="!isStudent()"></app-mindmap-body>
 
   <mat-list>
     <mat-divider></mat-divider>

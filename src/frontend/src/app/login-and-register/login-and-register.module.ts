@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { LoginRoutingModule } from "./login-routing/login-routing.module";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { ConfirmRegisterComponent } from './confirm-register/confirm-register.component';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
     LoginAndRegisterComponent,
     LoginComponent,
     RegisterComponent,
+    ConfirmRegisterComponent,
   ],
 })
 export class LoginAndRegisterModule {

@@ -21,7 +21,7 @@ export class LoginAndRegisterComponent implements OnInit {
   }
 
   indexChange(index) {
-    this.location.go(index == 0 ? '/login' : '/register')
+    this.location.go(index == 0 ? '/app/login' : '/app/register')
   }
 
 }

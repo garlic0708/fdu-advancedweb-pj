@@ -37,4 +37,5 @@ dependencies {
     compile("org.springframework.data:spring-data-neo4j")
     compile 'org.springframework.security:spring-security-web:5.0.5.RELEASE'
     compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.boot:spring-boot-starter-mail")
 }

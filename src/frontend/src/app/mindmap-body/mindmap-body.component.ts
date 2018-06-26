@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import {init, testMap} from '../../assets/mapjs/mapjs-util'
-import {MindmapEvent} from "./mindmap-event";
-import {defaultColor, level1Color} from '../../assets/mapjs/theme';
-import { Observable } from "rxjs/index";
+import { init, testMap } from '../../assets/mapjs/mapjs-util'
+import { MindmapEvent } from "./mindmap-event";
+import { defaultColor, level1Color, foreGround, lightForeGround } from '../../assets/mapjs/theme';
+import * as tinyColor from 'tinycolor2';
 
 @Component({
   selector: 'app-mindmap-body',
@@ -13,14 +13,17 @@ import { Observable } from "rxjs/index";
 export class MindmapBodyComponent implements OnInit, AfterViewInit {
 
   @ViewChild('container') container;
-  mapModel;
-  selectedNodeId: number;
-  rootIds: number[];
+  private mapModel;
+  private selectedNodeId: number;
+  private rootIds: number[];
 
   @Output() manipulation: EventEmitter<MindmapEvent> = new EventEmitter<MindmapEvent>();
 
   @Input() map;
   private _map;
+
+  private modelInitResolve: Function;
+  private modelInitPromise = new Promise(resolve => this.modelInitResolve = resolve);
 
   constructor() {
   }
@@ -32,11 +35,14 @@ export class MindmapBodyComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.rootIds = Object.keys(this._map.ideas).map(k => this._map.ideas[k].id);
-    this.mapModel = init(this.container.nativeElement, this._map);
-    this.addManipulationListeners();
-    this.addSelectionListener();
-    console.log(this.mapModel.getIdea())
+    setTimeout(() => {
+      this.rootIds = Object.keys(this._map.ideas).map(k => this._map.ideas[k].id);
+      this.mapModel = init(this.container.nativeElement, this._map);
+      this.modelInitResolve();
+      this.addManipulationListeners();
+      this.addSelectionListener();
+      console.log(this.mapModel.getIdea())
+    })
   }
 
   private addSelectionListener() {
@@ -51,7 +57,8 @@ export class MindmapBodyComponent implements OnInit, AfterViewInit {
   }
 
   private addManipulationListeners() {
-    const events = ['nodeCreated', 'nodeRemoved', 'nodeTitleChanged', 'colorChanged', 'parentNodeChanged'];
+    const events = ['nodeCreated', 'nodeRemoved', 'nodeTitleChanged',
+      'colorChanged', 'foreGroundChanged', 'parentNodeChanged'];
     events.forEach(eventName => {
       this.mapModel.addEventListener(eventName, e => {
         this.manipulation.emit({
@@ -76,12 +83,16 @@ export class MindmapBodyComponent implements OnInit, AfterViewInit {
     console.log(this.mapModel.getIdea())
   }
 
+  addSiblingIdeaBefore() {
+    this.mapModel.addSiblingIdeaBefore();
+  }
+
   removeSubIdea() {
     this.mapModel.removeSubIdea()
   }
 
-  setIdeaColor(color) {
-    this.mapModel.updateStyle('angular', 'background', color)
+  setIdeaColor(color, foreGround?) {
+    this.mapModel.updateStyle('angular', foreGround ? 'color' : 'background', color)
   }
 
   get selectedColor() {
@@ -89,8 +100,14 @@ export class MindmapBodyComponent implements OnInit, AfterViewInit {
       (this.rootIds.includes(this.selectedNodeId) ? level1Color : defaultColor)
   }
 
-  set editingEnabled(value: boolean) {
-    this.mapModel.setEditingEnabled(value)
+  get selectedForeGround() {
+    return this.mapModel.getSelectedStyle('color') ||
+      (tinyColor(this.selectedColor).isDark() ? lightForeGround : foreGround)
+  }
+
+  @Input() set editingEnabled(value: boolean) {
+    this.modelInitPromise.then(() =>
+      this.mapModel.setEditingEnabled(value))
   }
 
   undo() {
@@ -107,5 +124,9 @@ export class MindmapBodyComponent implements OnInit, AfterViewInit {
 
   get canRedo() {
     return this.mapModel && this.mapModel.getIdea().canRedo()
+  }
+
+  get isRootSelected() {
+    return this.rootIds && this.rootIds.includes(this.selectedNodeId)
   }
 }

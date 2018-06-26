@@ -20,6 +20,7 @@ export class CurrentUserService {
   private registerUrl = '/register';
   private logoutUrl = '/logout';
   private changePasswordUrl = "/changePassword";
+  private confirmRegisterUrl = "/registrationConfirm";
 
   private storage = window.sessionStorage;
 
@@ -38,13 +39,18 @@ export class CurrentUserService {
       }));
   }
 
-  register(form): Observable<User> {
-    return sendFormData<User>(this.registerUrl, form, this.http)
-      .pipe(map(user => {
-        this._currentUser.next(user);
-        this.storage.setItem(STORAGE_KEY, JSON.stringify(user));
-        return user
-      }));
+  register(form): Observable<any> {
+    return sendFormData(this.registerUrl, form, this.http)
+  }
+
+  confirmRegister(token): Observable<any> {
+    return this.http.get<User>(this.confirmRegisterUrl,
+      { params: new HttpParams().set('token', token) })
+      // .pipe(map(user => {
+      //   this._currentUser.next(user);
+      //   this.storage.setItem(STORAGE_KEY, JSON.stringify(user));
+      //   return user
+      // }));
   }
 
   changePassword(form): Observable<any> {

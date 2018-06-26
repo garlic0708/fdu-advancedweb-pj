@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { LoginAndRegisterComponent } from "../login-and-register.component";
 import { AuthGuard } from "../../auth-guards";
 import { ModifyComponent } from "../modify/modify.component";
+import { ConfirmRegisterComponent } from "../confirm-register/confirm-register.component";
 
 const routes: Routes = [
   {
@@ -12,6 +13,7 @@ const routes: Routes = [
     children: [
       { path: 'login', component: LoginAndRegisterComponent },
       { path: 'register', component: LoginAndRegisterComponent },
+      { path: 'confirmRegister', component: ConfirmRegisterComponent },
     ],
   },
   {

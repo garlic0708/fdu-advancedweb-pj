@@ -41,6 +41,8 @@ export class RegisterComponent implements OnInit {
 
   matcher = new MyErrorStateMatcher();
   submitting: boolean = false;
+  success: boolean = false;
+  error: string = null;
 
   constructor(private fb: FormBuilder, private currentUser: CurrentUserService,
               private router: Router) {
@@ -53,7 +55,6 @@ export class RegisterComponent implements OnInit {
     }, {
       validator: [
         (group: FormGroup) => {
-          console.log(group);
           const confirm = group.controls['passwordRepeated'];
           if (group.controls['password'].value != confirm.value)
             confirm.setErrors({ pattern: true });
@@ -64,6 +65,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.formGroup.valueChanges.subscribe(() => this.error = null)
   }
 
   submit() {
@@ -71,7 +73,12 @@ export class RegisterComponent implements OnInit {
     this.currentUser.register(this.formGroup.value)
       .subscribe(() => {
         this.submitting = false;
-        this.router.navigateByUrl('/app')
+        // this.router.navigateByUrl('/app')
+        this.success = true;
+      }, err => {
+        console.log(err);
+        this.submitting = false;
+        this.error = err.error
       })
   }
 }

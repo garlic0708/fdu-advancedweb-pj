@@ -1,0 +1,7 @@
+<div id="container" align="center">
+  <p *ngIf="submitting">请稍候</p>
+  <div *ngIf="error">
+    <p>口令已失效。请重试</p>
+    <button mat-button [routerLink]="['/app/register']">返回注册</button>
+  </div>
+</div>

@@ -48,11 +48,11 @@ import { UploadResourceComponent } from "./mindmap-holder/upload-resource/upload
     AppRoutingModule,
   ],
   providers: [
-    // environment.production ? [] : {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: MockProviderService,
-    //   multi: true,
-    // },
+    environment.production ? [] : {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MockProviderService,
+      multi: true,
+    },
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
   ],
   bootstrap: [AppComponent],

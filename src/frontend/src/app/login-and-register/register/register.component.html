@@ -1,7 +1,7 @@
 <div align="center">
   <h1>注册</h1>
 
-  <form class="form" (submit)="submit()" [formGroup]="formGroup">
+  <form class="form" (submit)="submit()" [formGroup]="formGroup" *ngIf="!success">
     <mat-form-field class="full-width">
       <input name="email" matInput placeholder="邮箱" [formControlName]="'email'" [errorStateMatcher]="matcher">
       <mat-hint>请输入正确的邮箱格式</mat-hint>
@@ -59,10 +59,14 @@
       </mat-error>
     </mat-form-field>
 
-    <button mat-flat-button type="submit" [disabled]="!formGroup.valid">注册</button>
+    <button mat-flat-button type="submit" [disabled]="!formGroup.valid || submitting">注册</button>
     <mat-spinner *ngIf="submitting"></mat-spinner>
+    <p *ngIf="error">{{error}}</p>
   </form>
 
+  <div *ngIf="success">
+    <p>请至邮箱点击激活链接完成注册</p>
+  </div>
 </div>
 <!-- Copyright 2018 Google Inc. All Rights Reserved.
     Use of this source code is governed by an MIT-style license that

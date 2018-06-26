@@ -30,12 +30,12 @@ export class FlatNode {
 }
 
 /**
- * Checklist database, it can build a tree structured Json object.
- * Each node in Json object represents a to-do item or a category.
+ * Course list database, it can build a tree structured Json object.
+ * Each node in Json object represents a course or a .
  * If a node is a category, it has children items and new items can be added under the category.
  */
 @Injectable()
-export class ChecklistDatabase {
+export class CourseListDatabase {
   dataChange: BehaviorSubject<Node[]> = new BehaviorSubject<Node[]>([]);
   selected: Node | null = null;
   private resolveInitialize: Function;
@@ -59,7 +59,7 @@ export class ChecklistDatabase {
     // Build the tree nodes from Json object. The result is a list of `TodoItemNode` with nested
     //     file node as children,
     // And notify the change.
-    this.dataChange.next(ChecklistDatabase.buildFileTree(courses, 0));
+    this.dataChange.next(CourseListDatabase.buildFileTree(courses, 0));
     this.resolveInitialize('ok')
   }
 
@@ -185,7 +185,7 @@ export class DeleteDialogComponent {
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.css'],
-  providers: [ChecklistDatabase, DeleteDialogComponent]
+  providers: [CourseListDatabase, DeleteDialogComponent]
 })
 export class SidenavComponent implements OnInit {
   opened = true;
@@ -211,7 +211,7 @@ export class SidenavComponent implements OnInit {
   private mindmapRoute: Promise<ActivatedRoute> =
     new Promise<ActivatedRoute>(resolve => this.initMindmapRoute = resolve);
 
-  constructor(private database: ChecklistDatabase, public dialog: MatDialog,
+  constructor(private database: CourseListDatabase, public dialog: MatDialog,
               private courseService: CourseService,
               private route: ActivatedRoute,
               private router: Router,

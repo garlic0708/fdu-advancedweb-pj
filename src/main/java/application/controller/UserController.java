@@ -1,15 +1,16 @@
 package application.controller;
 
+import application.controller.event.OnRegistrationCompleteEvent;
 import application.controller.result.JsonResult;
 import application.controller.util.CurrentUserUtil;
-import application.entity.ChangePasswordForm;
-import application.entity.CurrentUser;
-import application.entity.User;
-import application.entity.UserCreateForm;
+import application.entity.*;
 import application.service.UserService;
 import application.validator.ChangePasswordValidator;
 import application.validator.UserCreateFormValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.time.Instant;
+import java.util.Date;
 
 @Controller
 public class UserController {
@@ -32,13 +35,16 @@ public class UserController {
     private UserService userService;
     private final AuthenticationManager authenticationManager;
     private final ChangePasswordValidator changePasswordValidator;
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+    private final ApplicationEventPublisher eventPublisher;
 
     @Autowired
-    public UserController(UserCreateFormValidator userCreateFormValidator, UserService userService, AuthenticationManager authenticationManager, ChangePasswordValidator changePasswordValidator) {
+    public UserController(UserCreateFormValidator userCreateFormValidator, UserService userService, AuthenticationManager authenticationManager, ChangePasswordValidator changePasswordValidator, ApplicationEventPublisher eventPublisher) {
         this.userCreateFormValidator = userCreateFormValidator;
         this.userService = userService;
         this.authenticationManager = authenticationManager;
         this.changePasswordValidator = changePasswordValidator;
+        this.eventPublisher = eventPublisher;
     }
 
     @InitBinder("form")
@@ -69,12 +75,36 @@ public class UserController {
     public ResponseEntity register(
             HttpServletRequest request,
             @Valid @ModelAttribute("form") UserCreateForm form, BindingResult result) {
+        LOGGER.info(form.toString());
         if (result.hasErrors())
             return ResponseEntity.badRequest().body(result.getGlobalError().getDefaultMessage());
         else {
+            LOGGER.info("start authenticating");
             User user = userService.addUser(form);
-            authenticateUser(request, form);
-            return ResponseEntity.ok().body(user);
+            LOGGER.info(user.toString());
+//            authenticateUser(request, form);
+            eventPublisher.publishEvent(new OnRegistrationCompleteEvent
+                    (request, user, request.getLocale()));
+            LOGGER.info("complete publish event");
+            ResponseEntity body = ResponseEntity.ok().body(new JsonResult("status", "ok"));
+            LOGGER.info(body.toString());
+            return body;
+        }
+    }
+
+    @RequestMapping(value = "/registrationConfirm", method = RequestMethod.GET)
+    public ResponseEntity registrationConfirm(@RequestParam("token") String token,
+                                              HttpServletRequest request) {
+        VerificationToken verificationToken = userService.getToken(token);
+        if (verificationToken == null)
+            return ResponseEntity.badRequest().body("Invalid token");
+        else if (verificationToken.getExpiryDate().before(Date.from(Instant.now())))
+            return ResponseEntity.badRequest().body("Token has expired");
+        else {
+            User user = verificationToken.getUser();
+            user = userService.activateUser(user);
+//            authenticateUser(request, user);
+            return ResponseEntity.ok(new JsonResult("status", "ok"));
         }
     }
 
@@ -93,11 +123,13 @@ public class UserController {
         }
     }
 
-    private void authenticateUser(HttpServletRequest request, UserCreateForm form) {
-        UsernamePasswordAuthenticationToken authToken =
-                new UsernamePasswordAuthenticationToken(form.getEmail(), form.getPassword());
-        authToken.setDetails(new WebAuthenticationDetails(request));
-        Authentication authentication = authenticationManager.authenticate(authToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-    }
+//    private void authenticateUser(HttpServletRequest request, User user) {
+//        CurrentUser currentUser = new CurrentUser(user);
+//        UsernamePasswordAuthenticationToken authToken =
+//                new UsernamePasswordAuthenticationToken(currentUser, null,
+//                        currentUser.getAuthorities());
+//        authToken.setDetails(new WebAuthenticationDetails(request));
+//        Authentication authentication = authenticationManager.authenticate(authToken);
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//    }
 }

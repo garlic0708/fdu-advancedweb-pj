@@ -38,4 +38,8 @@ public interface UserService {
     Teacher getTeacherByNodeId(long nodeId);
 
     Set<Student> getStudentsByCourseId(long courseId);
+
+    VerificationToken getToken(String token);
+
+    User activateUser(User user);
 }

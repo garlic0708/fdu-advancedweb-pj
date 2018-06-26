@@ -19,5 +19,8 @@
   },
   "/afterLogout": {
     "target": "http://localhost:8080"
+  },
+  "/registrationConfirm": {
+    "target": "http://localhost:8080"
   }
 }
